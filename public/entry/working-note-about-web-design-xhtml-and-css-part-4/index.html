@@ -1,0 +1,842 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[Layout tech.] Web Design note with XHTML/CSS part 4 - HINA::工程幼稚園</title>
+  <meta name="author" content="hinablue">
+
+  
+  <meta name="description" content="在這之前，已經沒有要拜讀的東西了，不過有幾點明確認知請大家注意： IE6+7 sucks！本文作者是三尛咖！本文秉持著＂先研究不傷眼睛，再講究效果＂。
+若有不適者請勿繼續閱讀（疑？）。update, 請愛用 DTD。 到了這般地步，我想應該已經沒有甚麼特殊技能了。畢竟 CSS Styling &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.hinablue.me/entry/working-note-about-web-design-xhtml-and-css-part-4">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/hinablue" rel="alternate" title="HINA::工程幼稚園" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-259895-17']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">HINA::工程幼稚園</a></h1>
+  
+    <h2>偏執與強迫症的患者，算不上是無可救藥，只是我已經遇上我的良醫了。</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/hinablue" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.hinablue.me" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[Layout Tech.] Web Design Note With XHTML/CSS Part 4</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-05-21T19:59:00+08:00" pubdate data-updated="true">May 21<span>st</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><del>在這之前，已經沒有要拜讀的東西了</del>，不過有幾點明確認知請大家注意：</p>
+
+<ol><li style="font-weight: bold; font-size: 24px; color: rgb(255, 0, 0);">IE6+7 sucks！</li><li style="font-weight: bold; font-size: 24px; color: rgb(0, 128, 0);">本文作者是三尛咖！</li><li style="font-weight: bold; font-size: 24px; color: rgb(0, 0, 255);">本文秉持著＂先研究不傷眼睛，再講究效果＂。
+若有不適者請勿繼續閱讀（疑？）。</li><li style="font-weight: bold; font-size: 24px; color: rgb(255, 33, 33);">update, 請愛用 DTD。</li></ol>
+
+
+<p>到了這般地步，我想應該已經沒有甚麼特殊技能了。畢竟 CSS Styling 所需要的其實不是鑽研它能做些甚麼，而是你必須要知道你想要做些甚麼，而 CSS Styling 能否能滿足你的需求，如此而已。所以，也別把 CSS 當作仙丹妙藥，在對所謂的樣板、版面的製作與調整中，你必須得考量的是哪一種方式對你來說才是最適切的方式，如果不能避開那些要害，那最起碼做到兩害（CSS Styling 或是 HTML Coding）取其輕。</p>
+
+<p>無論你最後決定採取的方式是什麼，身為一個樣板、版面的製作者，總不能設（design）後不理，搞到最後還得勞師動眾（視覺這種事情可沒有 RTFM 這回事），弄得自己裡外不是人（編按：可以做人幹嘛做設計（寫程式））。這是比較常見的問題，視覺設計（ART）與程式人員之間永遠也切不斷的問題。</p>
+
+<ol><li>CSS 到底誰要做？</li><li>樣板一套程式，視覺就炸開了？</li><li>ART 一改樣板，程式就爛掉了？</li><li>以下 Loop&#8230;</li></ol>
+
+
+<p>所以（敲黑板），老師在講你都沒有在聽（丟筆）！跟你說要用 CSS，用 CSS，用 CSS，你用了沒？沒有嘛！所以你的樣板會炸開，所以你的程式會爛掉，<font size="5"><span style="font-weight: bold; color: rgb(212, 26, 1);">有套 CSS 讓你上天堂，沒套 CSS 讓你哭斷腸！</span></font>老師在講你都沒有在聽嘛（以下 Loop&#8230;）。<span style="font-weight: bold; color: rgb(255, 0, 0);">請思考一個問題，甚麼樣的 CSS Styling 才算是一個好的 CSS Styling？</span></p>
+
+<ol><li>優先且強制定義常用樣式。</li><li>相信瀏覽器，不要相信所見即所得。</li><li>清楚定義樣式名稱。</li><li>了解樣式從屬關係。</li><li>考慮例外（通常由 IE6+7 sucks! 造成）。</li></ol>
+
+
+<p>我再說一次，這不是仙丹妙藥，也不是需要奉為圭臬的什麼法則，這裡只有粗淺的經驗談（請大聲朗誦：本文作者是三尛咖！）。在我們考慮將一個視覺設計轉移到瀏覽器上去實現時，除了你需要具備的一些經驗之外（請參閱<a href="http://blog.hinablue.me/752" target="">第一篇</a>、<a href="http://blog.hinablue.me/753" target="">第二篇</a>），剩下的其實只有你對於 CSS 的熟悉程度，還有你自己如何去規畫 CSS Styling 的習慣。什麼是習慣？我們看圖說故事會比較清楚明瞭一點。
+<img src="http://static.hinablue.me/blog/7078869340.png" width="600" height="1000" />
+無論你是使用甚麼樣的軟體來撰寫或是設定你的樣式，請務必確認<span style="font-weight: bold; color: rgb(255, 0, 0);">你自己知道自己在做些甚麼事情</span>！無論你的樣板有多複雜，請讓他保持很清楚明瞭的 DOM 樹狀結構，同樣的，也請你將你的 CSS 設定檔案保持很清楚明瞭的設定結構。無論現在的編輯軟體再怎麼聰明（就連最常見的 Dreamweaver），都會有看不懂 DOM 結構的時候，特別是當你自己都不知道問題出在哪裡的時候。</p>
+
+<p>要整合你的 CSS Styling，其實從最根本的地方一步一步來，你就能抓出屬於自己的 Styling 風格！</p>
+
+<!-- more -->
+
+
+<ol><li>已經很清楚樣板區塊。</li><li>針對<span style="font-weight: bold; color: rgb(0, 102, 153);">所有樣板區塊</span>進行樣式設定。</li><li>重新檢查樣式，<span style="font-weight: bold; color: rgb(0, 102, 153);">剃除不需要的選擇器</span>。</li><li>重新檢查樣式，善用選擇器<span style="font-weight: bold; color: rgb(0, 102, 153);">合併功能相同的樣式</span>，善用 CSS 屬性繼承。</li><li>重新檢查樣式，刪除重複的樣式，並將這些樣式往父元件回朔，全部<span style="font-weight: bold; color: rgb(0, 102, 153);">寫入父元件樣式設定</span>中。</li><li>重新檢查樣式，確認所有的樣式屬性不會因為<span style="font-weight: bold; color: rgb(255, 0, 0);">繼承關係將頁面搞炸</span>。</li><li>不同的頁面用 <span style="font-weight: bold; color: rgb(0, 128, 0);">@import</span> 匯入，將 CSS 拆開成數個檔案。</li><li>有一支大家用的叫做 base.css，個別頁面用的叫做 home.css&#8230; 依此類推。</li><li><span style="font-weight: bold; color: rgb(255, 0, 0);">IE6+7 sucks！請額外準備 IE6+7 用的 CSS 檔案。</span></li></ol>
+
+
+<p>以上，提供給各位做參考！接下來，沒有說明，沒有翻譯，沒有解釋，<del>沒有閃光，沒有美女圖</del>，只有一些<del>暴力</del>範例畫面，給各位先進們參考一下。注意，由於內含了 jQuery 的粗淺應用（請大聲朗誦：本文作者是三尛咖！），所以萬一 jQuery 寫得很醜很難看，請各位先進們笑的時候小聲一點，不要吵到上班的同事就可以了。以下我從 IE6+7 sucks！開始，大概有這幾個項目：</p>
+
+<ol><li>CSS Styling in IE6+7</li><li>Float Menu</li><li>Position with multi-background</li><li>Clear & beautiful list item</li><li>Powerful slice table</li><li>Beautiful form</li><li>Smart readme & tips</li></ol>
+
+
+<p>我們先來講第一項。現行扣除掉 IE8 以外，IE6+7 有多不合群應該已經是眾所皆知，好險 IE 為了凸顯自己在 HTML 上的強大（？），推出了叫做條件式註解的東西，想當然爾，這鬼東西當然只有 IE 會支援。所以說，這個東西就被拿來當作是專門要給 IE 使用的 CSS 檔案所放置的地方了。至於，什麼是條件式註解，怎麼用，關於這一點請去問問 Google 大神，不要來問我喔（搖手）。</p>
+
+<p>以下是範例：</p>
+
+<pre><code>    &lt;!-- IE6 或以前的版本會執行這個部分 --&gt;
+    &lt;link rel="stylesheet" type="text/css" href="./styles/base.ie6.css" /&gt;
+&lt;![endif]--&gt;
+&lt;!--[if IE 7]&gt;
+    &lt;!-- IE7 會執行這個部分 --&gt;
+    &lt;link rel="stylesheet" type="text/css" href="./styles/base.ie7.css" /&gt;
+&lt;![endif]--&gt;
+</code></pre>
+
+<p>接著，我們來看看浮動選單。其實，這種範例網路上有一大堆，浮動選單的重點其實跟 CSS 可能比較沒關係（驚！），不過，我們撇開 Javascript 不談（這是工程師的問題），一個浮動選單在製作與輸出時，我們該怎麼做會比較好？對於簡單的選單來說，我們第一個應該會想到清單元件（如果你還是想到 Table，那麼請砍掉重練）。然而，怎麼樣讓清單元件能夠浮動，這又是工程師的問題了！雖然每一個工程師的習慣不同，但是簡單清楚的清單結構，絕對是相得益彰！
+<img src="http://static.hinablue.me/blog/5867250174.png" width="342" height="254" /></p>
+
+<pre><code>    &lt;ul id="ul-button"&gt;
+        &lt;li class="item"&gt;&lt;a href=""&gt;Home&lt;/a&gt;
+            &lt;ul class="list-menu"&gt;
+                &lt;li class="list-item"&gt;&lt;a href=""&gt;Item&lt;/a&gt;&lt;/li&gt;
+                &lt;li class="list-item"&gt;&lt;a href=""&gt;Item&lt;/a&gt;&lt;/li&gt;
+                &lt;li class="list-item"&gt;&lt;a href=""&gt;Item&lt;/a&gt;&lt;/li&gt;
+                &lt;li class="list-item"&gt;&lt;a href=""&gt;Item&lt;/a&gt;&lt;/li&gt;
+                &lt;li class="list-item"&gt;&lt;a href=""&gt;Item&lt;/a&gt;&lt;/li&gt;
+            &lt;/ul&gt;
+        &lt;/li&gt;
+        &lt;li class="item"&gt;&lt;a href=""&gt;About us&lt;/a&gt;
+            &lt;ul class="list-menu"&gt;
+                &lt;li class="list-item"&gt;&lt;a href=""&gt;Item&lt;/a&gt;&lt;/li&gt;
+                &lt;li class="list-item"&gt;&lt;a href=""&gt;Item&lt;/a&gt;&lt;/li&gt;
+                &lt;li class="list-item"&gt;&lt;a href=""&gt;Item&lt;/a&gt;&lt;/li&gt;
+                &lt;li class="list-item"&gt;&lt;a href=""&gt;Item&lt;/a&gt;&lt;/li&gt;
+                &lt;li class="list-item"&gt;&lt;a href=""&gt;Item&lt;/a&gt;&lt;/li&gt;
+            &lt;/ul&gt;
+        &lt;/li&gt;
+    &lt;/ul&gt;
+
+#ul-button {
+    border: 2px solid #1579bc;
+    background-color: #2385c3;
+    width: 234px;
+    height: 30px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+#ul-button &gt; li {
+    color: #fff;
+    font-weight: bold;
+    width: 115px;
+    height: 24px;
+    float: left;
+    text-align: center;
+    padding-top: 6px;
+    cursor: pointer;
+    background-color: transparent;
+}
+#ul-button &gt; li:hover {
+    background-color: #1579bc;
+}
+#ul-button &gt; li.item {
+    border-right: 1px solid #005d96;
+    border-left: 1px solid #74b4bc;
+}
+#ul-button li a {
+
+}
+#ul-button li a:hover {
+    text-decoration: none;
+}
+.list-menu {
+    width: auto;
+    height: auto;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    top: 0px;
+    left: 0px;
+    z-index: 10000;
+    display: none;
+    filter: alpha(opacity=90);
+    -moz-opacity: 0.9;
+
+    border-left: 1px solid #999;
+    border-right: 1px solid #999;
+}
+.list-menu li:first-child {
+    margin-top: 3px;
+}
+.list-menu &gt; .list-item {
+    padding-top: 8px;
+    color: #369;
+    background-color: #ffffff;
+    border-bottom: 1px solid #999;
+    height: 24px;
+}
+.list-menu &gt; .list-item:hover {
+    background-color: #369;
+    color: #fff;
+}
+
+.list-menu {
+    width: auto;
+    height: auto;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: relative; /* 利用定位屬性改變他的位置 */
+    top: 0px;
+    left: 0px;
+    z-index: 10000; /* 利用深度屬性改變他的顯示深度 */
+    display: none;
+    filter: alpha(opacity=90);
+    -moz-opacity: 0.9;
+
+    border-left: 1px solid #999;
+    border-right: 1px solid #999;
+}
+</code></pre>
+
+<p>接著，我們來看看較為複雜的背景設定（<a href="http://blog.hinablue.me/752" target="">第一篇</a>其實就是一個例子），但是，複雜背景設定除了考驗了你對於 Box 元件的掌握度，其實也考驗著你對於版型切割的經驗與設計習慣。
+<img src="http://static.hinablue.me/blog/6587546308.png" width="650" height="616" /></p>
+
+<p>我就近舉個例子，我的部落格就是用了三種背景的設定。
+<img src="http://static.hinablue.me/blog/5287310795.png" width="637" height="474" /></p>
+
+<p>其實這種設計模式，可能在一般較為正式的場合並不常見，畢竟這樣破格的設定不是每個人都會喜歡。但是，並非只有在這種狀況下會特別對元件動手腳，而是當你遇上了某一些有動態背景、動態元素的時候，這樣的設定就能帶來一定的便利與可利用性。我們簡單的來看這樣的背景元件視圖：
+<img src="http://static.hinablue.me/blog/8441027734.png" width="600" height="435" /></p>
+
+<p>其中，重點在於三個紅色的地方。這樣的背景設定是絕對無法使用 Table 來取代的（覺得我是唬爛的人請自行嘗試），所以，我們就必須仰賴 Box 元件的浮動（float）與定位（position）來達成我們想要的結果。在做這種特殊的版型時，由於 IE6+7 sucks！的關係，所以我們一樣，必須要考慮三種情況：</p>
+
+<pre><code>body {
+    font:12px "微軟正黑體", "Malgun Gothic", "Meiryo", "Segoe UI", "Trebuchet MS", "MS PGothic", "Gulim", "AppleGothic", "Sans-serif";
+    color:#666;
+    background: url(images/bg.jpg) left top repeat #303030;
+    padding:0;
+    margin:0;
+}
+#header_container {
+    width: 1000px;
+    height: 395px;
+    padding: 0;
+    border-bottom: 10px solid #666;
+    background-color: #333;
+}
+#header {
+    font: 0.75em/1.0em "Sans-serif";
+    width: 800px;
+    height: 12px;
+    color: #cdcdcd;
+    margin: 0;
+    padding: 6px 200px 0px 0px;
+    text-align: right;
+    border-bottom: 1px solid #666;
+}
+#flickr_album {
+    float: left;
+    width: 750px;
+    height: 375px;
+    border-right: 1px solid #666;
+}
+#header_menu {
+    float: left;
+    width: 244px;
+    height: 355px;
+    padding: 10px 0px 10px 5px;
+    background: url(./images/sideBlogMenuBg.jpg) top left repeat-x #303030;
+    text-align: right;
+    color: #fff;
+}
+#header_cross_sidebar {
+    width: 200px;
+    height: auto;
+    float: left;
+    margin: -220px 0px 0px 0px;
+    padding: 0;
+    background-color: #fff;
+}
+#content_container {
+    clear: right;
+    float: left;
+    width: 775px;
+    height: auto;
+    padding: 10px 5px 20px 10px;
+    background-color: #fff;
+}
+/* hack for IE6+ */
+#header_cross_sidebar {
+    margin: -200px 0px 0px -320px;
+}
+#content_container {
+    margin-left: -120px;
+}
+/* hack for IE7 */
+#header_cross_sidebar {
+    margin: -200px 0px 0px -320px;
+}
+#content_container {
+    margin-left: -120px;
+}
+</code></pre>
+
+<ul><li>#header_cross_sidebar { <span style="font-weight: bold; color: rgb(212, 26, 1);">margin: -220px 0px 0px 0px;</span> }</li></ul>
+
+
+<p>你沒眼花，重點只有這一段設定。它的意思是，<del>我的上邊留白要往負的方向走（廢話）</del>。這種設定在某些情況下是很危險的，因為你很有可能一不小心就變成這個樣子了：
+<img src="http://static.hinablue.me/blog/7779329444.png" width="642" height="627" /></p>
+
+<p>所以，對於浮動與定位元件的使用，請<del>戒慎恐懼</del>多用點心，畢竟現在的瀏覽器，所見即所得只是假象而以！這個簡單的樣板最後會是這個樣子：
+<img src="http://static.hinablue.me/blog/3720379602.png" width="650" height="356" /></p>
+
+<p>檔案在這，歡迎大家下載（請不要把版權拿掉，謝謝）：</p>
+
+<p><a href="http://static.hinablue.me/1156337522.zip">File download</a></p>
+
+<p>再來，我們來看個<del>漂亮</del>詭異的清單元件。
+<img src="http://static.hinablue.me/blog/7747136687.png" width="273" height="234" /></p>
+
+<p>我記得<a href="http://blog.hinablue.me/754" target="">上一篇</a>有提過，作清單元件不一定要使用清單標籤，但是，使用清單標籤的好處是，我不需要下太多複雜的 CSS 語法，畢竟，我們最終的目的，只是要條列而已，並不是要做出什麼很炫的特效。那麼，扣掉原本預設的項目之外，我們還可以利用背景設定來做到特殊的清單元素。不過，尚須留意的是，背景元素固然方便好用，但是由於字體有大小、行高的設定，而背景可沒有這種關聯性，所以，清單元件要碼就比字體小，要碼就一樣大，不然清單排起來會很詭異。</p>
+
+<pre><code>.sitemap-parent ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+ul.sitemap-parent li {
+    background: url(../images/agt_forward_right.png) left top no-repeat transparent;
+    padding: 0.2em 0 0.2em 20px;
+}
+ul.sitemap-parent li.parent {
+    background: url(../images/agt_home.png) left top no-repeat transparent;
+}
+ul.sitemap-parent li.empty {
+    background-image: none;
+}
+ul.sitemap-parent li ul li {
+    padding: 0.2em 0 0.2em 20px;
+}
+ul.sitemap-parent li ul li ul li {
+    padding: 0.2em 0 0.2em 20px;
+}
+</code></pre>
+
+<p>當然，<span style="font-weight: bold; color: rgb(255, 0, 0);">小範圍內的不同的設定，可以使用子元件選擇器。</span></p>
+
+<p>接著，來看看表格。
+<img src="http://static.hinablue.me/blog/3699465438.png" width="600" height="381" /></p>
+
+<p>這樣的情況非常常見，當我們需要一個規則（或是不規則）的 Box 元件時，我們就可能會這麼做。當然，上述的例子是最簡單，也最顯而易見的一種。除了 Table 之外，我們還有什麼選擇？我想大家應該會想到幾個標籤可以這麼做的：</p>
+
+<ol><li><table><tr><td></li><li><div></li><li><ul><li></li><li><dl><dt><dd></li></ol>
+
+
+<p>當然，你覺得哪一種最合適就用哪一種。通常在切割這種需要特殊底圖的 Box 元件時，盡量都以簡化為主，如果能夠固定寬度，那麼我們就切成三個部分（上、中、下），如果高度鎖定，那麼我們就切成左、中、右三個部分，如果都不固定，那就恭喜了，必須得像上圖一樣，切成九宮格，總共九個區塊。怎麼切最聰明，怎麼切最快，怎麼切問題會最少？</p>
+
+<p>通常，我會這麼做：</p>
+
+<pre><code>&lt;ul id="powerful-table"&gt;
+    &lt;li class="box-lt"&gt;1&lt;/li&gt;&lt;li class="box-ct"&gt;2&lt;/li&gt;&lt;li class="box-rt"&gt;3&lt;/li&gt;&lt;li class="box-lm"&gt;4&lt;/li&gt;
+    &lt;li class="box-cm"&gt;5&lt;/li&gt;
+    &lt;li class="box-rm"&gt;6&lt;/li&gt;&lt;li class="box-lb"&gt;7&lt;/li&gt;&lt;li class="box-cb"&gt;8&lt;/li&gt;&lt;li class="box-rb"&gt;9&lt;/li&gt;
+&lt;/ul&gt;
+
+#powerful-table {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    width: auto;
+    height: auto;
+}
+#powerful-table li {
+    margin:0;
+    padding:0;
+    float: left;
+    height: 10px;
+    width: 10px;
+    line-height: 10px;
+    /* font-size: 9px; */
+}
+#powerful-table &gt; li.box-lm,
+#powerful-table &gt; li.box-lb {
+    clear: left;
+}
+#powerful-table &gt; li.box-lt {
+    background: url(./images/left-top.gif) top left no-repeat transparent;
+}
+#powerful-table &gt; li.box-ct {
+    width: auto;
+    background: url(./images/center-top.gif) top left repeat-x transparent;
+}
+#powerful-table &gt; li.box-rt {
+    background: url(./images/right-top.gif) top right no-repeat transparent;
+}
+#powerful-table &gt; li.box-lm {
+    height: auto;
+    background: url(./images/left-middle.gif) top left repeat-y transparent;
+}
+#powerful-table &gt; li.box-cm {
+    width: auto;
+    height: auto;
+    background: url(./images/center-middle.gif) top left repeat transparent;
+}
+#powerful-table &gt; li.box-rm {
+    height: auto;
+    background: url(./images/right-middle.gif) top right repeat-y transparent;
+}
+#powerful-table &gt; li.box-lb {
+    background: url(./images/left-bottom.gif) bottom left no-repeat transparent;
+}
+#powerful-table &gt; li.box-cb {
+    width: auto;
+    background: url(./images/center-bottom.gif) bottom left repeat-x transparent;
+}
+#powerful-table &gt; li.box-rb {
+    background: url(./images/right-bottom.gif) bottom right no-repeat transparent;
+}
+</code></pre>
+
+<p><img src="http://static.hinablue.me/blog/2722530521.png" width="600" height="384" /></p>
+
+<p>這樣模擬表格的方式，其實還有另外一個好處，那就是不會受限於單純表格的行、列必須要等寬或是等高的限制（這也就是為什麼繪圖軟體切圖時，會留下一些 1px 的圖片欄位）。當然，如果遇上了更多更複雜的特殊底圖的 Box 元件，那麼我想這樣的切法帶來的可調整性與便利性應該會更顯而易見，但，相對的，HTML Code 很有可能就因此而爛掉了（有一好沒有兩好）。但是，這種情況下，總比切了一大堆巢狀的 Table 要來得好很多。</p>
+
+<p>接著我們來聊聊表單元件。在開始之前，我們先來看一個很標準的表單。
+<img src="http://static.hinablue.me/blog/6380731702.png" width="600" height="409" /></p>
+
+<p>通常這樣的表單元件，一般來說，照常理來說，最常見的方式是，用 Table 畫最萬無一失。</p>
+
+<pre><code>&lt;!-- 但是由於本人秉持先研究不傷身體，所以所有 Table 原始碼都會自動屏蔽 --&gt;
+</code></pre>
+
+<p>但是，我常常聽到 ART 說：文字與輸入框不能對齊、選項跟文字放同一列會歪掉、OO 跟 XX 放在列（行）中無法對齊，諸如此類的。所以，我這裡當然不會跟你說要怎麼用表格畫出表單元件（只要會用 Word 的人都會，那還需要 ART 做啥），我的表單元件從來不用 TABLEs 畫（認真）。</p>
+
+<pre><code>&lt;dl id="beautiful-form"&gt;
+    &lt;dt&gt;E-mail&lt;/dt&gt;&lt;dd&gt;&lt;input type="text" name="email" id="email" value="" size="40" maxlength="100" /&gt;&lt;/dd&gt;
+    &lt;dt&gt;&amp;nbsp;&lt;/dt&gt;&lt;dd&gt;請填寫正確 e-mail，以便得獎通知。&lt;/dd&gt;
+    &lt;dt&gt;密碼&lt;/dt&gt;&lt;dd&gt;&lt;input type="password" name="password" id="password" value="" size="40" maxlength="16" /&gt;&lt;/dd&gt;
+    &lt;dt&gt;&amp;nbsp;&lt;/dt&gt;&lt;dd&gt;密碼僅能使用英文、數字與底線(&amp;nbsp;_&amp;nbsp;)，最少 4 個字，限 16 個字。&lt;/dd&gt;
+    &lt;dt&gt;確認密碼&lt;/dt&gt;&lt;dd&gt;&lt;input type="password" name="confirm" id="confirm" value="" size="40" maxlength="16" /&gt;&lt;/dd&gt;
+    &lt;dt&gt;&amp;nbsp;&lt;/dt&gt;&lt;dd&gt;請再填寫一次密碼。&lt;/dd&gt;
+    &lt;dt&gt;暱稱&lt;/dt&gt;&lt;dd&gt;&lt;input type="text" name="nickname" id="nickname" value="" size="40" maxlength="100" /&gt;&lt;/dd&gt;
+    &lt;dt&gt;&amp;nbsp;&lt;/dt&gt;&lt;dd&gt;請填寫暱稱。&lt;/dd&gt;
+    &lt;dt&gt;真實姓名&lt;/dt&gt;&lt;dd&gt;&lt;input type="text" name="username" id="username" value="" size="40" maxlength="100" /&gt;&lt;/dd&gt;
+    &lt;dt&gt;&amp;nbsp;&lt;/dt&gt;&lt;dd&gt;請填寫真實姓名，以便得獎通知。&lt;/dd&gt;
+    &lt;dt&gt;連絡電話&lt;/dt&gt;&lt;dd&gt;&lt;input type="text" name="mobile" id="mobile" value="" size="40" maxlength="100" /&gt;&lt;/dd&gt;
+    &lt;dt&gt;&amp;nbsp;&lt;/dt&gt;&lt;dd&gt;請填寫正確連絡電話(請勿輸入任何區碼分隔符號，單純數字即可)，以便得獎通知。&lt;/dd&gt;
+&lt;/dl&gt;
+
+#beautiful-form {
+    margin:0;
+    padding:0;
+    width: auto;
+    height: auto;
+}
+#beautiful-form dt {
+    width: 80px;
+    float: left;
+}
+#beautiful-form dd {
+    float: left;
+}
+#beautiful-form dd + dt {
+    clear: left;
+}
+</code></pre>
+
+<p>接著，我們繼續來看表單元件中常使用到的勾選、輸入框。
+<img src="http://static.hinablue.me/blog/7456011849.png" width="522" height="431" /></p>
+
+<p>我想這是一般在使用輸入框時，很容易產生的一個問題。特別是 <input> 這個標籤並不屬於 Box 元件，所以你要將它對齊就比較困難，當然，如果你是 Table 愛用者，我想對齊這些元件可能不是什麼難事。不過，由於 Table 看多了有礙身心健康，所以我們這邊會介紹的當然是非 Table 所能做到的事情。<input> 元件其實與一般的文字元件差異並不大，你可以把它想成：</p>
+
+<div style="margin-left: 40px;"><span style="font-weight: bold; color: rgb(23, 127, 205);">#INPUT = #TEXT + @CSS{ padding: 1px 0px 2px 1px; } + @CSS{ border: 1px solid #000; }</span></div>
+
+
+<p>這樣有比較容易理解嗎？上面的那張圖片，字比較大的，是使用瀏覽器，也就是使用者端的預設 1em 的字體大小，字比較小的，則是使用 CSS 設定尺寸為 12px 的大小。紅色框框的部分，是使用 SPAN 標籤包起來的部分，灰色的部分就是原本的輸入框，而右邊則是跟在輸入框旁邊的文字。這個時候你會發現，一般的文字會很乖的讓 SPAN 給包起來，而 <input> 則會到處亂跑。</p>
+
+<p>如果要讓表單看起來很整齊，多數時候我們會使用 <ul><li> 標籤來做到。
+<img src="http://static.hinablue.me/blog/6104470284.png" width="423" height="117" />
+至於那個 <input> 亂跑的狀況怎麼辦？這裡提供一個 CSS 給各位參考：</p>
+
+<pre><code>.checkbox-item {
+    display: block;
+    margin: 5px 0px 5px;
+}
+</code></pre>
+
+<p>最後，來說說 content 這個有趣的屬性。先給個範例：
+<img src="http://static.hinablue.me/blog/2603845748.png" width="511" height="177" /></p>
+
+<p>搭配著 CSS 的擬似元素（pseudo-elements）中的 :before 與 :after 使用的 content 屬性，可以在元素的前面或是後面加入一些文字或是加入 counter 屬性（請參考<a href="http://blog.hinablue.me/754" target="">上一篇</a>）。這兩種擬似元素在一些內文或是表單說明的地方非常的好用，若是搭配著 counter 屬性，則可以做到在內文中使用附註（編號）的效果。
+<img src="http://static.hinablue.me/blog/3230104622.png" width="617" height="656" /></p>
+
+<pre><code>&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-TW"&gt;
+&lt;head profile="http://gmpg.org/xfn/11"&gt;
+&lt;meta http-equiv="content-Type" content="text/html; charset=UTF-8" /&gt;
+&lt;title&gt;Simple Layout - counter&lt;/title&gt;
+&lt;style type="text/css"&gt;
+&lt;!--
+body {
+    counter-reset: chapter;
+}
+h1:before {
+    content: "Chapter " counter(chapter) ". ";
+    counter-increment: chapter;
+}
+h1 {
+    counter-reset: section;
+}
+h2:before {
+    content: counter(chapter) "." counter(section) " ";
+    counter-increment: section;
+    margin-left: 40px;
+}
+div.content {
+    counter-reset: hotpoint;
+    margin: 0px 20px 0px 80px;
+    text-align: justify;
+}
+div.content a.hotpoint:after {
+    content: "(*" counter(hotpoint) ")";
+    counter-increment: hotpoint;
+    color: #f93;
+    font-size: 0.82em;    
+}
+--&gt;
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;H1.counter&lt;/h1&gt;
+    &lt;h2&gt;H2.counter&lt;/h2&gt;
+    &lt;div class="content"&gt;
+        There is a simple layout with counter and hit example.There is a simple layout&lt;a href=#" class="hotpoint"&gt;&lt;/a&gt; with counter and hit example.There is a simple layout with counter and hit example.There is a simple layout with counter and hit example.
+        There is a simple layout with counter and hit example.There is a simple layout with counter and hit example.There is a simple layout with counter and hit example.There is a simple layout with counter and hit example.
+        There is a simple layout with counter and hit example.There is a simple layout with counter and hit example.There is a simple&lt;a href=#" class="hotpoint"&gt;&lt;/a&gt; layout with counter and hit example.There is a simple layout with&lt;a href=#" class="hotpoint"&gt;&lt;/a&gt; counter and hit example.
+        There is a simple layout with counter and hit&lt;a href=#" class="hotpoint"&gt;&lt;/a&gt; example.There is a simple layout with counter and hit example.There is a simple layout with counter and hit example.There is a simple layout with counter and hit example.
+        There is a simple layout with counter and hit example.There is a simple layout with counter and hit example.There is a simple layout&lt;a href=#" class="hotpoint"&gt;&lt;/a&gt; with counter and hit example.There is a simple layout with counter and hit example.
+    &lt;/div&gt;
+&lt;h1&gt;H1.counter&lt;/h1&gt;
+    &lt;h2&gt;H2.counter&lt;/h2&gt;
+    &lt;div class="content"&gt;
+        There is a simple layout&lt;a href=#" class="hotpoint"&gt;&lt;/a&gt; with counter and hit example.There is a simple layout&lt;a href=#" class="hotpoint"&gt;&lt;/a&gt; with counter and hit example.There is a simple layout with counter and hit&lt;a href=#" class="hotpoint"&gt;&lt;/a&gt; example.There is a simple layout with counter and hit example.
+        There is a simple layout with counter and hit example.There is a simple layout with counter and hit example.There is a simple layout with counter and hit example.There is a simple layout with counter and hit example.
+        There is a simple layout with counter and hit example.There is a simple layout with counter and hit example.There is a simple layout with counter and hit example.There is a simple layout with&lt;a href=#" class="hotpoint"&gt;&lt;/a&gt; counter and hit example.
+        There is a simple layout with counter and hit example.There is a simple layout with counter and hit example.There is a simple layout with counter and hit example.There is a simple layout with counter and hit example.
+        There is a simple layout with counter and hit example.There is a simple layout with&lt;a href=#" class="hotpoint"&gt;&lt;/a&gt; counter and hit example.There is a simple layout&lt;a href=#" class="hotpoint"&gt;&lt;/a&gt; with counter and hit example.There is a simple layout with counter and hit example.
+    &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<p><span style="font-size: 18px; font-weight: bold; color: rgb(142, 142, 142);">到頭來，我根本沒提到 jQuery 嘛（眾毆）。</span></p>
+
+<p>我到後來想了想，真的把 jQuery 拉進來，好像偏離 CSS 的主題偏太多了，而且穿插 jQuery 的話，應該會更難消化（謎之音：其實是因為你自己懶，不想寫進來吧）。不過，這裡大抵上也是一些 CSS 的應用，希望這些簡單的例子能帶給大家更多關於 CSS 的美好（沒有誤）。</p>
+
+<p>最後（終於？），希望我不會再寫 part 5 了（疑？）。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">hinablue</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-05-21T19:59:00+08:00" pubdate data-updated="true">May 21<span>st</span>, 2009</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/jquery/'>jQuery</a>, <a class='category' href='/categories/javascript/'>javascript</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://blog.hinablue.me/entry/working-note-about-web-design-xhtml-and-css-part-4/" data-via="hinablue" data-counturl="http://blog.hinablue.me/entry/working-note-about-web-design-xhtml-and-css-part-4/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/entry/working-note-about-web-design-xhtml-and-css-part-3/" title="Previous Post: [Layout tech.] Web Design note with XHTML/CSS part 3">&laquo; [Layout tech.] Web Design note with XHTML/CSS part 3</a>
+      
+      
+        <a class="basic-alignment right" href="/entry/Mobloging-2009-05-23/" title="next Post: Mobloging - 2009-05-23">Mobloging - 2009-05-23 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Me</h1>
+  <img src="/images/hniablue_icon.jpg" width="195" height="195" alt="Hina, Cain Chen." />
+  <p>我是閃光洽！</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+  </ul>
+</section>
+<script type="text/javascript">
+    $.domReady(function() {
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+        (function() {
+            $.ajax({
+                url: '/atom.xml',
+                dataType: 'xml',
+                success: function(xml) {
+                    var parser, expectedXML;
+                    if (window.DOMParser) {
+                        parser = new DOMParser();
+                        expectedXML = parser.parseFromString(decodeURIComponent(xml.response),"text/xml");
+                    } else {
+                        expectedXML = new ActiveXObject("Microsoft.XMLDOM");
+                        expectedXML.async = false;
+                        expectedXML.loadXML(decodeURIComponent(xml.response));
+                    }
+
+                    var entries = expectedXML.getElementsByTagName('entry');
+                    var entries_limit = entries.length > 5 ? 5 : entries.length;
+                    for(var i=0; i<entries_limit; i++) {
+                        $('<a/>')
+                        .attr('href', entries[i].childNodes[3].attributes[0].nodeValue)
+                        .text(entries[i].childNodes[1].childNodes[0].nodeValue)
+                        .appendTo($('<li/>').addClass('post').appendTo($('#recent_posts')));
+                    }
+                },
+                error: function(err) {
+                    $('<li/>').addClass('post').text('Error Loading feed').appendTo($('#recent_posts'));
+                }
+            });
+        })();
+    });
+</script>
+
+<section>
+  <h1>Github Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/hinablue">@hinablue</a> on Github
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'hinablue',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("hinablue", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/hinablue" class="twitter-follow-button" data-width="208px" data-show-count="false">Follow @hinablue</a>
+  
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/104812280860478253996?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2011 - hinablue -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'hinablue';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.hinablue.me/entry/working-note-about-web-design-xhtml-and-css-part-4/';
+        var disqus_url = 'http://blog.hinablue.me/entry/working-note-about-web-design-xhtml-and-css-part-4/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

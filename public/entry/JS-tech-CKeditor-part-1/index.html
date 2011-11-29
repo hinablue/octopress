@@ -1,0 +1,389 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[JS tech.] CKeditor 萬事起頭一點都不難 - part 1 - HINA::工程幼稚園</title>
+  <meta name="author" content="hinablue">
+
+  
+  <meta name="description" content="如果有聽過 FCKeditor 的人，那我想 CKeditor 就一定要換上來用。雖然是同一家公司出品的編輯器，但是用了這麼久的 FCKeditor，我對於他的 API 頁面少成這樣實在有點頭痛，講好聽一點有四頁（驚），講難聽一點只有一頁。自從 CKeditor 推出之後，我一看到他的 API &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.hinablue.me/entry/JS-tech-CKeditor-part-1">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/hinablue" rel="alternate" title="HINA::工程幼稚園" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-259895-17']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">HINA::工程幼稚園</a></h1>
+  
+    <h2>偏執與強迫症的患者，算不上是無可救藥，只是我已經遇上我的良醫了。</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/hinablue" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.hinablue.me" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[JS Tech.] CKeditor 萬事起頭一點都不難 - Part 1</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-09-25T10:30:00+08:00" pubdate data-updated="true">Sep 25<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>如果有聽過 FCKeditor 的人，那我想 <a href="http://ckeditor.com/" target="_blank">CKeditor</a> 就一定要換上來用。雖然是同一家公司出品的編輯器，但是用了這麼久的 FCKeditor，我對於他的 <a href="http://docs.fckeditor.net/FCKeditor_2.x/Developers_Guide/JavaScript_API" target="_blank">API 頁面</a>少成這樣實在有點頭痛，講好聽一點有四頁（驚），講難聽一點只有一頁。自從 CKeditor 推出之後，我一看到他的 <a href="http://docs.fckeditor.net/ckeditor_api/" target="_blank">API 頁面</a>，差點沒痛哭流涕！這才叫做 API 啊（淚）！</p>
+
+<p>CKeditor 是 FCKeditor 的新作品，無論在速度或是 API 上都有很強大的進步。雖然我是在本機測試，但是幾乎瞬間啟動的編輯器畫面還是深得我心啊（大心）。同時官方也提供了完整的 source code 以供參考（<del>做壞事</del>），你可以在<a href="http://svn.fckeditor.net/" target="_blank">官方的 svn</a> 裡面找到 CKeditor 的 nightbuild 版本，如果你心臟夠大顆可以試試看。</p>
+
+<p>同時在 svn 裡面也有提供 <a href="http://svn.fckeditor.net/CKPackager/trunk/" target="_blank">CKPackager</a> 給你下載，你可以用 pack 檔案來打包自己想要的 CKeditor 的功能。但是，因為各種原始檔案並沒有詳細說明個別的相依特性，所以自行打包的話就必須要承擔一點風險，不然編輯器有可能會跛腳。所以，除非必要，不然還是不建議自己打包，你可以使用輕量化的 ckeditor_basic 就好（完整版的 CKeditor 檔案高達 265KBytes）。</p>
+
+<p>首先，我們直接跳過官方那個<a href="http://docs.fckeditor.net/CKEditor_3.x/Developers_Guide" target="_blank">鳥鳥的 Develop&#8217;s Guide</a> 吧（喂喂）。先從源頭看起，當你下載回來解壓縮之後，你會看到有 _source 這個資料夾，他就是所有的原始檔案，數量龐大，不建議胡亂服用（沒人叫你吃），最重要的地方是 core 資料夾，裡面是整個 CKeditor 的核心，依照 ckeditor_basic 的設定，我們由五個 js 看起。</p>
+
+<ol><li>ckeditor_base.js</li><li>event.js</li><li>editor_basic.js</li><li>env.js</li><li>ckeditor_basic.js</li></ol>
+
+
+<p>以上就可以架構一個檔案很小五臟俱全（7 KBytes）的編輯器。同時，這五個檔案也建立了 CKeditor 最基本的 Namespace/Classes 所需要的功能。</p>
+
+<ol><li><a href="http://docs.fckeditor.net/ckeditor_api/symbols/CKEDITOR.html" target="_blank">Namespace: CKEDITOR</a></li><li><a href="http://docs.fckeditor.net/ckeditor_api/symbols/CKEDITOR.env.html" target="_blank">Namespace: CKEDITOR.env</a></li><li><a href="http://docs.fckeditor.net/ckeditor_api/symbols/CKEDITOR.editor.html" target="_blank">Classes: CKEDITOR.editor</a></li><li><a href="http://docs.fckeditor.net/ckeditor_api/symbols/CKEDITOR.event.html" target="_blank">Classes: CKEDITOR.event</a></li></ol>
+
+
+<p>至於這些東西能做些甚麼事情？</p>
+
+<ol><li>event 提供：
+<ul><li>觸發（fire, fireOnce）</li><li>監聽（on）</li><li>監聽控制（hasListeners, removeListeners）</li></ul></li><li>editor 提供：
+<ul><li>DOM 控制（element, elementMode）</li><li>編輯區方法（暫不詳述，大致上跟 FCK 差不多，但是有一些新的，也有未完成的）
+<!-- more -->
+</li></ul></li></ol>
+
+
+<p>對於很基本的編輯器來說，這些控制與方法其實已經能符合八成以上的需求。
+<img src="http://static.hinablue.me/blog/8505771796.jpg" width="650" height="292" />
+接著我來說幾個很有趣的東西（雖然是屬於 editor_base，但需要額外 plugin 支援）：</p>
+
+<ol><li>虛擬(假)元件（需要 plugin 支援，並未包含在官方發佈的完整 ckeditor.js 中）
+</li><li>截取快照</li></ol>
+
+
+<p>首先，虛擬(假)元件雖然是包含在編輯器的 editor.js 中，但是他是需要你額外把 plugin 給打包進來的功能，個人猜測他還在測試中，所以並沒有真正把他包到完整的版本裡面。他的功能是，利用一張圖片來取代真正要顯示（插入）在編輯器裡的元件。這樣的動作跟 TextCube 的編輯器插入 Flash 的動作很像。他就只是<span style="font-weight: bold; color: rgb(255, 0, 0);">插入一張替代的圖片</span>，然後在<span style="font-weight: bold; color: rgb(255, 0, 0);">儲存的時候</span>再將圖片給<span style="font-weight: bold; color: rgb(255, 0, 0);">換回真正要插入的 code</span>。</p>
+
+<p>其實這個功能我已經在 FCKeditor 實作出來了，所以我很樂見他有內建這樣的功能。但是，稍微深入一點，他這個方法要呼叫還不是那麼容易，首先，你要先準備一組符合 CKEDITOR 標準的元件給他，換句話說，你必須要用 CKEDITOR API 先建立一個元件（就是你要插入的 code），然後再利用這個方法把元件換成假的。至於說，這樣作會不會多此一舉？我個人是覺得見仁見智，你要用正規表示式去洗其實也可以啦。</p>
+
+<p>至於截取快照，他是另一種＂儲存＂的方式，不真的儲存，而是將已經輸入好的內容放到某個變數裡面（就是丟到記憶體裡面啦），然後你可以隨時取出來用。這樣可以解決遠端連線出問題的時候資料的保存，但是缺點是，萬一客戶端這邊當機，也一樣一去不復返啊（茶）。</p>
+
+<p>就暫時先到這，接下來將會介紹 htmlParser/htmlWrite 這個核心命脈 plugin（笑）。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">hinablue</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-09-25T10:30:00+08:00" pubdate data-updated="true">Sep 25<span>th</span>, 2009</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/ckeditor/'>CKeditor</a>, <a class='category' href='/categories/fckeditor/'>FCKEditor</a>, <a class='category' href='/categories/javascript/'>Javascript</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://blog.hinablue.me/entry/JS-tech-CKeditor-part-1/" data-via="hinablue" data-counturl="http://blog.hinablue.me/entry/JS-tech-CKeditor-part-1/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/entry/Flash-AS3-with-trigonometric-function-flippage-part-2/" title="Previous Post: [AS3 note.] 翻頁座標分析 part 2">&laquo; [AS3 note.] 翻頁座標分析 part 2</a>
+      
+      
+        <a class="basic-alignment right" href="/entry/JS-tech-CKeditor-part-2/" title="next Post: [JS tech.] Ckeditor 令人詫異的 basic 模式 part 2">[JS tech.] Ckeditor 令人詫異的 basic 模式 part 2 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Me</h1>
+  <img src="/images/hniablue_icon.jpg" width="195" height="195" alt="Hina, Cain Chen." />
+  <p>我是閃光洽！</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+  </ul>
+</section>
+<script type="text/javascript">
+    $.domReady(function() {
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+        (function() {
+            $.ajax({
+                url: '/atom.xml',
+                dataType: 'xml',
+                success: function(xml) {
+                    var parser, expectedXML;
+                    if (window.DOMParser) {
+                        parser = new DOMParser();
+                        expectedXML = parser.parseFromString(decodeURIComponent(xml.response),"text/xml");
+                    } else {
+                        expectedXML = new ActiveXObject("Microsoft.XMLDOM");
+                        expectedXML.async = false;
+                        expectedXML.loadXML(decodeURIComponent(xml.response));
+                    }
+
+                    var entries = expectedXML.getElementsByTagName('entry');
+                    var entries_limit = entries.length > 5 ? 5 : entries.length;
+                    for(var i=0; i<entries_limit; i++) {
+                        $('<a/>')
+                        .attr('href', entries[i].childNodes[3].attributes[0].nodeValue)
+                        .text(entries[i].childNodes[1].childNodes[0].nodeValue)
+                        .appendTo($('<li/>').addClass('post').appendTo($('#recent_posts')));
+                    }
+                },
+                error: function(err) {
+                    $('<li/>').addClass('post').text('Error Loading feed').appendTo($('#recent_posts'));
+                }
+            });
+        })();
+    });
+</script>
+
+<section>
+  <h1>Github Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/hinablue">@hinablue</a> on Github
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'hinablue',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("hinablue", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/hinablue" class="twitter-follow-button" data-width="208px" data-show-count="false">Follow @hinablue</a>
+  
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/104812280860478253996?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2011 - hinablue -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'hinablue';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.hinablue.me/entry/JS-tech-CKeditor-part-1/';
+        var disqus_url = 'http://blog.hinablue.me/entry/JS-tech-CKeditor-part-1/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

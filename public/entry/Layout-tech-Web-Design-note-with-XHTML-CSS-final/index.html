@@ -1,0 +1,497 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[Layout tech.] Web Design note with XHTML/CSS final - HINA::工程幼稚園</title>
+  <meta name="author" content="hinablue">
+
+  
+  <meta name="description" content="在噗浪上看到 ericsk(的噗浪) 所寫的按鈕，我覺得應該來寫 part 5 了。至於為什麼是按鈕，那就先來看看 ericsk 所寫的按鈕： 很單純的 Click Me 也許沒什麼稀奇的，再來看看這個： 它還是 Click Me 也沒什麼稀奇的，只是字越來越大而以。那麼， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.hinablue.me/entry/Layout-tech-Web-Design-note-with-XHTML-CSS-final">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/hinablue" rel="alternate" title="HINA::工程幼稚園" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-259895-17']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">HINA::工程幼稚園</a></h1>
+  
+    <h2>偏執與強迫症的患者，算不上是無可救藥，只是我已經遇上我的良醫了。</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/hinablue" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.hinablue.me" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[Layout Tech.] Web Design Note With XHTML/CSS Final</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-06-04T16:26:00+08:00" pubdate data-updated="true">Jun 4<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>在<a href="http://www.plurk.com/hinablue/invite" target="_blank">噗浪</a>上看到 <a href="http://blog.ericsk.org/" target="_blank">ericsk</a>(的<a href="http://www.plurk.com/ericsk" target="_blank">噗浪</a>) 所寫的按鈕，我覺得應該來寫 part 5 了。至於為什麼是按鈕，那就先來看看 ericsk 所寫的按鈕：
+<img src="http://static.hinablue.me/blog/3150083359.jpg" width="291" height="291" />
+很單純的 Click Me 也許沒什麼稀奇的，再來看看這個：
+<img src="http://static.hinablue.me/blog/6520000171.jpg" width="296" height="296" /></p>
+
+<p>它還是 Click Me 也沒什麼稀奇的，只是字越來越大而以。那麼，不知道各位會怎麼製作這樣的按鈕？當然，用圖片是最快的做法，不過，這四個按鈕你需要用多少張圖片呢？12 張？免！8 張？免！6 張？免！ericsk 告訴我們，<span style="font-weight: bold; color: rgb(255, 0, 0);">一張都不用！</span>為什麼？</p>
+
+<p>為什麼？</p>
+
+<p>這就是 CSS 應用的極致，所謂神人一出手，便知有沒有。延伸 ericsk 的例子，我們繼續來看常見的對話框：
+<img src="http://static.hinablue.me/blog/2885265154.jpg" width="287" height="288" />
+圖片？如果這種很乾淨的對話框還用上圖片的話，光切圖就是很頭大的一件事情。</p>
+
+<!-- more -->
+
+
+<pre><code>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd"&gt; 
+&lt;html&gt; 
+    &lt;head&gt; 
+        &lt;meta http-equiv="Content-Type" content="text/html;charset=UTF-8"&gt; 
+        &lt;style type="text/css"&gt;
+        &lt;!--
+        .dg-inline-block {
+            display:-moz-inline-box;
+            display:inline-block;
+            zoom: 1;
+            *display:inline;
+        }
+        .dg-dialog {
+            border: 0 none;
+            margin:0 10px 2px 2px;
+            left: -2px;
+            position: relative;
+        }
+        .dg-dialog-outer {
+            border-color: #bbb;
+            border-style: solid;
+            border-width: 1px 0;
+            padding: 0;
+            margin:0;
+        }
+        .dg-dialog-inner {
+            background: #e3e3e3;
+            border-color: #bbb;
+            border-style: solid;
+            border-width: 0 1px;
+            margin: 0 -1px;
+            position: relative;
+            padding: 0;
+            *overflow: hidden;
+            *left: -1px;
+        }
+        .dg-dialog-slogan {
+            background: #fff;
+            background: #f9f9f9;
+            border-bottom: 1px solid #bbb;
+            height: auto;
+            overflow: hidden;
+            display: block;
+        }
+        .dg-dialog-slogan-content {
+            padding: 0 2px;
+        }
+        .dg-dialog-container {
+            background: #fff;
+            margin: 4px 4px;
+            border-color: #bbb;
+            border-style: solid;
+            border-width: 1px 0;
+        }
+        .dg-dialog-container-content {
+            margin: 0;
+            padding: 4px 4px;
+            border-color: #bbb;
+            border-style: solid;
+            border-width: 0 1px;
+            margin: 0 -1px;
+            width: 200px;
+            height: 200px;
+        }
+        --&gt;
+        &lt;/style&gt;
+    &lt;/head&gt; 
+    &lt;body&gt; 
+        &lt;div id="dialog-box"&gt;
+            &lt;div class="dg-dialog dg-inline-block"&gt;
+                &lt;div class="dg-dialog-outer dg-inline-block"&gt;
+                    &lt;div class="dg-dialog-inner dg-inline-block"&gt;
+                        &lt;div class="dg-dialog-slogan"&gt;
+                            &lt;div class="dg-dialog-slogan-content"&gt;
+                                &lt;strong&gt;Slogan&lt;/strong&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                        &lt;div class="dg-dialog-container"&gt;
+                            &lt;div class="dg-dialog-container-content"&gt;
+                                &lt;span&gt;Content in here.&lt;/span&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;br /&gt;
+    &lt;/body&gt; 
+&lt;/html&gt;
+</code></pre>
+
+<p>接著我們來講一些關於 CSS Hack 的事情，範例大多都可以從 Google 大神那找到，不過省事點，我幫各位找到<a href="http://centricle.com/ref/css/filters/" target="_blank">這個地方</a>，可以參考一下。表格不是很複雜，不過你需要熟悉 CSS Selector 的操作方式看起來比較不會那麼吃力。另外，我挑兩個簡單的 CSS Hack 來說明一下。
+<img src="http://static.hinablue.me/blog/9640273526.png" width="640" height="841" />
+當然，IE8 與 Firefox 3+ 執行結果肯定是一樣的，那麼 IE6+7 發生了甚麼事？我們看下去。</p>
+
+<pre><code>&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-TW"&gt;
+&lt;head profile="http://gmpg.org/xfn/11"&gt;
+&lt;meta http-equiv="content-Type" content="text/html; charset=UTF-8" /&gt;
+&lt;title&gt;Simple Layout - CSS Hack&lt;/title&gt;
+&lt;style type="text/css"&gt;
+&lt;!--
+#container {
+    width: 200px;
+    height: 400px;
+    background-color: rgb(135,220,34);
+    *width: 400px;
+    _width: 300px;
+}
+--&gt;
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div id="container"&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<p>另外，<a href="http://blog.ericsk.org/" target="_blank">ericsk</a>(的<a href="http://www.plurk.com/ericsk" target="_blank">噗浪</a>) 也提及過 <a href="http://www.plurk.com/p/uqi5t" target="_blank">CSS 垂直對齊</a>的奧義，你可以<a href="http://www.jakpsatweb.cz/css/css-vertical-center-solution.html" target="_blank">去看看</a>。至於我嘛，關於 CSS 我目前也想不到其它有趣的東西了，所以就來做個總結吧（無責）。</p>
+
+<p><a href="http://static.hinablue.me/7962352034.pdf">File download</a></p>
+
+<p>感謝收看！<img src="http://static.hinablue.me/emoticons/S4/s4_07.gif" alt="畫圈圈"  border="0"></p>
+
+<p>ps. 之前的文章在這裡：</p>
+
+<ul><li><a href="http://blog.hinablue.me/752" target="_blank">[Layout tech.] Web Design note with XHTML/CSS</a></li><li><a href="http://blog.hinablue.me/753" target="_blank">[Layout tech.] Web Design note with XHTML/CSS part 2</a>
+</li><li><a href="http://blog.hinablue.me/754" target="_blank">[Layout tech.] Web Design note with XHTML/CSS part 3</a>
+</li><li><a href="http://blog.hinablue.me/755" target="_blank">[Layout tech.] Web Design note with XHTML/CSS part 4</a>
+</li></ul>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">hinablue</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-06-04T16:26:00+08:00" pubdate data-updated="true">Jun 4<span>th</span>, 2009</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/jquery/'>jQuery</a>, <a class='category' href='/categories/javascript/'>javascript</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://blog.hinablue.me/entry/Layout-tech-Web-Design-note-with-XHTML-CSS-final/" data-via="hinablue" data-counturl="http://blog.hinablue.me/entry/Layout-tech-Web-Design-note-with-XHTML-CSS-final/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/entry/music-lala-album-the-loses/" title="Previous Post: [音樂] 徐佳瑩 失落沙洲">&laquo; [音樂] 徐佳瑩 失落沙洲</a>
+      
+      
+        <a class="basic-alignment right" href="/entry/Mobloging-2009-06-04/" title="next Post: Mobloging - 2009-06-04">Mobloging - 2009-06-04 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Me</h1>
+  <img src="/images/hniablue_icon.jpg" width="195" height="195" alt="Hina, Cain Chen." />
+  <p>我是閃光洽！</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+  </ul>
+</section>
+<script type="text/javascript">
+    $.domReady(function() {
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+        (function() {
+            $.ajax({
+                url: '/atom.xml',
+                dataType: 'xml',
+                success: function(xml) {
+                    var parser, expectedXML;
+                    if (window.DOMParser) {
+                        parser = new DOMParser();
+                        expectedXML = parser.parseFromString(decodeURIComponent(xml.response),"text/xml");
+                    } else {
+                        expectedXML = new ActiveXObject("Microsoft.XMLDOM");
+                        expectedXML.async = false;
+                        expectedXML.loadXML(decodeURIComponent(xml.response));
+                    }
+
+                    var entries = expectedXML.getElementsByTagName('entry');
+                    var entries_limit = entries.length > 5 ? 5 : entries.length;
+                    for(var i=0; i<entries_limit; i++) {
+                        $('<a/>')
+                        .attr('href', entries[i].childNodes[3].attributes[0].nodeValue)
+                        .text(entries[i].childNodes[1].childNodes[0].nodeValue)
+                        .appendTo($('<li/>').addClass('post').appendTo($('#recent_posts')));
+                    }
+                },
+                error: function(err) {
+                    $('<li/>').addClass('post').text('Error Loading feed').appendTo($('#recent_posts'));
+                }
+            });
+        })();
+    });
+</script>
+
+<section>
+  <h1>Github Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/hinablue">@hinablue</a> on Github
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'hinablue',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("hinablue", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/hinablue" class="twitter-follow-button" data-width="208px" data-show-count="false">Follow @hinablue</a>
+  
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/104812280860478253996?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2011 - hinablue -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'hinablue';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.hinablue.me/entry/Layout-tech-Web-Design-note-with-XHTML-CSS-final/';
+        var disqus_url = 'http://blog.hinablue.me/entry/Layout-tech-Web-Design-note-with-XHTML-CSS-final/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

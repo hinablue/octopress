@@ -1,0 +1,507 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: jQuery | HINA::工程幼稚園]]></title>
+  <link href="http://blog.hinablue.me/categories/jquery/atom.xml" rel="self"/>
+  <link href="http://blog.hinablue.me/"/>
+  <updated>2011-11-29T23:02:43+08:00</updated>
+  <id>http://blog.hinablue.me/</id>
+  <author>
+    <name><![CDATA[hinablue]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[[SASS note.] CSS 逆向工程 Part 3]]></title>
+    <link href="http://blog.hinablue.me/entry/sass-note-css-reversed-engineering-part-3/"/>
+    <updated>2011-08-24T11:32:00+08:00</updated>
+    <id>http://blog.hinablue.me/entry/sass-note-css-reversed-engineering-part-3</id>
+    <content type="html"><![CDATA[<p>俗話說得好，事不過三，所以大抵上寫到 Part 3 就沒有什麼好說得了（揍飛）。其實 @mixin 的概念並不困難，他是很單純的可以當作是一個函式來用，也可以用 @include 來引入。而，使用 @include 引入的方式跟 @extend 與 Nested @import 其實很類似。</p>
+
+<p>依照慣例，範例先上。
+<img src="http://static.hinablue.me/blog/1905532002.png" width="628" height="713" /></p>
+
+<p>產出結果比較：
+<img src="http://static.hinablue.me/blog/4785284169.png" width="628" height="710" /></p>
+
+<p>請注意輸出結果，基本上 Nested @import 跟 @mixin 的 @include 輸出的狀況非常類似，只是，輸出的先後順序是不一樣的，這會影響到 CSS 的繼承權重問題，所以在輸出使用上請特別小心。</p>
+
+<p>接著，就是函式的應用，一樣，範例先上。</p>
+
+<!-- more -->
+
+
+<p><img src="http://static.hinablue.me/blog/2355347749.png" width="623" height="493" /></p>
+
+<p>這就是結果：
+<img src="http://static.hinablue.me/blog/2889285161.png" width="627" height="495" /></p>
+
+<p>上述的 @mixin 函式，是使用＋號來呼叫，然後傳入值是 $width，預設值是 960。如果你沒有傳入值，那麼他就會使用預設的數值帶入。這跟我們一般在寫函式呼叫的方式很像。然後，其實 Sass 有內建的函式可以用，不過這當然得是要去翻官方文件才有的東西。</p>
+
+<p><a href="http://sass-lang.com/docs/yardoc/Sass/Script/Functions.html"><strong><font size="5">http://sass-lang.com/docs/yardoc/Sass/Script/Functions.html</font></strong></a></p>
+
+<p>文件也非常清楚。清楚到我覺得我應該沒有什麼好寫的了（揍飛）。</p>
+
+<p>至於變數，就是 $ 開頭的東西。他有三種使用的方式：</p>
+
+<pre><code>/* 單純的數字
+$width: 960
+/* 加上單位的變數
+$width: 960px
+/* 字串
+$width: "960px"
+
+$width: 1000
+$width1: 1000px
+$width2: "1000px"
+.your_class
+  width: $width
+  width: #{$width}
+  width: $width1
+  width: #{$width1}
+  width: $width2
+  width: #{$width2}
+
+.your_class {
+  width: 1000;
+  width: 1000;
+  width: 1000px;
+  width: 1000px;
+  width: "1000px";
+  width: 1000px; }
+
+
+$type: "white"
+.my_class_#{$type}
+    color: #{$type}
+
+.my_class_white {
+    color: white; }
+
+$font_size: 12pt
+$line_height: 1.8
+.my_class
+  font: $font_size/$line_height
+  font: #{$font_size}/#{$line_height}
+
+.my_class {
+    font: 6.667pt;
+    font: 12pt/1.8; }
+</code></pre>
+
+<p>至於數學運算的部份，請注意的地方是，不同單位的數值不可以混合運算，例如：</p>
+
+<pre><code>$font_size: 16pt
+$line_height: 2em
+.my_class
+  font-size: $font_size/$line_height
+
+&lt;div&gt;$ sass test.sass
+Syntax error: 16pt/em isn't a valid CSS value.
+        on line 5 of test.sass
+  Use --trace for backtrace.&lt;/div&gt;
+
+$font_size: 16
+$font_size2: 16pt
+$line_height: 2
+.my_class
+  font-size: #{$font_size/$line_height}px
+  font-size: $font_size2/$line_height
+
+.my_class {
+    font-size: 8px;
+    font-size: 8pt; }
+</code></pre>
+
+<p>最後的最後，還是請大家多多翻閱 <a href="http://sass-lang.com/docs/yardoc/file.SASS_REFERENCE.html" target="_blank">SASS 的官方文件</a>，裡面有非常詳細的說明。</p>
+
+<p>最後，就醬 <img src="http://static.hinablue.me/emoticons/S4/s4_08.gif" border="0" alt="幹得好" > <img src="http://static.hinablue.me/emoticons/S4/s4_08.gif" border="0" alt="幹得好" > <img src="http://static.hinablue.me/emoticons/S4/s4_08.gif" border="0" alt="幹得好" ></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[[SASS note.] CSS 逆向工程 part 2]]></title>
+    <link href="http://blog.hinablue.me/entry/sass-note-css-reversed-engineering-part-2/"/>
+    <updated>2011-08-16T11:30:00+08:00</updated>
+    <id>http://blog.hinablue.me/entry/sass-note-css-reversed-engineering-part-2</id>
+    <content type="html"><![CDATA[<p>有了一點概念之後，接下來看的地方是嵌套（Nested）的部份。為什麼不講一些比較特殊的地方？因為那些不過就是一些花招而已（無誤），樣式的基本撰寫才是核心所在。而嵌套的作法由於會影響到 CSS 的樣式權重的關係，所以必須要特別留意撰寫的方式。</p>
+
+<p>首先我們知道，可以用兩種方式來嵌套樣式：</p>
+
+<ul><li>@import
+可以從外部引入 sass 檔案，也可以做樣式內部嵌套（Nexted @import）
+</li><li>@extend
+直接引用已設定的樣式規則。</li></ul>
+
+
+<p>照慣例，範例先上，<del>菜待會再說</del>。
+<img src="http://static.hinablue.me/blog/7477695812.png" width="648" height="874" /></p>
+
+<p>我們這邊需要兩個檔案，一個叫做 <em>import.sass，另一個叫做 </em>extend.sass，這裡不列出檔案內容了，這兩個檔案只是簡單的塞了兩個樣式而已，產出的 css 如下所示。</p>
+
+<p><img src="http://static.hinablue.me/blog/5558204639.png" width="642" height="1056" /></p>
+
+<!-- more -->
+
+
+<p>這樣看起來很眼花？沒關係，我們慢慢說明。所謂的嵌套（Nested），就是把樣式嵌入樣式中，或是樣式連接樣式。利用縮排的方式，就可以將樣式（或是屬性）給黏在一起。</p>
+
+<pre><code>.my_font
+  font
+    family: "Arial"
+    size: 1em
+    weight: bold
+
+.my_font {
+    font-family: "Arial";
+    font-size: 1em;
+    font-weight: bold;
+
+.my_class
+  font-weight: bold
+  .my_class2
+    font-weight: normal
+
+.my_class {
+    font-weight: bold;
+}
+.my_class .my_class2 {
+    font-weight: normal;
+}
+
+
+.my_class
+  font-weight: bold
+  &gt;.my_class2
+    font-weight: normal
+  &amp;.my_class3
+    color: red
+
+
+.my_class {
+    font-weight: bold;
+}
+.my_class &gt; .my_class2 {
+    font-weight: normal;
+}
+.my_class.my_class3 {
+    color: red;
+}
+</code></pre>
+
+<p>@extend 先來，他就是可以引用已經定義好的樣式。而 @import 則是引入外部的設定。如果你是在樣式設定中使用 @import，則叫做嵌套（Nested @import）。
+<img src="http://static.hinablue.me/blog/7235816185.png" width="653" height="596" /></p>
+
+<p>這是結果，我會接著說明。
+<img src="http://static.hinablue.me/blog/7390955067.png" width="654" height="588" /></p>
+
+<pre><code>/*
+ * Extend SASS
+.extend_style
+  background-color: red
+  margin: 0
+  padding: 0
+  border: 0
+.extned_style2
+  background-color: blue
+  margin: 0 auto
+
+.first_class
+  font-weight: bold
+.my_class
+  @extend .first_class
+  @import extend
+  color: red
+
+
+.first_class, .my_class {
+  font-weight: bold; }
+.my_class {
+  /* Extend SASS */
+  color: red; }
+  .my_class .extend_style {
+    background-color: red;
+    margin: 0;
+    padding: 0;
+    border: 0; }
+  .my_class .extned_style2 {
+    background-color: blue;
+    margin: 0 auto; }
+</code></pre>
+
+<p>我們使用了 @extend，所以，他會使用逗號分隔的方式共用同一個樣式設定。而且<strong>他會放在你的呼叫 @extend 樣式的上面</strong>，請注意，這會跟樣式權重有關。一旦你原先的設定與 @extend 中的設定相同，那麼你的設定是會蓋掉 @extend 所延伸繼承過來的設定的。在 CSS 的設定中，這種逗號分隔的設定方式，在樣式繼承的權重中，是屬於最低的（完全依照樣式的先後順序而定）。</p>
+
+<p>所以，在使用 @extend 的時候請留心你所引用的樣式設定位置。如果你的 @extend 對象在第 10 行，那麼，儘管你在第 100 行使用 @extend 來引用樣式設定，你的第 100 行的 @extend 設定，一樣會被提到第 10 行去。</p>
+
+<p><del>什麼？你說的 10 行跟第 100 行有什麼差？那我可以很確定你不太懂 CSS。</del></p>
+
+<p>另外，@extend 也會依照關聯樣式去把所有的設定一口氣做完，請看範例：
+<img src="http://static.hinablue.me/blog/2747402649.png" width="657" height="597" /></p>
+
+<p>我們由 .my_class 去引用 .other_class，再由 .other_class 引用 .first_class，這樣所產出的結果就是：
+<img src="http://static.hinablue.me/blog/7475249742.png" width="662" height="593" /></p>
+
+<p>請注意，.my_class 出現了兩次！這種鍊結方式的引入（chain @extend），最後一個引用的一定會蓋掉之前引用的設定（不管有沒有鍊結引入）。所以，請留意你的 @extend 的方式，還有你到底引用了哪些樣式設定。不然這樣樣式蓋來蓋去，對維護上應該不是一件好事。</p>
+
+<p>接著是 @import！</p>
+
+<p>那麼 @import 又是怎麼回事呢？他跟 @extend 很雷同，但是，他是用來嵌套（或載入）外部的檔案用的。外部的檔案，當然很有可能是函式（@mixin）或是樣式，或是單純的 CSS 設定而已。但是！<strong>如果你是使用嵌套（Nested @import）方式，那你所用的檔案就不能包含函式（@mixin）</strong>！</p>
+
+<p>那麼？嵌套又是怎麼回事呢？</p>
+
+<p>由上面的例子我們可以看到，.my_class 如果嵌套了 <em>extend.sass 這個檔案，那麼他就會以子元件選擇器（Descendant selectors）來作樣式的設定。而，如果 </em>extend.sass 直接寫入單純的 CSS 設定，那麼就會將整個設定嵌入原本的 .my_class 裡面。</p>
+
+<p>請注意，如果是純的 CSS 設定，你的嵌套放在什麼位置，那他就會將單純的 CSS 設定放在那個位置。所以，如果上行下述有一樣的樣式設定時，當然就以最後一個設定為準，你所嵌入的設定將會被最後一個相同的設定給覆蓋掉。</p>
+
+<p>例如：</p>
+
+<pre><code>/*
+ * Extend: _extend.sass
+background-color: white
+
+.my_class
+  @import extend
+  background-color: red
+
+.my_class
+    background-color: white;
+    background-color: red;
+</code></pre>
+
+<p>這樣，對於引入，嵌套應該就有基礎了解了 <img src="http://static.hinablue.me/emoticons/S4/s4_08.gif" border="0" alt="幹得好" ></p>
+
+<p>下一回，來講些 @mixin 跟變數、流程控制等等。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[[SASS note.] CSS 逆向工程 part 1]]></title>
+    <link href="http://blog.hinablue.me/entry/sass-note-css-reversed-engineering-part-1/"/>
+    <updated>2011-08-15T17:51:00+08:00</updated>
+    <id>http://blog.hinablue.me/entry/sass-note-css-reversed-engineering-part-1</id>
+    <content type="html"><![CDATA[<p>工欲善其事，必先利其器！如果你對 CSS 的基礎還不甚了解，請先把基礎打好再來（認真（無誤）。關於什麼叫做 SASS 的，請上網 Google 或是參考我之前<a href="http://blog.hinablue.me/entry/css-note-sass-del-say-a-sexy-styling-del" target="_blank">寫的文章</a>，或是參考我的<a href="http://sass.hinablue.me" target="_blank">投影片</a>（請用 Chrome 開啟）。</p>
+
+<p>首先，對於已經開發的 CSS 樣式表，我們本來就可以使用 sass 的工具，將他從 css 轉換成 sass 檔案格式，這一點都沒有難度（你要換成 scss 也是行得通的）。</p>
+
+<pre><code>$ sass-convert -F css -T sass my_styling.css my_styling.sass
+</code></pre>
+
+<p>接下來，面對已經轉換過的 sass 檔案，我們該怎麼辦？</p>
+
+<ul><li>尋找重複性高的區塊</li><li>尋找數值關聯性</li><li>留意嵌套（Nested）的項目</li><li>留意順序（由上到下）</li></ul>
+
+
+<p>為什麼？</p>
+
+<ul><li>重複區塊，使用 <strong>@mixin</strong></li><li>數值關聯，使用 <strong>$</strong></li><li>嵌套（Nested）組合從 sass 轉出至 css <strong><a href="http://sass-lang.com/docs/yardoc/file.SASS_REFERENCE.html#nested-import" target="_blank">組合</a> <a href="http://sass-lang.com/docs/yardoc/file.SASS_REFERENCE.html#nested_rules" target="_blank">方式</a> <a href="http://sass-lang.com/docs/yardoc/file.SASS_REFERENCE.html#nested_properties" target="_blank">不只一種</a></strong></li><li>順序決定<strong>樣式權重</strong></li></ul>
+
+
+<p>既然這麼麻煩，那為什麼要這樣做？</p>
+
+<p><strong><font size="6">因為我是好人！</font></strong></p>
+
+<!-- more -->
+
+
+<p>這麼做的好處，是對於接下來要維護或是修正的時候，能夠帶來一定的便利性，還有快速。加上強大的 <a href="http://blog.hinablue.me/entry/css-note-powerful-tool-compass-base-on-sass" target="_blank">Compass 這個工具</a>，可以讓你省下很多時間<del>去訂個下午茶或是追個噗浪之類的</del>。所以，基於<del>可以一邊啃派客雞排一邊追噗浪又</del>可以快速開發理由，這麼做其實也是很合理的！</p>
+
+<p>我拿了我自己做過的一個 CSS 樣式檔案來作例子，通常拿來做範例的檔案都又臭又長，這次當然也不利外，註解加上單純 CSS 設定總共有 1052 行，如果使用 sass-convert 做轉換，轉成 sass 檔案之後的行數是 911 行。也許你會覺得，沒差多少嘛，的確，也不過是 141 行的差異而已。</p>
+
+<p>接著我們對轉出的 sass 檔案做一些簡易的編輯，然後再去比對檔案，我們會發現編輯過得檔案變成了 921 行了。像這個時候同一個時間，你一定會覺得很詭譎，怎麼檔案變大了？</p>
+
+<p><font style="font-weight: bold;" size="6">其實我打從一開始就沒說 SASS 會讓 CSS 縮小。</font></p>
+
+<p>這是一種工具，一種可以做簡易程式化的工具，讓你編輯 CSS 能夠更快速且便利。我舉幾個簡單的例子給大家說明一下：</p>
+
+<p><img src="http://static.hinablue.me/blog/2601595663.png" width="655" height="729" />
+這裡定義了許多大家一起用的變數，有了這些變數，當我要修改某一個項目的顏色，或是修改某一個函式（@mixin）的輸出樣式時，從這裡修改就比較方便，不需要做全檔搜尋與取代（這樣如果改到不想改的地方就更麻煩了）。</p>
+
+<p><img src="http://static.hinablue.me/blog/3763179176.png" width="655" height="732" />
+利用迴圈的特性，將整個樣式的寫法精簡，這個迴圈可以帶出六種（snap, party, event, shopstyle, about, gray）樣式設定，並且呼叫函式 nav_colors 做出額外的樣式設定。所以，我所說得可以精簡的地方在此，可以大大降低你重複撰寫樣式（搞不好名子還不小心打錯）的機率。</p>
+
+<p><img src="http://static.hinablue.me/blog/8844697165.png" width="658" height="734" />
+這個地方也是，利用迴圈，利用變數運算，把 CSS Sprites 的設定改成這種寫法。所以呢？一方面你不會把位移的數值打錯，二來也可以省下不少 coding 的時間。只是說，像我這種數學不好的，只能用簡單的運算給各位當範例囉。</p>
+
+<p><img src="http://static.hinablue.me/blog/2124100860.png" width="655" height="734" />
+以上是剛剛迴圈輸出的結果。</p>
+
+<p><img src="http://static.hinablue.me/blog/9626456826.png" width="657" height="732" />
+以上是迴圈輸出 CSS Sprites 的結果。</p>
+
+<p>當然，我們可以做的更多。只是，我們在使用這些工具的時候，還是需要注意一些地方。畢竟他是工具，如果造成不便，那就失去了這個工具的本意了。</p>
+
+<ul><li>SASS =~ CSS，只是換一種方式！
+</li><li>適當的變數、函式與嵌套！</li><li>善用 Compass 內建函式（@mixin）</li><li>將常用的 Styling 作成 @mixin 或是 @extend（不過如果只有一行就太超過了</li><li>將複雜的 @mixin 作成額外的 .sass 檔案，使用 @import 嵌入</li><li>如果你不清楚結果，盡量不要用 @import 嵌套（<a href="http://sass-lang.com/docs/yardoc/file.SASS_REFERENCE.html#nested-import" target="_blank">Nested @import</a>）</li></ul>
+
+
+<p>第一階段大概就是這樣！其實最好的入門方法，就是先把 SASS 當作是 CSS 來寫，只是不需要括號（{ }），使用縮排來做編輯，不需要結尾的分號。那麼，你應該可以很快的入門最基礎的 SASS 的寫作風格。</p>
+
+<p>下一個階段，會來看看一些嵌套的問題，還有樣式名稱嵌套時對於 CSS 權重的影響等。</p>
+
+<p>就降 <img src="http://static.hinablue.me/emoticons/S4/s4_08.gif" alt="幹得好"  border="0"></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[[CSS note.] 強大的 Compass 來產出 CSS]]></title>
+    <link href="http://blog.hinablue.me/entry/css-note-powerful-tool-compass-base-on-sass/"/>
+    <updated>2011-07-26T22:42:00+08:00</updated>
+    <id>http://blog.hinablue.me/entry/css-note-powerful-tool-compass-base-on-sass</id>
+    <content type="html"><![CDATA[<h1>Compass</h1>
+
+<p>他的全名就叫做 Compass（揍飛）！是一個基於 SASS 上面的開發工具。功能就是幫你兜好一些既定的 CSS，當然，是以 SASS 的方式來作。既然是基於 SASS 的工具，也是一樣，請先準備好 Ruby 的環境，並且確認你已經把 SASS 給安裝好了。至於 Compass 的<a href="http://compass-style.org/install/" target="_blank">安裝方法，官方也有教</a>。</p>
+
+<pre><code>$ gem install compass
+
+compass create my_test_project --syntax sass
+</code></pre>
+
+<p><img src="http://static.hinablue.me/blog/9836684194.png" width="705" height="316" /></p>
+
+<!-- more -->
+
+
+<p>這是預設的東西，然後我們要的東西在 sass 裡面。在 sass 資料夾中，會有三個預設的檔案，好像是依照 Blueprint 這一套 CSS Framework 來命名的。你如果要加入新的 sass 檔案，就直接在這個資料夾新增就可以了。你新增完的 sass 檔案，只要執行 compass compile 他就會自動幫你轉 css 放到 stylesheets 裡面了。</p>
+
+<p><img src="http://static.hinablue.me/blog/5113043639.png" width="564" height="269" /></p>
+
+<p>如果你要知道更多訊息，可以輸入 compass compile -h 來看看有什麼工具可用。</p>
+
+<p>為什麼要用 Compass？</p>
+
+<p>就像是 <a href="http://blog.xdite.net/?p=2097" target="_blank">XDite 所說</a>，這個東西可以解決<strong>大部分</strong>的 hasLayout/clearfix 的問題！請注意，我是說大部分。畢竟 Compass 裡面所有的套件，雖然能夠自動幫你做好這個部份，但是你也知道 <del>IE 不能動，又有什麼值得我心痛</del>，IE 所帶來的問題，不是我們能夠理解的，所以，如果真的有遇到 Compass 無解的狀況，還是得要自己動手加工才行（XDite 在留言也提到，IE Hack 的部份你還是得自己手動加工）。</p>
+
+<p>Compass 一樣很佛心，<font size="5">官方的</font><strong><a href="http://compass-style.org/reference/compass/" target="_blank"><font size="5">說明文件非常的清楚！</font></a></strong></p>
+
+<p>所以說，入門並不會太困難，只要有 SASS 的底子，Compass 只是一個<del>更方便</del>超級無敵的工具而已！然後呢，其實官方也很佛心的提供了一些 IE hacks/browser hacks 的工具：</p>
+
+<p><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta http-equiv="content-type" content="text/html; charset=utf-8"><a href="http://compass-style.org/reference/compass/utilities/general/hacks/">http://compass-style.org/reference/compass/utilities/general/hacks/</a></p>
+
+<p>你看看，是不是！是不是！至於那<a href="https://github.com/imathis/fancy-buttons" target="_blank">一堆噁心的特效</a>就不再多說，自己抓來用吧！這樣說來，我是不是應該把我之前寫得噁心的特效改成 SASS 呢（噴笑</p>
+
+<p>好工具，不用嗎！</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[[CSS note.] SASS - Say a sexy styling（刪除線）]]></title>
+    <link href="http://blog.hinablue.me/entry/css-note-sass-del-say-a-sexy-styling-del/"/>
+    <updated>2011-07-26T17:45:00+08:00</updated>
+    <id>http://blog.hinablue.me/entry/css-note-sass-del-say-a-sexy-styling-del</id>
+    <content type="html"><![CDATA[<p><span style="color:#ff3399;font-weight:bold;font-size: 128px;">SASS</span></p>
+
+<p>全名是 Syntactically Awesome Stylesheets，當然不是我說得那個（媽媽有說，認真就輸了（揍飛），也許有人會說，<del>踏碼的</del>有一個 CSS 就已經很難搞了，現在來搞一個 SASS 來自作孽幹麼？或者是，這一切一定都是<del>你們這些 programmer 在自 HIGH 用的啦</del>，<del>一切都是阿共啊A陰謀啦</del>～之類的。<strong>BUT！</strong></p>
+
+<p>人生最厲害的就是這個 BUT！（<del>這梗你要用幾次啦！</del></p>
+
+<p>俗話說得好，好的老師帶你上天堂，不好的老師讓你住套房，好的工具帶你上天堂，<del>沒有工具讓你住病房！</del>這也不是沒有道理的！這就是一個好工具，當然，好工具就一定會有一個前提！</p>
+
+<p><strong><font color="#ff0000">請對 CSS 有一定的熟悉程度再來玩，這不是門檻，而是必備條件。</font></strong></p>
+
+<p>SASS 是一個語言，是一個將 CSS 給簡化，並加入可程式化的特性的一種語言。你可以不要那麼緊張的把他想成那眾多的程式語言。不諱言，你要說他是，那他就是，你要說他不是，那他就不是。至於他可以做到什麼事情？請看：</p>
+
+<ul><li>可以用變數（$）。</li><li>可以做運算（+, -, \*, /, %）。</li><li>可以用函式（@mixin）。</li><li>可以載入（@import）與擴展（@extend）。</li><li>可以用判斷式（@if, @else if, @else）。</li><li>可以用迴圈（@for, @while）。</li></ul>
+
+
+<p>安裝方法，在<a href="http://sass-lang.com/" target="_blank">官方有寫</a>。不過這是在 Ruby 的環境底下，所以請先準備好 Ruby 的環境喔（<del>啾咪！</del>）所以，裝好之後呢，我們就可以來寫 SASS 了。就這麼簡單？是的，就這麼簡單<meta http-equiv="content-type" content="text/html; charset=utf-8">， <del>90 萬人都在用，就這麼簡單</del>。</p>
+
+<!-- more -->
+
+
+<p>首先，我們先來認識一下 SASS 到底是什麼東西。首先，他有兩種寫法，一種是 sass，另一種是 scss，這兩種有什麼差別呢？</p>
+
+<pre><code>/* 這種叫做 scss
+    $color: "#ff3333";
+    #h1 {
+      background-color: #{$color};
+    }
+/* 這種叫做 sass
+$color: "#ff3333"
+    #h1
+      background-color: #{$color}
+</code></pre>
+
+<p><span style="color:#ff3399;font-weight:bold;font-size: 72px;">我已經回不去了。</span></p>
+
+<p>一旦開使用 SASS 之後，基本上應該就不會回去寫 CSS 了。底下來介紹一下一些基本用法：</p>
+
+<pre><code>/* 變數建立方式
+$color: "#ff3333"
+$width: 1000px
+/* 函式建立方式（@mixin
+@mixin box_radius($radius: 10px)
+  -moz-box-radius: #{$radius}
+  -webkit-box-radius: #{$radius}
+  box-radius: #{$radius}
+/* 關聯式寫法（Nesting and Nesting properties）
+h1 span
+  margin: 0
+  a
+    color: #ff3333
+    &amp;:hover
+      color: #ffff33
+  &gt;span
+    color: #3333ff
+    font:
+      weight: bold
+      size: 14px
+/* 引入與擴展（@import, @extend）
+    外部的 sass 檔案前面必須前置底線（所以外部名稱實為：_import_css.sass）
+@import "import_css"
+.extend_class
+    margin: 0
+.my_class
+  @extend .extend_class
+  padding: 0
+/* 運算
+$width: 1000px
+.my_class
+    width: $width - 300px
+/* 傳入值（Interpolation）
+    我們傳入變數的方式有兩種，一種是傳入變數的值，一種是傳入變數。
+    其中 #{ } 的寫法就是傳入值。
+    倘若我們在這個例子的 .my_class1 使用 $color1，
+    則產生出來的 css 的 color 就會變成 "#ff3333" 了。
+    而倘若把 $color2 使用 # { } 傳入，則不影響所傳入的值。
+    傳入值有什麼好處？請看 .my_class3 應該就很清楚。
+$color1: "#ff3333"
+$color2: #3333ff
+$color3: "white"
+.my_class1
+  color: #{$color1}
+.my_class2
+  color: $color2
+.my_class3
+  a.#{$color3}
+    color: #{$color3}  
+/* 迴圈
+@for $i from 1 through 3
+  .my_class_#{$i}
+    width: 100px * $i
+/* 判斷式
+$color: "white"
+p
+  @if $color == "white"
+    color: white
+  @else if $color == "blue"
+    color: blue
+  @else
+    color: block
+</code></pre>
+
+<p>然後，還有一個超強的工具，叫做 <a href="http://compass-style.org/" target="_blank">Compass</a>！關於這個東西 <a href="http://blog.xdite.net/?p=2097" target="_blank">XDite 寫了一篇介紹</a>！我也有在使用，一樣也是要 Ruby 環境的，而且他還有賣 GUI 的工具。不過我已經習慣用指令去做了，所以對我來說是沒差的。</p>
+
+<p><span style="color:#ff3399;font-weight:bold;font-size: 64px;">Compass 也是超強！</span></p>
+
+<p>好工具，不用嗎？</p>
+
+<p>更多介紹：</p>
+
+<p><a href="http://blog.longwin.com.tw/" target="_blank">Tsung's Blog</a>：<a href="http://blog.longwin.com.tw/2011/06/linux-sass-install-usage-2011/#more-2442" target="_blank">於 Linux 安裝 與 SASS 簡易使用紀錄</a>
+<a href="http://blog.wu-boy.com/" target="_blank">小惡魔（wu-boy）</a>：<a href="http://blog.wu-boy.com/2011/05/%E5%8A%A0%E9%80%9F%E9%96%8B%E7%99%BC-css-%E5%B7%A5%E5%85%B7-sass/" target="_blank">加速開發 CSS 工具: Sass</a></p>
+]]></content>
+  </entry>
+  
+</feed>

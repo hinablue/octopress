@@ -1,0 +1,581 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[CSS3 note.] CSS3 Transform Matrix 筆記 - HINA::工程幼稚園</title>
+  <meta name="author" content="hinablue">
+
+  
+  <meta name="description" content="英文網站詳解：http://www.useragentman.com/blog/2011/01/07/css3-matrix-transform-for-the-mathematically-challenged/ 由於我英文很爛，所以寫一個中文的筆記也是很合理的。由於他是基於 Transform &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.hinablue.me/entry/CSS3-note-css3-transform-matrix-note">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/hinablue" rel="alternate" title="HINA::工程幼稚園" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-259895-17']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">HINA::工程幼稚園</a></h1>
+  
+    <h2>偏執與強迫症的患者，算不上是無可救藥，只是我已經遇上我的良醫了。</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/hinablue" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.hinablue.me" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[CSS3 Note.] CSS3 Transform Matrix 筆記</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-04-14T16:02:00+08:00" pubdate data-updated="true">Apr 14<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>英文網站詳解：<a href="http://www.useragentman.com/blog/2011/01/07/css3-matrix-transform-for-the-mathematically-challenged/">http://www.useragentman.com/blog/2011/01/07/css3-matrix-transform-for-the-mathematically-challenged/</a></p>
+
+<p>由於我英文很爛，所以寫一個中文的筆記也是很合理的。由於他是基於 Transform 2D 而來，所以基本上是由一個 3x3 的矩陣所組成，所以是：matrix[1, 2, 3, 4, 5, 6]，至於為什麼，我剛剛說了，因為是 2D。</p>
+
+<div style="height: 4em;overflow:hidden;"><div style="float:left;height:3em;"> 
+matrix[1, 2, 3, 4, 5, 6] = </div><div style="float:left;height: 3em;font-size:3em;">[</div><div style="float:left;height:3em;">1 3 5
+2 4 6
+0 0 1</div><div style="float:left;height:3em;font-size:3em;">]</div></div>
+
+
+<br style="clear:both;">矩陣的乘法就不贅述了，對了，我除了英文不好以外，數學也特爛。這六個數字分別代表的意義，可以在英文詳解的 Other Interesting Facts About Matrices 中看出端倪。
+
+
+
+
+<div style="height: 4em;overflow:hidden;"><div style="float:left;height:3em;"> 
+scale(a) = </div><div style="float:left;height: 3em;font-size:3em;">[</div><div style="float:left;height:3em;">a 0 0
+<!-- more -->
+0 a 0
+0 0 1</div><div style="float:left;height:3em;font-size:3em;">]</div></div>
+
+
+<br style="clear:both;">
+
+
+
+
+<div style="height: 4em;overflow:hidden;"><div style="float:left;height:3em;"> 
+scaleX(x) = </div><div style="float:left;height: 3em;font-size:3em;">[</div><div style="float:left;height:3em;">x 0 0
+0 1 0
+0 0 1</div><div style="float:left;height:3em;font-size:3em;">]</div></div>
+
+
+<br style="clear:both;">
+
+
+
+
+<div style="height: 4em;overflow:hidden;"><div style="float:left;height:3em;"> 
+scaleY(y) = </div><div style="float:left;height: 3em;font-size:3em;">[</div><div style="float:left;height:3em;">1 0 0
+0 y 0
+0 0 1</div><div style="float:left;height:3em;font-size:3em;">]</div></div>
+
+
+<br style="clear:both;">
+
+
+
+
+<div style="height: 4em;overflow:hidden;"><div style="float:left;height:3em;"> 
+translate(x,y) = </div><div style="float:left;height: 3em;font-size:3em;">[</div><div style="float:left;height:3em;">0 0 x
+0 0 y
+0 0 1</div><div style="float:left;height:3em;font-size:3em;">]</div></div>
+
+
+<br style="clear:both;">
+
+
+
+
+<div style="height: 4em;overflow:hidden;"><div style="float:left;height:3em;"> 
+translateX(x) = </div><div style="float:left;height: 3em;font-size:3em;">[</div><div style="float:left;height:3em;">0 0 x
+0 0 0
+0 0 1</div><div style="float:left;height:3em;font-size:3em;">]</div></div>
+
+
+<br style="clear:both;">
+
+
+
+
+<div style="height: 4em;overflow:hidden;"><div style="float:left;height:3em;"> 
+translateY(y) = </div><div style="float:left;height: 3em;font-size:3em;">[</div><div style="float:left;height:3em;">0 0 0
+0 0 y
+0 0 1</div><div style="float:left;height:3em;font-size:3em;">]</div></div>
+
+
+<br style="clear:both;">
+
+
+
+
+<div style="height: 4em;overflow:hidden;"><div style="float:left;height:3em;"> 
+skew(x,y) = </div><div style="float:left;height: 3em;font-size:3em;">[</div><div style="float:left;height:3em;">  1     tan<strong>x</strong>  0
+tan<strong>y</strong>    1     0
+  0       0     1</div><div style="float:left;height:3em;font-size:3em;">]</div></div>
+
+
+<br style="clear:both;">
+
+
+
+
+<div style="height: 4em;overflow:hidden;"><div style="float:left;height:3em;"> 
+skewX(x) = </div><div style="float:left;height: 3em;font-size:3em;">[</div><div style="float:left;height:3em;">1  tan<strong>x</strong>  0
+0    1     0
+0    0     1</div><div style="float:left;height:3em;font-size:3em;">]</div></div>
+
+
+<br style="clear:both;">
+
+
+
+
+<div style="height: 4em;overflow:hidden;"><div style="float:left;height:3em;"> 
+skewY(y) = </div><div style="float:left;height: 3em;font-size:3em;">[</div><div style="float:left;height:3em;">  1     0  0
+tan<strong>y</strong>  1  0
+  0     0  1</div><div style="float:left;height:3em;font-size:3em;">]</div></div>
+
+
+<br style="clear:both;">
+
+
+
+
+<div style="height: 4em;overflow:hidden;"><div style="float:left;height:3em;"> 
+rotate(θ) = </div><div style="float:left;height: 3em;font-size:3em;">[</div><div style="float:left;height:3em;">cosθ -sinθ  0
+sinθ  cosθ  0
+  0      0     1</div><div style="float:left;height:3em;font-size:3em;">]</div></div>
+
+
+<br style="clear:both;">
+
+
+<p>這樣看得出端倪嗎？所有的 CSS3 變形效果，都可以用 Matrix 來做到，而實際上，瀏覽器似乎也是把所有的效果全部轉換為 matrix 去執行（只是我們並不知道而已）。這麼看來，我們可以小結一下：</p>
+
+<ul><li>1, 4 是縮放變形的結果</li><li>5, 6 是位移變形的結果</li><li>2, 3 是歪斜變形的結果</li><li>1, 2, 3, 4 是旋轉變形的結果</li></ul>
+
+
+<p>所以，其實 matrix 是一個因，而瀏覽器執行這個設定所顯示出來的是果。讓開發出現難度的地方是，你無法精準控制所產生的結果是否如預期。而，上述的英文詳解網站也有做一個讓你<a href="http://www.useragentman.com/matrix/">實踐操作的工具頁面</a>，你可以去這裡把玩看看，建議使用 Chrome 或是 Firefox 啦，IE 不能動，還有什麼值得我心痛（<a href="http://www.youtube.com/watch?v=nOmGXz20pOQ&feature=player_detailpage#t=44s">許茹雲，淚海</a>）。</p>
+
+<p>所以，我該怎麼去推測結果？首先，我先假設一個方塊，將變形的原點（transform-origin）設定為 (0,0)，是的，如果變形的原點不同，所產生的結果也是不一樣的。那麼，我現在有一個 100x100 的矩陣，然後我要作一個變形，我們隨意取一個值來測試：</p>
+
+<blockquote>-moz-transform: matrix(<meta http-equiv="content-type" content="text/html; charset=utf-8">0.6924, 1.2, -0.3216, 1.2, 50px, 100px);
+
+-webkit-transform: matrix(<meta http-equiv="content-type" content="text/html; charset=utf-8">0.6924, 1.2, -0.3216, 1.2, 50, 100);
+
+-o-transform: matrix(<meta http-equiv="content-type" content="text/html; charset=utf-8">0.6924, 1.2, -0.3216, 1.2, 50, 100);
+
+transform: matrix(0.6924, 1.2, -0.3216, 1.2, 50, 100);</blockquote>
+
+
+<p><meta http-equiv="content-type" content="text/html; charset=utf-8">如果把這些數字換成矩陣，那就會長這個樣子：</p>
+
+<div style="height: 4em;overflow:hidden;">
+<div style="float:left;height:3em;"> 
+matrix = </div><div style="float:left;height: 3em;font-size:3em;">[</div><div style="float:left;height:3em;"> 0.6924  -0.3216    50
+    1.2          1.2      100
+     0             0           1</div><div style="float:left;height:3em;font-size:3em;">]</div><br style="clear:both;"></div>
+
+
+<p>我們的方塊有四個角落，所以就分別有四個座標值，因為是二元的，所以作成 3x1 的矩陣就是：</p>
+
+<div style="height: 4em;overflow:hidden;">
+<div style="float:left;height:3em;"> 
+A(0,0) = </div><div style="float:left;height: 3em;font-size:3em;">[</div><div style="float:left;height:3em;">0
+0
+1</div><div style="float:left;height:3em;font-size:3em;">]</div>
+
+<div style="float:left;height:3em;"> 
+，B(100,0) = </div><div style="float:left;height: 3em;font-size:3em;">[</div><div style="float:left;height:3em;">100
+  0
+  1</div><div style="float:left;height:3em;font-size:3em;">]</div>
+
+<div style="float:left;height:3em;"> 
+，C(0,100) = </div><div style="float:left;height: 3em;font-size:3em;">[</div><div style="float:left;height:3em;">  0
+100
+  1</div><div style="float:left;height:3em;font-size:3em;">]</div>
+
+<div style="float:left;height:3em;"> 
+，D(100,100) = </div><div style="float:left;height: 3em;font-size:3em;">[</div><div style="float:left;height:3em;">100
+100
+  1</div><div style="float:left;height:3em;font-size:3em;">]</div>
+
+<br style="clear:both;"></div>
+
+
+<p>然後我們來作矩陣的相乘，由於我數學太爛，所以我取 100 只是剛好而已：</p>
+
+<div style="height: 4em;overflow:hidden;">
+<div style="float:left;height:3em;"> 
+A&#8217; = </div><div style="float:left;height: 3em;font-size:3em;">[</div><div style="float:left;height:3em;"> 50
+100
+  1</div><div style="float:left;height:3em;font-size:3em;">]</div>
+
+<div style="float:left;height:3em;"> 
+，B&#8217; = </div><div style="float:left;height: 3em;font-size:3em;">[</div><div style="float:left;height:3em;">119.24
+   220
+     1</div><div style="float:left;height:3em;font-size:3em;">]</div>
+
+<div style="float:left;height:3em;"> 
+，C&#8217; = </div><div style="float:left;height: 3em;font-size:3em;">[</div><div style="float:left;height:3em;">17.84
+  220
+    1</div><div style="float:left;height:3em;font-size:3em;">]</div>
+
+<div style="float:left;height:3em;"> 
+，D&#8217; = </div><div style="float:left;height: 3em;font-size:3em;">[</div><div style="float:left;height:3em;">87.08
+ 340
+   1</div><div style="float:left;height:3em;font-size:3em;">]</div>
+<br style="clear:both;"></div>
+
+
+<p>所以這樣我們就有新的座標點了：</p>
+
+<blockquote>A&#8217; (50, 100)
+B&#8217; (119.24, 220)
+C&#8217; (18.84, 220)
+D&#8217; (87.08, 340)</blockquote>
+
+
+<p>用新的座標點所畫出來的圖形（因為我們的 transform-origin 設定為 (0,0) 所以不影響變形座標軸），就是做完變形之後的圖形。在 matrix 中的前四個數字，由於是從 skew，rotate 與 scale 三個矩陣相乘而來，所以想從 matrix 反推回去幾乎是不太可能。由於我數學太爛，所以我也不知道該怎麼告訴你要怎麼推回去。</p>
+
+<p>你可以照這個畫面把資料輸入進去，這樣就是這個數據所變形出來的結果。
+<img src="http://static.hinablue.me/blog/4761192911.png" width="700" height="689" /></p>
+
+<div>還有一個有趣的地方，假設我們使用 skew，rotate，scale，來去將我們需要的 matrix 算出來的話，倘若直接拿去給瀏覽器，套用到 matrix 中，出來的結果並不一定相同。原因是：<strong>Matrix 有其順序性！</strong>
+
+<b>
+Matrix = translate x rotate x scale x skew
+</b>
+
+依照這種順序所相乘出來的矩陣數值，才是真正 matrix 所表現的樣子。所以在 CSS3 中所要排列的樣子就必須是：
+
+<blockquote>-webkit-transform: translate(50px, 100px) rotate(30deg) scale(1.2) skew(15deg, 30deg);</blockquote>這樣做出來的效果就等同於使用 matrix 設定：
+
+
+<blockquote>-webkit-transform: matrix(<meta http-equiv="content-type" content="text/html; charset=utf-8">0.6924, 1.2, -0.3216, 1.2, 50, 100);</blockquote><meta http-equiv="content-type" content="text/html; charset=utf-8">不要問我為什麼知道，這種事情作點弊就好了（喂喂喂）。其實也不是作弊，就是是先用矩陣把他乘出來而已。這樣大抵上就是 Transform 在 Matrix 上面的變化了。不過這個東西有個風險，在動態效果頻繁的狀態下，會讓瀏覽器莫名的 Crash 掉，不知道是不是跟我跑在 Ubuntu 底下有關（硬體不太穩定）。
+
+
+
+總之，大概就先這樣吧（逃走）。</div>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">hinablue</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-04-14T16:02:00+08:00" pubdate data-updated="true">Apr 14<span>th</span>, 2011</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/jquery/'>jQuery</a>, <a class='category' href='/categories/javascript/'>javascript</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://blog.hinablue.me/entry/CSS3-note-css3-transform-matrix-note/" data-via="hinablue" data-counturl="http://blog.hinablue.me/entry/CSS3-note-css3-transform-matrix-note/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/entry/photos-jingtong-pingshi-2011-04-10/" title="Previous Post: [影像] 菁桐、平溪一日遊">&laquo; [影像] 菁桐、平溪一日遊</a>
+      
+      
+        <a class="basic-alignment right" href="/entry/jQuery-note-about-namespace-in-the-plugin/" title="next Post: [jQuery note.] 關於一點點 Namespace Event 的事情">[jQuery note.] 關於一點點 Namespace Event 的事情 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Me</h1>
+  <img src="/images/hniablue_icon.jpg" width="195" height="195" alt="Hina, Cain Chen." />
+  <p>我是閃光洽！</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+  </ul>
+</section>
+<script type="text/javascript">
+    $.domReady(function() {
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+        (function() {
+            $.ajax({
+                url: '/atom.xml',
+                dataType: 'xml',
+                success: function(xml) {
+                    var parser, expectedXML;
+                    if (window.DOMParser) {
+                        parser = new DOMParser();
+                        expectedXML = parser.parseFromString(decodeURIComponent(xml.response),"text/xml");
+                    } else {
+                        expectedXML = new ActiveXObject("Microsoft.XMLDOM");
+                        expectedXML.async = false;
+                        expectedXML.loadXML(decodeURIComponent(xml.response));
+                    }
+
+                    var entries = expectedXML.getElementsByTagName('entry');
+                    var entries_limit = entries.length > 5 ? 5 : entries.length;
+                    for(var i=0; i<entries_limit; i++) {
+                        $('<a/>')
+                        .attr('href', entries[i].childNodes[3].attributes[0].nodeValue)
+                        .text(entries[i].childNodes[1].childNodes[0].nodeValue)
+                        .appendTo($('<li/>').addClass('post').appendTo($('#recent_posts')));
+                    }
+                },
+                error: function(err) {
+                    $('<li/>').addClass('post').text('Error Loading feed').appendTo($('#recent_posts'));
+                }
+            });
+        })();
+    });
+</script>
+
+<section>
+  <h1>Github Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/hinablue">@hinablue</a> on Github
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'hinablue',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("hinablue", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/hinablue" class="twitter-follow-button" data-width="208px" data-show-count="false">Follow @hinablue</a>
+  
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/104812280860478253996?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2011 - hinablue -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'hinablue';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.hinablue.me/entry/CSS3-note-css3-transform-matrix-note/';
+        var disqus_url = 'http://blog.hinablue.me/entry/CSS3-note-css3-transform-matrix-note/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

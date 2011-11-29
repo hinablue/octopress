@@ -1,0 +1,398 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>HINA::工程幼稚園</title>
+  <meta name="author" content="hinablue">
+
+  
+  <meta name="description" content="首先，如果可以的話，先看看官方的說明吧！http://jquerymobile.com/demos/1.0a1/官方有說，所有的內容與結構都是基於 W3C 的 WAI-ARIA 為準，所以在要做這個之前，還是先得去翻閱一次那些規格等等的文件。因為跟一般的 HTML 有相當的落差， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.hinablue.me/page/31">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/hinablue" rel="alternate" title="HINA::工程幼稚園" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-259895-17']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">HINA::工程幼稚園</a></h1>
+  
+    <h2>偏執與強迫症的患者，算不上是無可救藥，只是我已經遇上我的良醫了。</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/hinablue" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.hinablue.me" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/entry/jquery-note-the-first-look-about-jquery-mobile-framework/">[jQuery Note.] 初探 jQuery Mobile 的筆記</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-10-22T11:12:00+08:00" pubdate data-updated="true">Oct 22<span>nd</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>首先，如果可以的話，先看看官方的說明吧！<br /><a href="http://jquerymobile.com/demos/1.0a1/">http://jquerymobile.com/demos/1.0a1/</a><br /><br />官方有說，所有的內容與結構都是基於 <a href="http://www.w3.org/TR/wai-aria/" target="_blank">W3C 的 WAI-ARIA</a> 為準，所以在要做這個之前，還是先得去翻閱一次那些規格等等的文件。因為跟一般的 HTML 有相當的落差，所以其實要上手最快的方式，還是直接去挖官方的 Code 回來參考是比較快的（喂）！附帶一提的是，眼尖的人應該會發現 WAI-ARIA 還是處於 Draft 的狀態（<s>IE 表示：不要問，很恐怖</s>）。<br /><br />官方所提供的簡易頁面範例在這裡：<a href="http://jquerymobile.com/demos/1.0a1/#docs/pages/docs-pages.html">http://jquerymobile.com/demos/1.0a1/#docs/pages/docs-pages.html</a><br /><br />另外，可以使用 Ajax 的方式來讀取頁面，關於這個，是這次筆記的主要項目之一。官方當然也是有寫文件出來啦，但是實在是<a href="http://jquerymobile.com/demos/1.0a1/#docs/pages/docs-navmodel.html" target="_blank">落落長一篇</a>，有耐心的人可以慢慢看完！大致上的重點是：<br /><ol><li>使用 location.hash<br /> jQuery Mobile 動態讀取的方式，利用 #hash 來紀錄目前所在頁面，並將目標頁面以 ajax 的方式讀取到目前的資料結構中。他會自動在 <head> 的地方加入 <base> 這個標籤，用以標定目前存取的基準目錄。這有一個好處，可以讓你所讀取進來的頁面，不會因為從外部讀入而導致內容中的鍊結失效。不過，個人認為，其缺點是，你要讀取的頁面內容，路徑必須搞清楚！</li><li>由於使用了 <base> 所以，提供了三個 function 給開發者使用，分別是：<br /><ul><li>getBaseURL，取得 <base> 的 href 屬性值。</li><li>setBaseURL，設定 <base> 的 href 屬性值。</li><li>resetBaseURL，重設 <base> 的 href 屬性值。</li></ul></li><li>可以利用 URL 動態產生頁面。說穿了就是，你可以使用特定（指定）的 ID 來呼叫其他頁面，然後將頁面自動產出在目標區塊內。</li><li>如果你不要用 Ajax 讀取（我可以後略嗎）?<br />（後略&#8230;）</li><li>表單傳送，預設會使用 Ajax 的方式去傳送。有一個地方需要留意，他的回應會覆蓋你原本是 content 的地方！</li><li>非預設環境的限制（<s>IE 表示：&#8230;</s>），就是在莫名狀況下的限制（喂）：</li><ul><li>當鍊結目標是一個目錄，請務必加上 /（slash），至於原因，jQuery 表示：<s>不要問，很恐怖。</s>因為是使用 / 來擷取 <base> 的目錄節點（預設最後一個 / 後面是檔案） ，所以目標若非檔案，請務必加上 /（slash）。</li><li>任何被讀取的獨立頁面（結構），都必需要放在 page 元件內。</li><li>此外，其他非獨立使用的頁面（結構），都必須放置在 page 元件外，以防任何腳本（script）被重複執行。</li><li>ui-page 元件的 hash 值可以隨便你用（喂），預設儲存在 jQuery.mobile.subPageUrlKey。</li></ul></ol><br />接著，我要怎麼畫出 jQuery Mobile 的畫面呢？基本上這一點在 jQuery Mobile 官方 Docs 上是<s>不告訴你的呦</s>（疑疑疑）。整個 DOM 的結構，基本上還是得回到 WAI-ARIA 的文件裡面才行，這整個 jQuery Mobile framework 都是基於 WAI-ARIA 的設定與規範做出來的（沒有誤）。<br /><br />網路上有沒有相關文章？有，請看：<br /><ul><li><a href="http://dev.opera.com/articles/view/introduction-to-wai-aria/" target="_blank">Introduction to WAI ARIA</a>（英文）</li><li><a href="http://blog.othree.net/log/2010/10/10/introduction-to-wai-aria-1/" target="_blank">WAI ARIA 介紹</a>（上面那一篇的中文版）</li><li>上述文章的延伸閱讀（疑）</li></ul><br />把玩過後，其實在應用上，jQuery 確實是把製作 Mobile 所需的元素給變簡單了。不過，你也必須清楚的了解 WAI ARIA 的基本規則就是。<br /><br />附上測試畫面。<br /><img src="http://static.hinablue.me/blog/1319247124.png" width="615" height="630" /><br /></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/entry/HTC-Desire-my-android-phone/">[閒聊] 我的 HTC Desire</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-10-21T09:37:00+08:00" pubdate data-updated="true">Oct 21<span>st</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>手機嘛，想說用了智慧型手機就會變得比較聰明嗎？這種事情還是交給上帝去評斷吧（疑）。打從用了 Android 系統之後，我只有一個感想，那就是，版本進步速度太快，寫軟體的工程師應該會很想死！至於說，用了智慧型手機有沒有比較聰明？我到是覺得，應該會更容易有資訊焦慮的症頭吧（肯定的）！只可惜螢幕小了點，不然裝個 shell console 應該也<s>蠻有趣的</s>（揍飛）。</p>
+
+<p>資訊速食化的程度，應該會隨著這種手機的普及而更快速。大家都是只要帶手機出門啥事都搞定（嗯？不是有個廣告也是這樣播的嘛），然後手機要是沒帶就啥事都辦不好（也太誇張）。我不能評斷說這是好事還是壞事，但是就資訊或是適地性服務無所不在的情況下，我倒是強烈懷疑我到底還能記得多少事情！？</p>
+
+<p>手機沒帶，你能記得幾個電話號碼？</p>
+
+<div><div>所以，順便記錄一下裝了啥東西。
+<img src="http://static.hinablue.me/blog/5820845125.png" width="480" height="800" />
+
+<ul><li><a href="http://www.appbrain.com/app/advanced-task-killer-froyo/com.rechild.advancedtaskkillerfroyo" target="_blank">Advanced Task Killer Froyo</a>
+自動刪除常駐程式的<strong><font color="#FF0000">常駐程式</font></strong>（笑）。</li><li><a href="http://www.appbrain.com/app/angry-birds/com.rovio.angrybirds" target="_blank">Angry Birds</a>
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/entry/HTC-Desire-my-android-phone/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/entry/photos-afternoon-tea-in-the-new-caffee-alley/">[影像] 館前路新咖啡弄</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-10-18T14:29:00+08:00" pubdate data-updated="true">Oct 18<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>台北車站館前路新開的咖啡弄！
+<a href="http://www.flickr.com/photos/hinablue/5091665005/"><img src="http://farm5.static.flickr.com/4128/5091665005_7bc441a688.jpg" alt="IMG_6859" /></a></p>
+
+<p><a href="http://www.flickr.com/photos/hinablue/5092257482/"><img src="http://farm5.static.flickr.com/4144/5092257482_9df695544c.jpg" alt="IMG_6856" /></a></p>
+
+<p><a href="http://www.flickr.com/photos/hinablue/5092240834/"><img src="http://farm5.static.flickr.com/4090/5092240834_d09dc05f92.jpg" alt="IMG_6850" /></a></p>
+
+<p><a href="http://www.flickr.com/photos/hinablue/5091649673/"><img src="http://farm5.static.flickr.com/4087/5091649673_cd175580b0.jpg" alt="IMG_6852" /></a></p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/entry/photos-afternoon-tea-in-the-new-caffee-alley/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/page/32/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/page/30/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Me</h1>
+  <img src="/images/hniablue_icon.jpg" width="195" height="195" alt="Hina, Cain Chen." />
+  <p>我是閃光洽！</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+  </ul>
+</section>
+<script type="text/javascript">
+    $.domReady(function() {
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+        (function() {
+            $.ajax({
+                url: '/atom.xml',
+                dataType: 'xml',
+                success: function(xml) {
+                    var parser, expectedXML;
+                    if (window.DOMParser) {
+                        parser = new DOMParser();
+                        expectedXML = parser.parseFromString(decodeURIComponent(xml.response),"text/xml");
+                    } else {
+                        expectedXML = new ActiveXObject("Microsoft.XMLDOM");
+                        expectedXML.async = false;
+                        expectedXML.loadXML(decodeURIComponent(xml.response));
+                    }
+
+                    var entries = expectedXML.getElementsByTagName('entry');
+                    var entries_limit = entries.length > 5 ? 5 : entries.length;
+                    for(var i=0; i<entries_limit; i++) {
+                        $('<a/>')
+                        .attr('href', entries[i].childNodes[3].attributes[0].nodeValue)
+                        .text(entries[i].childNodes[1].childNodes[0].nodeValue)
+                        .appendTo($('<li/>').addClass('post').appendTo($('#recent_posts')));
+                    }
+                },
+                error: function(err) {
+                    $('<li/>').addClass('post').text('Error Loading feed').appendTo($('#recent_posts'));
+                }
+            });
+        })();
+    });
+</script>
+
+<section>
+  <h1>Github Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/hinablue">@hinablue</a> on Github
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'hinablue',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("hinablue", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/hinablue" class="twitter-follow-button" data-width="208px" data-show-count="false">Follow @hinablue</a>
+  
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/104812280860478253996?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2011 - hinablue -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'hinablue';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

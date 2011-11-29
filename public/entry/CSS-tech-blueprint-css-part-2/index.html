@@ -1,0 +1,410 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[CSS tech.] Blueprint CSS part 2 - HINA::工程幼稚園</title>
+  <meta name="author" content="hinablue">
+
+  
+  <meta name="description" content="其實在許久之前，我有寫過一篇關於 Blueprint CSS 的介紹了，但是我覺得還是有些地方稍嫌不足。特別是今天為了要找一些東西，又繼續看了 Bblueprint CSS，覺得上次那一篇時在是寫的不夠，所以就來補充一下。 特別提一下這個，Blueprint CSS How To &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.hinablue.me/entry/CSS-tech-blueprint-css-part-2">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/hinablue" rel="alternate" title="HINA::工程幼稚園" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-259895-17']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">HINA::工程幼稚園</a></h1>
+  
+    <h2>偏執與強迫症的患者，算不上是無可救藥，只是我已經遇上我的良醫了。</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/hinablue" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.hinablue.me" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[CSS Tech.] Blueprint CSS Part 2</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-02-03T14:06:00+08:00" pubdate data-updated="true">Feb 3<span>rd</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>其實在許久之前，我有<a href="http://blog.hinablue.me/790" target="_blank">寫過一篇</a>關於 <a href="http://www.blueprintcss.org/" target="_blank">Blueprint CSS</a> 的介紹了，但是我覺得還是有些地方稍嫌不足。特別是今天為了要找一些東西，又繼續看了 <a href="http://www.blueprintcss.org/" target="_blank">Bblueprint CSS</a>，覺得上次那一篇時在是寫的不夠，所以就來補充一下。</p>
+
+<p>特別提一下這個，<a href="http://www.elliotswan.com/2008/02/15/blueprint-css-how-to-customizing-typography-baselines/" target="_blank">Blueprint CSS How To Customizing Typography Baselines</a>，他是介紹怎麼樣修改在 Blueprint CSS 中的 Typography  基準，請務必要看看。</p>
+
+<p>首先還是回到 Grid 這個設定上面，你可以從 src 裡面看到這個檔案的基本設置：</p>
+
+<blockquote><div style="padding: 10px; background-color: rgb(250, 255, 169);">   grid.css
+   * Sets up an easy-to-use grid of 24 columns.
+
+   By default, the grid is 950px wide, with 24 columns
+   spanning 30px, and a 10px margin between columns.</div></blockquote>
+
+
+<p>基本的寬度就是 950px，共有 24 欄，每個欄寬 30px，每個欄位間隔 10px 的留白（使用 margin-right）。倘若你要增加或是減少這個預設的寬度，需要自己去執行 lib/compress.rb 這個程序（使用 Ruby）。我們假設都以這種寬度來開發，暫時不考慮重新製作新的 Grid 為前提。</p>
+
+<p>首先，你確認好自己的 Layout 之後，就可以開始利用 Grid 來編排 Layout 中所有元件的位置。這裡需要提醒一下的是，這個 Grid 他是依照預設的欄寬去做編排的，所以若你的 Layout 不符合欄位寬度的設置，就必須小心處理這個部分。雖然他只是個 Grid，但是做為參考的標準，規則還是不要太輕易的打破比較好。</p>
+
+<!-- more -->
+
+
+<p>假設我們要做兩欄式的網站，那麼我們就有左邊（或右邊）跟中間兩個欄位。那左（或右）的欄位寬度可以這樣計算，這裡我們以左邊欄位跟中間欄位的例子來說：</p>
+
+<blockquote><div style="padding: 10px; background-color: rgb(250, 255, 169);">5 * 40 - 10 = 210px（Grid 範圍）
+5 * 40 = 200px（內容範圍）</div></blockquote>
+
+
+<p>我要 5 個欄位（30 * 5 + 10 * 6）來當做左邊（或右邊）的欄位，那剩下的就是中間的區塊：</p>
+
+<blockquote><div style="padding: 10px; background-color: rgb(250, 255, 169);">19 * 40 - 10 = 750px</div></blockquote>
+
+
+<p>要留意的是，左邊的欄位會多出 10px 的留白，是無法被使用的區塊，真正能使用到的範圍其實只有 200px 而以。當然，你的欄位切割的越多，可以使用的區塊相對的就會越少，因為每切割一次就會少 10px。</p>
+
+<p><img src="http://static.hinablue.me/blog/6790148805.jpg" width="586" height="385" /></p>
+
+<p>問題來了，<font size="5"><span style="font-weight: bold; color: rgb(255, 0, 0);">萬一我的 Layout 沒那麼剛好符合 Grid 怎麼辦？</span></font></p>
+
+<p>有兩種解決方法：</p>
+
+<ol><li>計算出欄位與留白，重新產生 Grid.css！</li><li>犧牲 1 欄！
+</li></ol>
+
+
+<p>第一種解法是比較正規的做法，利用 Blueprint CSS 自帶的程序來重新產生新的樣式檔案，好處是他會重新製做整套 grid，甚至是做成你需要的 grid 檔案，所產生出來問題比較不會那麼多，也不會發生奇怪的問題。缺點是數學要很好，如果你的 Layout 剛好可以整除，那恭喜你，如果不行，那就想辦法讓他整除（沒有誤）。</p>
+
+<p>如果嫌自己算太累，那麼<a href="http://bluecalc.groupion.com/index.php" target="_blank">這個網站</a>應該可以幫你一些忙（他還幫你做好 grid.css），但是請留意 Blurprint CSS 的版本，因為他所算出的 grid.css 版本未必會是最新喔！</p>
+
+<p>第二種方式，我不建議 CSS 生手來做這件事情，不過話又說回來，有能力使用 Blueprint CSS 這種 Framework 的應該不能算是生手了吧（認真）。其實這個方法是我自己硬幹想出來的，萬一手頭上的 Layout 我草泥馬的複雜，很難處理的話，以上述運算為例，倘若一樣是切兩個欄位，但是我的尺寸是：左 220px 右 720px 的話呢？</p>
+
+<blockquote><div style="padding: 10px; background-color: rgb(250, 255, 169);">( 220 + 720 ) / 20 = 47（可以切成 47 欄，各寬 20px 的欄目，倒過來也可）
+47 是質數，所以 20 已經是最大因數，最大切割為 20 欄，每欄 47px！
+但上利須採用左 11 欄，右 36 欄來處理，也可直接重新產生 Grid.css。</div></blockquote>
+
+
+<p>所為的犧牲 1 欄的意思，就是一樣採用原有設置，但是在尺寸誤差的地方，將靠近接合的那個欄位犧牲掉，也就是說，利用 Blueprint 中的 pull 與 push 來做這件事情！但我還是得說，必須要是 CSS 熟手，不然那個 Layout 可能就因為這樣 pull &amp; push 被推到地獄裡去了！</p>
+
+<p>兩欄目的方式處理起來比較簡單，左邊欄目依舊使用 Grid 的 5 欄目設定，另外再套入自訂義的 Styling 改變寬度，右欄目亦同！差別在於，我可以在右欄目寫入 PUSH，讓他推齊右邊界，這樣在接合處或許會與原本的 Grid 不相符，但是目的一樣達到了。只是我們把 Grid 的方式拿到了左、右邊界去使用！而不是由左至右的對齊。</p>
+
+<p>相對於較複雜的 Layout，其實最主要的精神是，你要以哪個地方當做基準，然後再去實作。畢竟，在我看來 Grid 是一種工具，也是一種精神，他可以無所不在，只要你知道你自己的基準在甚麼地方。其實這個東西並不難，也不複雜，他就只是很單純的一個 CSS 設定而已，就像是畫滿方格的草稿紙一樣，要填甚麼上去，還端看客官您啊！</p>
+
+<p>人人 Layout 都有一把尺，請當寶劍用！</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">hinablue</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-02-03T14:06:00+08:00" pubdate data-updated="true">Feb 3<span>rd</span>, 2010</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/jquery/'>jQuery</a>, <a class='category' href='/categories/javascript/'>javascript</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://blog.hinablue.me/entry/CSS-tech-blueprint-css-part-2/" data-via="hinablue" data-counturl="http://blog.hinablue.me/entry/CSS-tech-blueprint-css-part-2/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/entry/photos-2010-01-30-Yingge-Ceramics-Museum/" title="Previous Post: [影像] 鶯歌陶瓷博物館">&laquo; [影像] 鶯歌陶瓷博物館</a>
+      
+      
+        <a class="basic-alignment right" href="/entry/jQuery-note-queue-sample-test/" title="next Post: [jQuery note.] queue 簡單應用心得">[jQuery note.] queue 簡單應用心得 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Me</h1>
+  <img src="/images/hniablue_icon.jpg" width="195" height="195" alt="Hina, Cain Chen." />
+  <p>我是閃光洽！</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+  </ul>
+</section>
+<script type="text/javascript">
+    $.domReady(function() {
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+        (function() {
+            $.ajax({
+                url: '/atom.xml',
+                dataType: 'xml',
+                success: function(xml) {
+                    var parser, expectedXML;
+                    if (window.DOMParser) {
+                        parser = new DOMParser();
+                        expectedXML = parser.parseFromString(decodeURIComponent(xml.response),"text/xml");
+                    } else {
+                        expectedXML = new ActiveXObject("Microsoft.XMLDOM");
+                        expectedXML.async = false;
+                        expectedXML.loadXML(decodeURIComponent(xml.response));
+                    }
+
+                    var entries = expectedXML.getElementsByTagName('entry');
+                    var entries_limit = entries.length > 5 ? 5 : entries.length;
+                    for(var i=0; i<entries_limit; i++) {
+                        $('<a/>')
+                        .attr('href', entries[i].childNodes[3].attributes[0].nodeValue)
+                        .text(entries[i].childNodes[1].childNodes[0].nodeValue)
+                        .appendTo($('<li/>').addClass('post').appendTo($('#recent_posts')));
+                    }
+                },
+                error: function(err) {
+                    $('<li/>').addClass('post').text('Error Loading feed').appendTo($('#recent_posts'));
+                }
+            });
+        })();
+    });
+</script>
+
+<section>
+  <h1>Github Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/hinablue">@hinablue</a> on Github
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'hinablue',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("hinablue", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/hinablue" class="twitter-follow-button" data-width="208px" data-show-count="false">Follow @hinablue</a>
+  
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/104812280860478253996?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2011 - hinablue -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'hinablue';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.hinablue.me/entry/CSS-tech-blueprint-css-part-2/';
+        var disqus_url = 'http://blog.hinablue.me/entry/CSS-tech-blueprint-css-part-2/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

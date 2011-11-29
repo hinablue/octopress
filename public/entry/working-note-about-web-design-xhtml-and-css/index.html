@@ -1,0 +1,803 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[Layout tech.] Web Design note with XHTML/CSS - HINA::工程幼稚園</title>
+  <meta name="author" content="hinablue">
+
+  
+  <meta name="description" content="在這之前，請先拜讀： Create a Clean Modern Website Design in PhotoshopHow to convert a photoshop mockup to XHtml/CSS 如果是 XHTML/CSS 高手們，您打開上述兩篇後，就可以跳過這一篇了（肯定的 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.hinablue.me/entry/working-note-about-web-design-xhtml-and-css">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/hinablue" rel="alternate" title="HINA::工程幼稚園" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-259895-17']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">HINA::工程幼稚園</a></h1>
+  
+    <h2>偏執與強迫症的患者，算不上是無可救藥，只是我已經遇上我的良醫了。</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/hinablue" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.hinablue.me" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[Layout Tech.] Web Design Note With XHTML/CSS</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-05-12T21:05:00+08:00" pubdate data-updated="true">May 12<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>在這之前，請先拜讀：</p>
+
+<ul><li><a href="http://line25.com/tutorials/create-a-clean-modern-website-design-in-photoshop" target="_blank">Create a Clean Modern Website Design in Photoshop</a></li><li><a href="http://line25.com/tutorials/how-to-convert-a-photoshop-mockup-to-xhtml-css" target="_blank">How to convert a photoshop mockup to XHtml/CSS</a></li></ul>
+
+
+<p><span style="font-weight: bold; color: rgb(255, 0, 0);">如果是 XHTML/CSS 高手們，您打開上述兩篇後，就可以跳過這一篇了（肯定的）。</span></p>
+
+<p>醜話說在前頭，我不是網頁設計（就是俗稱的：ART），我也不是美工、美編，所以我所提出來的範例一定不會美觀到哪裡去（肯定的）。這也不是說教，只是一些對於接觸了 CSS 的感慨（？）與一些個人的經驗談而已，不過，說經驗我也只能算是小小小咖（<font size="6"><strong>我是三尛咖</strong></font>），所以請各位看倌鞭小力一點，不然會很痛的（？）。</p>
+
+<p>既然我是工程師，那一定會有工程師最常遇到的三個問題：</p>
+
+<ol><li>ART 給的樣板充滿了 TABLEs</li><li>ART 給的樣板充滿了 TABLEs</li><li>ART 給的樣板充滿了 TABLEs</li></ol>
+
+
+<p>很令人傷腦筋的地方在於，我所遇過的 ART，幾乎沒有人對 CSS 有到上手的程度，我只能說我時運不濟、遇人不淑、待人不周、逢人就譙（？）的關係，所以工作了四年多（就說我很嫩）沒遇過很好很強大的 ART。所以，對於樣板交給工程師準備套入 Smarty 或是套入程式的時候，我就常常陷入 TABLEs 的地獄之中。有人說我對 ART 太好，但是，有些時候真的是人在江湖身不由己，不這麼做的話，我的工時就會被延宕，最後被譙的還是我（因為我是代很大、代不用錢的代理主管）。</p>
+
+<p>好了，廢話太多了，進入正題。首先，來看看這次醜不拉嘰的範例樣板：
+<img src="http://static.hinablue.me/blog/4947364431.png" width="475" height="450" />
+這個樣板比較複雜（一點），若是對於 CSS 很熟稔的高手們，請不要笑太大聲。當然這絕對不會是 ART 給你的樣子，通常設計所丟出來的靜態畫面，裡面會充滿了假字、假圖、假情報、<del>假賽</del>等等的資料。這是我刻意將那些文字與圖都拿掉的樣板，我們今天就單純一點，針對畫面來說說，如何將這樣的畫面轉換成 XHTML/CSS。</p>
+
+<!-- more -->
+
+
+<p>首先，這樣的畫面，大致上可以這麼思考：
+<img src="http://static.hinablue.me/blog/3269437285.png" width="600" height="500" /></p>
+
+<p>圖中的名稱只是筆記用，並不是說 CSS 的名稱就非得這樣命名不可。這個樣板比較複雜的地方在於，背景圖案總共有四個地方，如果這是用表格來切的話，在 <span style="font-weight: bold; color: rgb(23, 127, 205);">sidebar.background</span> 的地方就需要下很多工夫去切開，當然，那個＂很多工夫＂就等於＂很多 TABLE＂意思是一樣的。我們就先來看所有需要使用到背景的地方，到底他的置放方式與困難點在哪。</p>
+
+<p>背景圖示意圖：
+<img src="http://static.hinablue.me/blog/7603642620.png" width="475" height="450" />
+這樣我們可以知道有哪四個地方是有需要使用到背景設定，同樣的，這四個地方也會是樣板的主軸。為什麼說是主軸？當我們在考量一個樣板要如何切割的同時，首先必須要決定的是，哪些地方是能夠包含最多物件的區塊（<del>最外面，當然，使用 TABLEs 切樣板的人一定會這麼想</del>），決定了大區塊之後，剩下的東西一切都會變得簡單起來（沒有誤）。這四個區塊，我們把它們拆開來看，其實不難：</p>
+
+<ol><li>body.background
+網頁的最底層背景，這個背景可以設定在 body 標籤上，但通常不建議這麼做。如果可以，盡可能下在最外層的 div 的標籤上，靈活度也夠，同時，也可以利用樣板特性，使用不同的 body 與 container 的 CSS 屬性配置，就可更換或是使用不同的背景設定（當然不限於背景設定）。</li><li>header.background
+這個背景是蓋在 body 之上，但是由於左方的圖型下半部有跨過 content 與 sidebar 區塊，所以這個背景圖案只取以 content 跟 sidebar 的上基線為底。左方圖型的下半部則給 sidebar 使用。</li><li>sidebar.background
+這個區塊有兩種背景圖案設定，由於背景圖案不覆蓋的關係，所以可以在 sidebar 使用兩種 container 來放置背景圖案。一個是 sidebar 本身，一個是 sidebar 內容物件，而 sidebar 內容物件可使用上留白將 sidebar 的背景圖案顯示出來。</li><li>content.background
+這裡的背景圖案並不是白色，而是底下的底色設定。至於說 content 的內容區塊為什麼會是白色，這個問題好像太簡單，可不可以不要回答啊（XD）。</li></ol>
+
+
+<p>接著下來，我們來看看 HTML 怎麼設定（命名規則請依照個人喜好去命名）：
+<img src="http://static.hinablue.me/blog/2933072022.png" width="600" height="500" /></p>
+
+<p>這樣，我們就有了基礎的 HTML 頁面了。請不要問我為什麼這些 div 區塊要這樣排列，這種排列的方式，請到姑狗大神上問問 CSS Templates 之類的關鍵字，然後下載幾個人家做好的檔案下來看，就知道要怎麼排列這些區塊了。基本上就是，大區塊（container）包入了標題（header）、內容（content）、地（footer），而內容區塊（content）有時候會像這個範例一樣，有所謂的側邊欄（sidebar）。</p>
+
+<p>基本的樣板長這個樣子：</p>
+
+<pre><code>&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-TW"&gt;
+&lt;head profile="http://gmpg.org/xfn/11"&gt;
+&lt;title&gt;Simple Layout&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div id="container"&gt;
+    &lt;div id="header"&gt;
+        &lt;div id="slogan"&gt;Your Company&lt;/div&gt;
+        &lt;div class="header_menu"&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div id="content"&gt;
+        &lt;div id="sidebar"&gt;
+        &lt;/div&gt;
+        &lt;div id="content_main"&gt;
+            &lt;div id="content_menu"&gt;
+            &lt;/div&gt;
+            &lt;br class="clear" /&gt;
+            &lt;div id="content_body"&gt;
+                &lt;div class="content_square"&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;br class="clear" /&gt;
+        &lt;!-- footer menu --&gt;
+        &lt;div id="content_footer"&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div id="footer"&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<p>我想基本樣板大家應該都沒有問題，唯一可能有疑問的地方是，為什麼 content 裡面，需要這麼複雜的切法？首先，因為 sidebar 需要浮動於右手邊的內容框，而內容框的選單（content_footer）需要將內容框與側邊欄推齊（使用 clear），所以，需要用一個 <span style="font-weight: bold; color: rgb(255, 0, 0);">content_main</span> 將右邊的內容框全部包起來，避免 content_footer 沒辦法將兩邊的內容推齊。</p>
+
+<p>我相信，大部份的樣板都很容易找到這些區隔的線：
+<img src="http://static.hinablue.me/blog/9208632703.png" width="600" height="500" /></p>
+
+<p>這些推齊（clear）的動作，完全靠網路上的樣板慢慢的吸收跟摸索，我想沒有誰能夠一眼看出甚麼樣的地方背景該怎麼設定，哪些欄位需要將它推齊，或是不需要推齊。而這些狀況，能盡量以<span style="font-weight: bold; color: rgb(23, 127, 205);">行的方式切齊</span>，我個人認為是最好的方式。雖然我自己的部落格是例外（眾毆），但是這種例外會因為瀏覽器版本的不同而造成畫面的差異，所以這種例外可以自 HIGH 但絕不能拿客戶開玩笑（肯定的）。</p>
+
+<p>接著，我們來看看按鈕如何製作：</p>
+
+<pre><code>        &lt;div class="header_menu"&gt;
+            &lt;ul&gt;
+                &lt;li&gt;&lt;a href="#"&gt;Home&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;|&lt;/li&gt;
+                &lt;li&gt;&lt;a href="#"&gt;About us&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;|&lt;/li&gt;
+                &lt;li&gt;&lt;a href="#"&gt;Contact us&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;|&lt;/li&gt;
+                &lt;li&gt;&lt;a href="#"&gt;Sitemap&lt;/a&gt;&lt;/li&gt;
+            &lt;/ul&gt;
+        &lt;/div&gt;
+
+#header .header_menu ul {
+    margin: 0px 30px 0px 580px;
+    padding-top: 3px;
+    list-style: none;
+    background-color: #3186c5;
+    height: 20px;
+}
+#header .header_menu ul li {
+    color: #fff;
+    float: left;
+    margin-left: 6px;
+    font-size: 0.85em;
+    font-weight: bold;
+}
+.header_menu ul li a {
+    color: #fff;
+}
+
+            &lt;div id="content_menu"&gt;
+            &lt;ul&gt;
+                &lt;li class="firstItem"&gt;Home&lt;/li&gt;
+                &lt;li class="item"&gt;About us&lt;/li&gt;
+                &lt;li class="item"&gt;Contact us&lt;/li&gt;
+                &lt;li class="item"&gt;Sitemap&lt;/li&gt;
+                &lt;li class="item"&gt;News&lt;/li&gt;
+                &lt;li class="lastItem"&gt;Services&lt;/li&gt;
+            &lt;/ul&gt;
+            &lt;/div&gt;
+
+#content_main #content_menu {
+    border: 2px solid #1579bc;
+    background-color: #2385c3;
+    width: 700px;
+    height: 30px;
+    margin:0;
+    padding:0;
+}
+#content_menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+#content_menu ul li {
+    color: #fff;
+    font-weight: bold;
+    width: 115px;
+    height: 24px;
+    float: left;
+    text-align: center;
+    padding-top: 6px;
+    cursor: pointer;
+}
+#content_menu ul li:hover {
+    background-color: #1579bc;
+}
+#content_menu ul li.firstItem {
+    border-right: 1px solid #005d96;
+}
+#content_menu ul li.lastItem {
+    border-left: 1px solid #74b4bc;
+}
+#content_menu ul li.item {
+    border-right: 1px solid #005d96;
+    border-left: 1px solid #74b4bc;
+}
+#content_menu ul a {
+    color: #fff;
+}
+#content_menu ul a:hover {
+    text-decoration: none;
+}
+</code></pre>
+
+<p>我想應該會有很多人會很納悶，幹嘛不用圖片做，又快又方便不是嗎？沒錯，圖片製作的確是又快又方便，不過，使用 CSS 來製作，雖然麻煩，但是在後續的維護上卻比起圖型要來得便利。圖形化製作按鈕或是類似清單選項，我個人覺得只有一種好處，美觀，沒錯，CSS 做出來的按鈕的確不比圖片來的美觀，但是若是使用背景圖案設定，我想 CSS 所排出來的按鈕也一樣可以很美觀。</p>
+
+<p>這是用 CSS 排出來的按鈕列，沒有使用任何圖片設置，跟使用圖片比起來，似乎也沒多大差異。
+<img src="http://static.hinablue.me/blog/4432542993.png" width="483" height="60" /></p>
+
+<p>接著，我們來完成整個 HTML：</p>
+
+<pre><code>&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-TW"&gt;
+&lt;head profile="http://gmpg.org/xfn/11"&gt;
+&lt;meta http-equiv="content-Type" content="text/html; charset=UTF-8" /&gt;
+&lt;title&gt;Simple Layout&lt;/title&gt;
+&lt;link rel="stylesheet" media="screen,print" href="./layout.css" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div id="container"&gt;
+    &lt;div id="header"&gt;
+        &lt;div id="slogan"&gt;Your Company&lt;/div&gt;
+        &lt;div class="header_menu"&gt;
+            &lt;ul&gt;
+                &lt;li&gt;&lt;a href="#"&gt;Home&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;|&lt;/li&gt;
+                &lt;li&gt;&lt;a href="#"&gt;About us&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;|&lt;/li&gt;
+                &lt;li&gt;&lt;a href="#"&gt;Contact us&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;|&lt;/li&gt;
+                &lt;li&gt;&lt;a href="#"&gt;Sitemap&lt;/a&gt;&lt;/li&gt;
+            &lt;/ul&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div id="content"&gt;
+        &lt;div id="sidebar"&gt;
+        Sidebar&lt;br /&gt;&lt;br /&gt;
+        Sidebar&lt;br /&gt;&lt;br /&gt;
+        Sidebar&lt;br /&gt;&lt;br /&gt;
+        Sidebar&lt;br /&gt;&lt;br /&gt;
+        &lt;/div&gt;
+
+        &lt;div id="content_main"&gt;
+            &lt;div id="content_menu"&gt;
+            &lt;ul&gt;
+                &lt;li class="firstItem"&gt;Home&lt;/li&gt;
+                &lt;li class="item"&gt;About us&lt;/li&gt;
+                &lt;li class="item"&gt;Contact us&lt;/li&gt;
+                &lt;li class="item"&gt;Sitemap&lt;/li&gt;
+                &lt;li class="item"&gt;News&lt;/li&gt;
+                &lt;li class="lastItem"&gt;Services&lt;/li&gt;
+            &lt;/ul&gt;
+            &lt;/div&gt;
+            &lt;br class="clear" /&gt;
+            &lt;div id="content_body"&gt;
+                &lt;h1&gt;Your Company&lt;/h1&gt;
+                &lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;
+                &lt;div class="content_square"&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;!-- footer menu --&gt;
+    &lt;div id="content_footer"&gt;
+        &lt;ul&gt;
+            &lt;li&gt;&lt;a href="#"&gt;Home&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;|&lt;/li&gt;
+            &lt;li&gt;&lt;a href="#"&gt;About us&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;|&lt;/li&gt;
+            &lt;li&gt;&lt;a href="#"&gt;Contact us&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;|&lt;/li&gt;
+            &lt;li&gt;&lt;a href="#"&gt;Sitemap&lt;/a&gt;&lt;/li&gt;    
+        &lt;/ul&gt;
+    &lt;/div&gt;
+    &lt;div id="footer"&gt;
+        &lt;div class="footer-copyright"&gt;
+        Copyright here.
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+
+@charset "utf-8";
+/******************************************************************************************************************/
+/* global */
+/******************************************************************************************************************/
+html, body {
+    font: 0.95em/1.2 "微軟正黑體", "新細明體", "Malgun Gothic", "Meiryo", "Segoe UI", "Trebuchet MS", "MS PGothic", "Gulim", "AppleGothic", "Sans-serif";
+    margin: 0;
+    padding: 0;
+}
+table, tr, td, form, div, span, input, select, textarea, button, p, a, ul, ol, li {
+    font-family: "微軟正黑體", "新細明體", "Malgun Gothic", "Meiryo", "Segoe UI", "Trebuchet MS", "MS PGothic", "Gulim", "AppleGothic", "Sans-serif";
+}
+a {
+    color: #3366CC;
+    text-decoration: none;
+}
+a:hover {
+    color: #006699;
+    text-decoration: underline;
+}
+br.clear {
+    clear: both;
+}
+/******************************************************************************************************************/
+/* header and container box setting */
+/******************************************************************************************************************/
+#container {
+    margin: 0 auto;
+    width: 950px;
+    background: url(./images/header_background_2.jpg) left top repeat-x #ffffff;
+}
+#header {
+    background: url(./images/header_background.jpg) left top no-repeat transparent;
+    width: 950px;
+    height: 170px;
+    margin: 0;
+    padding: 0;
+}
+#header #slogan {
+    float: left;
+    padding: 60px 0px 0px 250px;
+    font-size: 2em;
+    font-weight: bold;
+    color: #fff;
+}
+#header .header_menu ul {
+    margin: 0px 30px 0px 580px;
+    padding-top: 3px;
+    list-style: none;
+    background-color: #3186c5;
+    height: 20px;
+}
+#header .header_menu ul li {
+    color: #fff;
+    float: left;
+    margin-left: 6px;
+    font-size: 0.85em;
+    font-weight: bold;
+}
+.header_menu ul li a {
+    color: #fff;
+}
+/******************************************************************************************************************/
+/* content Column setting with main Column and sidebar Column */
+/******************************************************************************************************************/
+#content {
+    width: 904px;
+    height: auto;
+    background: url(./images/sidebar_body_bg.jpg) left top repeat-y #f2efe6;
+}
+#content #content_main {
+    width: 703px;
+    height: auto;
+    float: left;
+    padding: 0;
+    margin: 0;
+}
+#content #sidebar {
+    background: url(./images/sidebar_header_bg.jpg) left top no-repeat transparent;
+    width: 200px;
+    height: auto;
+    float: left;
+    padding: 135px 0px 0px 0px;
+    margin: 0;
+}
+#content_main {
+    background-color: #fff;
+    border-right: 1px solid #efefef;
+}
+#content_main #content_menu {
+    border: 2px solid #1579bc;
+    background-color: #2385c3;
+    width: 700px;
+    height: 30px;
+    margin:0;
+    padding:0;
+}
+#content_menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+#content_menu ul li {
+    color: #fff;
+    font-weight: bold;
+    width: 115px;
+    height: 24px;
+    float: left;
+    text-align: center;
+    padding-top: 6px;
+    cursor: pointer;
+}
+#content_menu ul li:hover {
+    background-color: #1579bc;
+}
+#content_menu ul li.firstItem {
+    border-right: 1px solid #005d96;
+}
+#content_menu ul li.lastItem {
+    border-left: 1px solid #74b4bc;
+}
+#content_menu ul li.item {
+    border-right: 1px solid #005d96;
+    border-left: 1px solid #74b4bc;
+}
+#content_menu ul a {
+    color: #fff;
+}
+#content_menu ul a:hover {
+    text-decoration: none;
+}
+#content_footer {
+    background-color: #f2efe6;
+    width: 950px;
+    height: 30px;
+    margin: 0 auto;
+}
+#content_footer ul {
+    list-style: none;
+    margin: 0;
+    padding: 6px 0px 0px 0px;
+    text-align: right;
+}
+#content_footer ul li {
+    font-size: 0.82em;
+    color: #666;
+    display: inline;
+    margin-right: 6px;
+}
+#content_footer ul li a {
+    color: #666;
+}
+/******************************************************************************************************************/
+/* Footer */
+/******************************************************************************************************************/
+#footer {
+    clear: both;
+    width: 100%;
+    font-size: 0.82em;
+    line-height: 1.5em;
+    text-align: center;
+    padding: 0.5em 0 0.5em;
+    color: #666;
+}
+</code></pre>
+
+<p>接下來看圖說故事，我們來說重點就好，以下內容的 CSS 均為節錄，完整設定還是如上所述。
+<img src="http://static.hinablue.me/blog/6859181871.png" width="600" height="500" /></p>
+
+<p>底下是內文區塊重點設定。</p>
+
+<p><img src="http://static.hinablue.me/blog/6915325874.png" width="600" height="500" /></p>
+
+<p>我還是要再說一次，因為這個範例樣板比較不一樣的地方是，它的背景區域有四塊，所以在本文區塊設定上才會變得比較複雜，請看圖：
+<img src="http://static.hinablue.me/blog/3608822879.png" width="600" height="500" /></p>
+
+<p>為什麼 content.background 不能做在 sidebar 裡面呢？因為，content.background 是右邊陰影漸層的圖型，而這個右邊陰影漸層會跟著 content_main 內文區塊結束而結束，所以，倘若這個背景設定在 sidebar 裡面的話，陰影漸層會隨著 sidebar 結束而結束，並不會跟著 content_main 內文區塊，這樣會導致內文區塊底色不一致，也跟原始輸出的圖型樣版不同，所以，這樣的底色需要另外再使用一個區塊將他包覆，這樣陰影漸層的圖型就會因為 content_footer 這個區塊的推齊設定，而填滿整個 content_main 區塊。</p>
+
+<p>抓緊幾個原則，我想用 CSS 來切版面，應該只會越來越精準且迅速：</p>
+
+<ol><li>找到切割基準線！</li><li>將大區塊中，可重複使用的小區塊拿出來。</li><li>對於很難界定的畸狀區塊用行切割直接切掉，最後再處理。</li><li>多看 HTML 標準文件，因為你還有沒用過的標籤。</li><li>CSS 在不同瀏覽器有不同結果，請接受。</li><li>DIV, TABLE, TR, TD, IMG 叫做 Boxing 物件，可以 inline 也可以 float，但 TR, TD 除外。</li><li>盡量不要使用 position！</li><li>使用 float 注意 height 的設定（因為在 Firefox 若不設，自動等於 0）。</li><li>IE6 sucks！</li><li>IE7 sucks！</li><li>IE8 good！</li></ol>
+
+
+<p>以上，一些粗淺的經驗跟大家分享。</p>
+
+<p><a href="http://static.hinablue.me/1258453436.zip">File download</a></p>
+
+<p>==== 以下是牢騷，可跳過，我是譙很大分隔線 ====
+總括來說，CSS 的應用還是需要長時間的練習。我常常聽到 ART 說，CSS 的東西都不太能很即時的反應在編輯器上。不過，由於我沒有使用
+Dreamweaver 或是類似編輯器的習慣，所以，照道理說，我開瀏覽器來檢查 CSS 的做法應該更不即時才對。那，為什麼我對於 CSS
+的熟悉程度還是比 ART 好一些些呢？套一句聖嚴法師說的，面對它、接受它、處理它、放下它，我還是覺得很多人遇到了這些瓶頸，都是<span style="font-weight: bold; color: rgb(255, 0, 0);">直接放下它</span>啊。</p>
+
+<p>我想 CSS 並不是很難的東西，只是我接觸的時間恰恰好比較長一點點。很多人不願意接觸的原因，我想並不是出在於 CSS
+很不好使用，而是出在於樣板本身。因為，樣板並不是你自己構思、自己切割、自己所考量的，當然就很自然的去排斥使用 CSS，還有 ART 跟我說，用
+TABLEs 切一下就好了。對啊，我也知道用 TABLEs
+切一下就好，但是，當我要你改某個區塊要挪動位置改變大小的時候，你怎麼會跟我說要明天才好呢（因為 ART 自己也找不到 TABLEs
+是放在哪個巢狀結構裡）？</p>
+
+<p>==== 以上是牢騷，可跳過，我是譙很大分隔線 ====</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">hinablue</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-05-12T21:05:00+08:00" pubdate data-updated="true">May 12<span>th</span>, 2009</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/jquery/'>jQuery</a>, <a class='category' href='/categories/javascript/'>javascript</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://blog.hinablue.me/entry/working-note-about-web-design-xhtml-and-css/" data-via="hinablue" data-counturl="http://blog.hinablue.me/entry/working-note-about-web-design-xhtml-and-css/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/entry/blahblah-talk-about-work-20090511/" title="Previous Post: [工作] 人蠢真的沒藥醫">&laquo; [工作] 人蠢真的沒藥醫</a>
+      
+      
+        <a class="basic-alignment right" href="/entry/working-note-about-web-design-xhtml-and-css-part-2/" title="next Post: [Layout tech.] Web Design note with XHTML/CSS part 2">[Layout tech.] Web Design note with XHTML/CSS part 2 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Me</h1>
+  <img src="/images/hniablue_icon.jpg" width="195" height="195" alt="Hina, Cain Chen." />
+  <p>我是閃光洽！</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+  </ul>
+</section>
+<script type="text/javascript">
+    $.domReady(function() {
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+        (function() {
+            $.ajax({
+                url: '/atom.xml',
+                dataType: 'xml',
+                success: function(xml) {
+                    var parser, expectedXML;
+                    if (window.DOMParser) {
+                        parser = new DOMParser();
+                        expectedXML = parser.parseFromString(decodeURIComponent(xml.response),"text/xml");
+                    } else {
+                        expectedXML = new ActiveXObject("Microsoft.XMLDOM");
+                        expectedXML.async = false;
+                        expectedXML.loadXML(decodeURIComponent(xml.response));
+                    }
+
+                    var entries = expectedXML.getElementsByTagName('entry');
+                    var entries_limit = entries.length > 5 ? 5 : entries.length;
+                    for(var i=0; i<entries_limit; i++) {
+                        $('<a/>')
+                        .attr('href', entries[i].childNodes[3].attributes[0].nodeValue)
+                        .text(entries[i].childNodes[1].childNodes[0].nodeValue)
+                        .appendTo($('<li/>').addClass('post').appendTo($('#recent_posts')));
+                    }
+                },
+                error: function(err) {
+                    $('<li/>').addClass('post').text('Error Loading feed').appendTo($('#recent_posts'));
+                }
+            });
+        })();
+    });
+</script>
+
+<section>
+  <h1>Github Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/hinablue">@hinablue</a> on Github
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'hinablue',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("hinablue", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/hinablue" class="twitter-follow-button" data-width="208px" data-show-count="false">Follow @hinablue</a>
+  
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/104812280860478253996?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2011 - hinablue -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'hinablue';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.hinablue.me/entry/working-note-about-web-design-xhtml-and-css/';
+        var disqus_url = 'http://blog.hinablue.me/entry/working-note-about-web-design-xhtml-and-css/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,683 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[php tech.] MSN Bot step by step part 2 Connect HOWTO - HINA::工程幼稚園</title>
+  <meta name="author" content="hinablue">
+
+  
+  <meta name="description" content="連線，其實並不是一件簡單的事情。要怎麼樣讓一個程序，能夠持續的跟伺服器溝通，卻不會因為逾時等問題導致連線中斷，這就是即時通訊比較麻煩的地方。首先，我們首先需要做的，就是跟 MSN 的服務做溝通的動作，這個溝通動作有詳細的命令，請參閱：http://msnpiki.msnfanatic.com/ &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.hinablue.me/entry/php-tech-MSN-Bot-step-by-step-part-2-Connect-HOWTO">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/hinablue" rel="alternate" title="HINA::工程幼稚園" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-259895-17']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">HINA::工程幼稚園</a></h1>
+  
+    <h2>偏執與強迫症的患者，算不上是無可救藥，只是我已經遇上我的良醫了。</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/hinablue" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.hinablue.me" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[Php Tech.] MSN Bot Step by Step Part 2 Connect HOWTO</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-07-02T11:44:00+08:00" pubdate data-updated="true">Jul 2<span>nd</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>連線，其實並不是一件簡單的事情。要怎麼樣讓一個程序，能夠持續的跟伺服器溝通，卻不會因為逾時等問題導致連線中斷，這就是即時通訊比較麻煩的地方。首先，我們首先需要做的，就是跟 MSN 的服務做溝通的動作，這個溝通動作有詳細的命令，請參閱：<a href="http://msnpiki.msnfanatic.com/index.php/Reference:Commands" target="_blank">http://msnpiki.msnfanatic.com/index.php/Reference:Commands</a></p>
+
+<p><span style="font-weight: bold; color: rgb(255, 0, 0);">注意，溝通的動作如果送太多次，會被 MSN 服務給擋掉喔！所以請勿輕易用固定 IP 的主機嘗試。</span></p>
+
+<p>首先，跟 MSN 服務溝通的第一步，我們使用 php 的 fsockopen 來與服務器做溝通。並且告訴他我們所使用的通訊協定版本。</p>
+
+<pre><code>&lt;?php
+    $id = 1;
+    $fp = fsockopen('messenger.hotmail.com', 1863, $errno, $errstr, 5);
+    stream_set_timeout($fp, 2);
+    if (!$fp) {
+        echo "Can't connect to messenger.hotmail.com:1863, error =&gt; $errno, $errstr";
+</code></pre>
+
+<!-- more -->
+
+
+<pre><code>        exit;
+    }
+    fwrite($fp, "VER $id MSNP15 CVR0\r\n");
+    fclose($fp);
+
+&lt;?php
+    $id = 1;
+    $fp = fsockopen('messenger.hotmail.com', 1863, $errno, $errstr, 5);
+    stream_set_timeout($fp, 2);
+    if (!$fp) {
+        echo "Can't connect to messenger.hotmail.com:1863, error =&gt; $errno, $errstr";
+        exit;
+    }
+    fwrite($fp, "VER $id MSNP15 CVR0\r\n");
+    while (!feof($fp)) {
+        $data = fgets($fp, 4096);
+        $id++;
+        $code = substr($data, 0, 3);
+        switch ($code) {
+            case 'VER':
+                fwrite($fp, "CVR $id 0x0409 winnt 5.1 i386 MSMSGS 8.1.0178 msmsgs bot1@hinablue.me\r\n");
+            break;
+            default:
+                fwrite($fp, "OUT\r\n");
+        }
+    }
+    fclose($fp);
+
+&lt;?php
+    $id = 1;
+    $fp = fsockopen('messenger.hotmail.com', 1863, $errno, $errstr, 5);
+    stream_set_timeout($fp, 2);
+    if (!$fp) {
+        echo "Can't connect to messenger.hotmail.com:1863, error =&gt; $errno, $errstr";
+        exit;
+    }
+    fwrite($fp, "VER $id MSNP15 CVR0\r\n");
+    while (!feof($fp)) {
+        $data = fgets($fp, 4096);
+        $id++;
+        $code = substr($data, 0, 3);
+        switch ($code) {
+            case 'VER':
+                fwrite($fp, "CVR $id 0x0409 winnt 5.1 i386 MSMSGS 8.1.0178 msmsgs bot1@hinablue.me\r\n");
+            break;
+            case 'CVR':
+                fwrite($fp, "USR $id SSO I bot1@hinablue.me\r\n");
+            break;
+            default:
+                fwrite($fp, "OUT\r\n");
+        }
+    }
+    fclose($fp);
+
+&lt;?php
+    $id = 1;
+    $fp = fsockopen('messenger.hotmail.com', 1863, $errno, $errstr, 5);
+    stream_set_timeout($fp, 2);
+    if (!$fp) {
+        echo "Can't connect to messenger.hotmail.com:1863, error =&gt; $errno, $errstr";
+        exit;
+    }
+    fwrite($fp, "VER $id MSNP15 CVR0\r\n");
+    while (!feof($fp)) {
+        $data = fgets($fp, 4096);
+        $id++;
+        $code = substr($data, 0, 3);
+        switch ($code) {
+            case 'VER':
+                fwrite($fp, "CVR $id 0x0409 winnt 5.1 i386 MSMSGS 8.1.0178 msmsgs bot1@hinablue.me\r\n");
+            break;
+            case 'CVR':
+                fwrite($fp, "USR $id SSO I bot1@hinablue.me\r\n");
+            break;
+            case 'USR':
+                // 這裡是做登入檢查的地方，現在暫時不做，讓他直接離開。
+                fwrite($fp, "OUT\r\n");
+            break;
+            default:
+                fwrite($fp, "OUT\r\n");
+        }
+    }
+    fclose($fp);
+</code></pre>
+
+<p>在取得登入動作之前，還有兩個預設的動作，一個是 XFR，另一個是 GCF，所以我們個別處理。</p>
+
+<pre><code>&lt;?php
+    $id = 1;
+    $fp = fsockopen('messenger.hotmail.com', 1863, $errno, $errstr, 5);
+    stream_set_timeout($fp, 2);
+    if (!$fp) {
+        echo "Can't connect to messenger.hotmail.com:1863, error =&gt; $errno, $errstr";
+        exit;
+    }
+    fwrite($fp, "VER $id MSNP15 CVR0\r\n");
+    while (!feof($fp)) {
+        $data = fgets($fp, 4096);
+        $id++;
+        $code = substr($data, 0, 3);
+        switch ($code) {
+            case 'VER':
+                fwrite($fp, "CVR $id 0x0409 winnt 5.1 i386 MSMSGS 8.1.0178 msmsgs bot1@hinablue.me\r\n");
+            break;
+            case 'CVR':
+                fwrite($fp, "USR $id SSO I bot1@hinablue.me\r\n");
+            break;
+            case 'USR':
+                // 這裡是做登入檢查的地方，現在暫時不做，讓他直接離開。
+                fwrite($fp, "OUT\r\n");
+            break;
+            case 'XFR':
+                @list(/* XFR */, /* id */, /* NS */, $server, /* ... */) = @explode(' ', $data);
+                @list($ip, $port) = @explode(':', $server);
+                fclose($fp);
+                $fp = @fsockopen($ip, $port, $errno, $errstr, 5);
+                if (!$fp) {
+                    return false;
+                }
+                stream_set_timeout($fp, 2);
+                fwrite($fp, "VER $id MSNP15 CVR0\r\n");
+                break;
+            break;
+            case 'GCF':
+                // 這裡會取得非常大量的資料，暫時不做處理，直接讓他離開。
+                fwrite($fp, "OUT\r\n");
+            break;
+            default:
+                fwrite($fp, "OUT\r\n");
+        }
+    }
+    fclose($fp);
+</code></pre>
+
+<p>[code]
+VER 1 MSNP15
+CVR 2 1.0.0000 1.0.0000 1.0.0000 http://msgr.dlservice.microsoft.com http://download.live.com/?sku=messenger
+XFR 3 NS 64.4.34.156:1863 U D
+VER 4 MSNP15
+CVR 5 1.0.0000 1.0.0000 1.0.0000 http://msgr.dlservice.microsoft.com http://download.live.com/?sku=messenger
+GCF 0 7019
+<Policies>
+<Policy type="ABCH">
+<policy>
+<set id="push" service="ABCH" priority="200"></p>
+
+<pre><code>  &lt;r id="pushstorage" threshold="180000" /&gt;
+&lt;/set&gt;
+</code></pre>
+
+<p><set id="delaysup" service="ABCH" priority="150">
+  <r id="whatsnew" threshold="900000" />
+  <r id="whatsnew_storage_ABCH_delay" timer="900000" />
+</set>
+</policy>
+</Policy>
+<Policy type="SHIELDS">
+<config>
+  <shield></p>
+
+<pre><code>&lt;cli maj="7" min="0" minbld="0" maxbld="9999" deny="" /&gt;
+</code></pre>
+
+<p>  </shield>
+  <block></p>
+
+<pre><code>&lt;hashes&gt;
+&lt;/hashes&gt;
+&lt;regexp&gt;
+  &lt;imtext value="cGhvdG8yMzRcLnppcA==" /&gt;
+  &lt;imtext value="aW1nMDIxXC56aXA=" /&gt;
+  &lt;imtext value="dGFueWFiYWJlXC56aXA=" /&gt;
+  &lt;imtext value="c3R1ZmZcLnppcA==" /&gt;
+  &lt;imtext value="Zm90b3NcLnppcA==" /&gt;
+  &lt;imtext value="dHVmb3Rv" /&gt;
+  &lt;imtext value="Z2V0LW1lc3Nlbmdlcg==" /&gt;
+  &lt;imtext value="Mm5udmM3" /&gt;
+  &lt;imtext value="YmxvY2tpbnJpbw==" /&gt;
+  &lt;imtext value="bWVzc2FnaW5nLW5hbWVz" /&gt;
+  &lt;imtext value="cGljdHVyYTAwMg==" /&gt;
+  &lt;imtext value="bWVzc2VuZ2VyLXNjYW4=" /&gt;
+  &lt;imtext value="c3VtbWVyMjAwOA==" /&gt;
+  &lt;imtext value="bWVzc2VuZ2VyZGVsZXRlY2hlY2tlcg==" /&gt;
+  &lt;imtext value="cGhvdG9hbGJ1bTIwMDc=" /&gt;
+  &lt;imtext value="aW1hZ2UwMjlcLnppcA==" /&gt;
+  &lt;imtext value="Zm90b183ODFcLnppcA==" /&gt;
+  &lt;imtext value="Y2hpcnN0bWFzLTIwMDdcLnppcA==" /&gt;
+  &lt;imtext value="cGhvdG8yMDA3LTEyXC56aXA=" /&gt;
+  &lt;imtext value="aW1nNS0yMDA3XC56aXA=" /&gt;
+  &lt;imtext value="bXlwaWN0dXJlcy0wMTA4XC56aXA=" /&gt;
+  &lt;imtext value="d3d3XC5la2FzdGFtb251XC5pbmZv" /&gt;
+  &lt;imtext value="d3d3XC5tc24tZnJpZW5kXC5jb20=" /&gt;
+  &lt;imtext value="d3d3XC5zb250YXJpaFwuaW5mbw==" /&gt;
+  &lt;imtext value="cGhvdG9zMS0yMDA4XC56aXA=" /&gt;
+  &lt;imtext value="aGFwcHkyMDA4XC5leGU=" /&gt;
+  &lt;imtext value="aGFwcHlfMjAwOFwuZXhl" /&gt;
+  &lt;imtext value="aGFwcHktMjAwOFwuZXhl" /&gt;
+  &lt;imtext value="bmV3X3llYXJzX2xldHRlcl9mbGFzaFwuZXhl" /&gt;
+  &lt;imtext value="d3d3XC5tc25saXN0c3RhdHVzXC5jb20=" /&gt;
+  &lt;imtext value="d3d3XC5nb2xkd2luZG9zMjAwMFwuY29t" /&gt;
+  &lt;imtext value="d3d3XC5tc253ZWJpbWFnZXNcLmNvbQ==" /&gt;
+  &lt;imtext value="d3d3XC5tYWlubXNuXC5jb20=" /&gt;
+  &lt;imtext value="d3d3XC5idXJhc2lzZW5pbnllcmluXC5pbmZv" /&gt;
+  &lt;imtext value="bWFpbm1zblwuY29t" /&gt;
+  &lt;imtext value="d3d3XC5lbXJldFwuaW5mbw==" /&gt;
+  &lt;imtext value="d3d3XC5tc25zcHlcLmV1" /&gt;
+  &lt;imtext value="bWFpbm1zblwubmV0" /&gt;
+  &lt;imtext value="aW1hZ2VzXC5pZG9ob3N0XC5jb20=" /&gt;
+  &lt;imtext value="Zm1jb25zdWx0aW5n" /&gt;
+  &lt;imtext value="bXNuZ2FsbGVyeVwubXNcLmZ1bnBpY1wuZGU=" /&gt;
+  &lt;imtext value="ZS1hZnlvbmthcmFoaXNhclwuaW5mbw==" /&gt;
+  &lt;imtext value="YWNpc2FsYXZhbnNcLmluZm8=" /&gt;
+  &lt;imtext value="YWNpbGFzdGlyXC5pbmZv" /&gt;
+  &lt;imtext value="YW1hem9uaGFsa2lcLmluZm8=" /&gt;
+  &lt;imtext value="ZWthcnNcLmluZm8=" /&gt;
+  &lt;imtext value="YmlyZXljaVwuaW5mbw==" /&gt;
+  &lt;imtext value="cmV1dHlcLmluZm8=" /&gt;
+  &lt;imtext value="cG9ydGFrYWxsaWRhdmV0XC5pbmZv" /&gt;
+  &lt;imtext value="YW1hem9uZGFrYXlib2xkdW1cLmluZm8=" /&gt;
+  &lt;imtext value="ZGFuc2FkaW1pXC5pbmZv" /&gt;
+  &lt;imtext value="dXlzYWxsaWtcLmluZm8=" /&gt;
+  &lt;imtext value="YmV6Z2lcLmluZm8=" /&gt;
+  &lt;imtext value="c3VsYW5kaXJtYQ==" /&gt;
+  &lt;imtext value="dHVuYWJhbGlnaQ==" /&gt;
+  &lt;imtext value="eW9ydW5nZXNlbA==" /&gt;
+  &lt;imtext value="dHVoYWZraW1zZQ==" /&gt;
+  &lt;imtext value="YWNpc2FsY2FwXC5pbmZv" /&gt;
+  &lt;imtext value="Ym95YW1hZ3VjdQ==" /&gt;
+  &lt;imtext value="dHV0dXNrYW5saWs=" /&gt;
+  &lt;imtext value="YWNpc2FsY2Fw" /&gt;
+  &lt;imtext value="bXNucHJvZmlsZXNcLm1zXC5mdW5waWNcLmRl" /&gt;
+  &lt;imtext value="aW1hZ2VzXC5nZXRlbmpveW1lbnRcLm5ldA==" /&gt;
+  &lt;imtext value="bXltc25nYWxsZXJ5" /&gt;
+  &lt;imtext value="ZnVucGljXC5kZQ==" /&gt;
+  &lt;imtext value="aW1hZ2UwMzFcLnppcA==" /&gt;
+  &lt;imtext value="Zm90bzcyMmE2" /&gt;
+  &lt;imtext value="cGhvdG8yMVwuemlw" /&gt;
+  &lt;imtext value="cGljdHVyZTIyXC56aXA=" /&gt;
+  &lt;imtext value="cGljdHVyZXo5MjNcLnppcA==" /&gt;
+  &lt;imtext value="cGhvdG9fNjg4LWpwZ1wuemlw" /&gt;
+  &lt;imtext value="bXlwaG90bzk0XC56aXA=" /&gt;
+  &lt;imtext value="dmlkZW9cLmV4ZQ==" /&gt;
+  &lt;imtext value="a3V6ZW5cLmV4ZQ==" /&gt;
+  &lt;imtext value="bWlyY1wuZXhl" /&gt;
+  &lt;imtext value="YmFja2Rvb3I6aXJjL2Zsb29kXC5jYw==" /&gt;
+  &lt;imtext value="Zm90b18wMjdcLnppcA==" /&gt;
+  &lt;imtext value="Zm90bzcwOGs2XC56aXA=" /&gt;
+  &lt;imtext value="bXNuYmxvY2tsaXN0XC5jb20=" /&gt;
+  &lt;imtext value="bXNuLWZyaWVuZFwuY29t" /&gt;
+  &lt;imtext value="cXVpZW50ZWFkbWl0ZVwuY29t" /&gt;
+  &lt;imtext value="Y2hlY2ttZXNzZW5nZXJcLm5ldA==" /&gt;
+  &lt;imtext value="bXNuYmxvY2tlcmxpc3RcLmNvbQ==" /&gt;
+  &lt;imtext value="bXNubGlzdHN0YXR1c1wuY29t" /&gt;
+  &lt;imtext value="ZnJpZW5kbHktb2ZmZXJcLmNvbQ==" /&gt;
+  &lt;imtext value="c2plZ2F0XC5waWNzXC5za2FxXC5pbmZv" /&gt;
+  &lt;imtext value="c2V0dXBcLmV4ZQ==" /&gt;
+  &lt;imtext value="aG9zdGlsZWFwcGxldA==" /&gt;
+  &lt;imtext value="Z3NkYWdkZmdhc2RnczI0NTc0NTIyNDdcLmV4ZQ==" /&gt;
+  &lt;imtext value="Z3NkZGFzMjQ1ODcyMTRnc2RcLmV4ZQ==" /&gt;
+  &lt;imtext value="Zm90by0zMTFfanBlZw==" /&gt;
+  &lt;imtext value="aW1hZ2UyMDZcLmpwZy13d3dcLnBob3Rvc2hhcmVcWzFdXC5jb20=" /&gt;
+  &lt;imtext value="aW1hZ2UyMDZcLmpwZw==" /&gt;
+  &lt;imtext value="YnVzaFwuY29t" /&gt;
+  &lt;imtext value="Y2FtZGFcLmV4ZQ==" /&gt;
+  &lt;imtext value="eW91dHViZV9naXJpc19wcm9ncmFtaVwuZXhl" /&gt;
+  &lt;imtext value="Y2gzY2szclwuaW5mbw==" /&gt;
+  &lt;imtext value="cjU3OWRrYTkyalwuemlw" /&gt;
+  &lt;imtext value="MjAzXC4xNTVcLjc0XC45MS9lbGliL2Jsb2cvYmxvZ1wuaHRtbA==" /&gt;
+  &lt;imtext value="aWRcLmI0bmdcLmluZm8=" /&gt;
+  &lt;imtext value="bW9uY2xvY2hlclwuY29t" /&gt;
+  &lt;imtext value="aW1hZ2Vzd2l0Y2hcLmluZm8=" /&gt;
+  &lt;imtext value="c3BsaW50ZXJcLmhvc3RpbWdzXC5pbmZv" /&gt;
+  &lt;imtext value="dWx0aW1hdGUtc3R1ZmZcLmluZm8=" /&gt;
+  &lt;imtext value="bmV3ZXN0cGljdHVyZTAzXC5qcGc=" /&gt;
+  &lt;imtext value="d3d3XC5mcmVlcGxheWxpc3RcLmluZm8=" /&gt;
+  &lt;imtext value="bm90aWNpYXNkb2JyYXNpbFwuY29tXC5zYXBvXC5wdC9ub3RpY2lhdXJnZW50ZWJyYXNpbG51bWVybzk4MjFcLmNvbQ==" /&gt;
+  &lt;imtext value="d3d3XC5ob3JueW1hdGNoZXNcLmNvbQ==" /&gt;
+  &lt;imtext value="d2luZG93c215X3Bob3Rvc18xNTMwMVwuemlw" /&gt;
+  &lt;imtext value="cGhvdG9zXzE1MzAxXC56aXA=" /&gt;
+  &lt;imtext value="d2ViY2FtZXJhNHlvdVwubmV0" /&gt;
+  &lt;imtext value="dXN1YXJpb3NcLmx5Y29zXC5lcy9saXl0cmU=" /&gt;
+  &lt;imtext value="dGhld29tYW5pemVyXC5uZXQ=" /&gt;
+  &lt;imtext value="aW1wbGF5XC5jb20=" /&gt;
+  &lt;imtext value="aW1wbGF5XC5vcmc=" /&gt;
+  &lt;imtext value="Ym9ieXVwXC5jb20=" /&gt;
+  &lt;imtext value="YWlydW5pcXVlXC5ib2J5dXBcLmNvbQ==" /&gt;
+  &lt;imtext value="Ym9iYmxha1wuY29t" /&gt;
+  &lt;imtext value="cGljcy1hdC10aGUtcGFydHlcLmNvbQ==" /&gt;
+  &lt;imtext value="Ym9iem9wXC5jb20=" /&gt;
+  &lt;imtext value="bW9vcnNoXC5jb20=" /&gt;
+  &lt;imtext value="Ym9ieXVw" /&gt;
+  &lt;imtext value="d3d3XC5teXNwY1wubmV0" /&gt;
+  &lt;imtext value="d293YmFtXC5jb20=" /&gt;
+  &lt;imtext value="Zm90b1wuZXhl" /&gt;
+  &lt;imtext value="ZHNjMjAwOTAxMTdcLmpwZ1wuZXhl" /&gt;
+  &lt;imtext value="ZnJpZW5kaW1zXC5jb20=" /&gt;
+  &lt;imtext value="bm93cG91bmRzXC5jb20=" /&gt;
+  &lt;imtext value="Y2xpcGRlZXBzXC5jb20=" /&gt;
+  &lt;imtext value="YmVpbmctc2luZ2xlXC5jb20vaW52aXRhdGlvblwucGhw" /&gt;
+  &lt;imtext value="aGVhcnRtZWJhZFwuY29tL2RhdGVcLnBocA==" /&gt;
+  &lt;imtext value="ZGlwaWV0cm8xMFwubm9ucmVjZWl2ZWRtYWlsXC5jb20vY2xpY2tcLnBocA==" /&gt;
+  &lt;imtext value="bWFrZW1leW91cmxvdmVyXC5jb20vcHVzc3lcLnBocA==" /&gt;
+&lt;/regexp&gt;
+</code></pre>
+
+<p>  </block>
+</config>
+</Policy>
+</Policies>
+USR 6 SSO S MBI_KEY_OLD n1DPXrGuiTp6hWDiJNCQkLI1weGA2TJl27DlzyApfPhq2TvV0frz0v+tfbpZFHQH</p>
+
+<p>其實，無論你要做甚麼樣的動作，其實都得透過 <a href="http://msnpiki.msnfanatic.com/index.php/Reference:Commands" target="_blank">Command</a> 來達成，只有某些特定的資料取得，是需要透過 SOAP 來抓取，詳細的資料可以參考這裡：</p>
+
+<ol><li><a href="http://msnpiki.msnfanatic.com/index.php/MSNP13:Contact_List" target="_blank">http://msnpiki.msnfanatic.com/index.php/MSNP13:Contact_List</a></li><li><a href="http://msnpiki.msnfanatic.com/index.php/MSNP13:Contact_Membership" target="_blank">http://msnpiki.msnfanatic.com/index.php/MSNP13:Contact_Membership</a></li><li><a href="http://msnpiki.msnfanatic.com/index.php/MSNP13:Contact_Updates" target="_blank">http://msnpiki.msnfanatic.com/index.php/MSNP13:Contact_Updates</a></li><li><a href="http://msnpiki.msnfanatic.com/index.php/MSNP13:Offline_IM" target="_blank">http://msnpiki.msnfanatic.com/index.php/MSNP13:Offline_IM</a></li><li><a href="http://msnpiki.msnfanatic.com/index.php/MSNP13:SOAPTweener" target="_blank">http://msnpiki.msnfanatic.com/index.php/MSNP13:SOAPTweener</a></li></ol>
+
+
+<p>這些較為特殊的 SOAP 是需要比較特別的方式去處理，不然其他的動作其實都是透過 Command 來完成的。以上，就是 MSN 服務連線的粗淺介紹。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">hinablue</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-07-02T11:44:00+08:00" pubdate data-updated="true">Jul 2<span>nd</span>, 2009</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/php/'>PHP</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://blog.hinablue.me/entry/php-tech-MSN-Bot-step-by-step-part-2-Connect-HOWTO/" data-via="hinablue" data-counturl="http://blog.hinablue.me/entry/php-tech-MSN-Bot-step-by-step-part-2-Connect-HOWTO/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/entry/php-tech-MSN-Bot-step-by-step-part-1-SSO-HOWTO/" title="Previous Post: [php tech.] MSN Bot step by step part 1 SSO HOWTO">&laquo; [php tech.] MSN Bot step by step part 1 SSO HOWTO</a>
+      
+      
+        <a class="basic-alignment right" href="/entry/plurk-tech-add-link-with-jquery-in-the-responses-list/" title="next Post: [plurk tech.] 在單一噗浪頁面加入回應鏈結 + jQuery">[plurk tech.] 在單一噗浪頁面加入回應鏈結 + jQuery &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Me</h1>
+  <img src="/images/hniablue_icon.jpg" width="195" height="195" alt="Hina, Cain Chen." />
+  <p>我是閃光洽！</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+  </ul>
+</section>
+<script type="text/javascript">
+    $.domReady(function() {
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+        (function() {
+            $.ajax({
+                url: '/atom.xml',
+                dataType: 'xml',
+                success: function(xml) {
+                    var parser, expectedXML;
+                    if (window.DOMParser) {
+                        parser = new DOMParser();
+                        expectedXML = parser.parseFromString(decodeURIComponent(xml.response),"text/xml");
+                    } else {
+                        expectedXML = new ActiveXObject("Microsoft.XMLDOM");
+                        expectedXML.async = false;
+                        expectedXML.loadXML(decodeURIComponent(xml.response));
+                    }
+
+                    var entries = expectedXML.getElementsByTagName('entry');
+                    var entries_limit = entries.length > 5 ? 5 : entries.length;
+                    for(var i=0; i<entries_limit; i++) {
+                        $('<a/>')
+                        .attr('href', entries[i].childNodes[3].attributes[0].nodeValue)
+                        .text(entries[i].childNodes[1].childNodes[0].nodeValue)
+                        .appendTo($('<li/>').addClass('post').appendTo($('#recent_posts')));
+                    }
+                },
+                error: function(err) {
+                    $('<li/>').addClass('post').text('Error Loading feed').appendTo($('#recent_posts'));
+                }
+            });
+        })();
+    });
+</script>
+
+<section>
+  <h1>Github Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/hinablue">@hinablue</a> on Github
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'hinablue',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("hinablue", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/hinablue" class="twitter-follow-button" data-width="208px" data-show-count="false">Follow @hinablue</a>
+  
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/104812280860478253996?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2011 - hinablue -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'hinablue';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.hinablue.me/entry/php-tech-MSN-Bot-step-by-step-part-2-Connect-HOWTO/';
+        var disqus_url = 'http://blog.hinablue.me/entry/php-tech-MSN-Bot-step-by-step-part-2-Connect-HOWTO/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

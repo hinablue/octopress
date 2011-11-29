@@ -1,0 +1,469 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[jQuery tech.] 你的 stop() 真的 stop 了嗎 - 漫談 queue() part 2 - HINA::工程幼稚園</title>
+  <meta name="author" content="hinablue">
+
+  
+  <meta name="description" content="看過上一回的問題之後，我們接著看 queue() 與 dequeue() 在核心中做了甚麼事情： jQuery.extend({ queue: function( elem, type, data ) { if ( !elem ) { return; } type = (type || "fx &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.hinablue.me/entry/jQuery-queue-and-sure-your-stop-really-stop-part-2">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/hinablue" rel="alternate" title="HINA::工程幼稚園" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-259895-17']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">HINA::工程幼稚園</a></h1>
+  
+    <h2>偏執與強迫症的患者，算不上是無可救藥，只是我已經遇上我的良醫了。</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/hinablue" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.hinablue.me" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[jQuery Tech.] 你的 Stop() 真的 Stop 了嗎 - 漫談 Queue() Part 2</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-03-01T16:41:00+08:00" pubdate data-updated="true">Mar 1<span>st</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>看過<a href="http://blog.hinablue.me/827" target="_blank">上一回</a>的問題之後，我們接著看 queue() 與 dequeue() 在核心中做了甚麼事情：</p>
+
+<pre><code>jQuery.extend({
+    queue: function( elem, type, data ) {
+        if ( !elem ) {
+            return;
+        }
+
+        type = (type || "fx") + "queue";
+        var q = jQuery.data( elem, type );
+</code></pre>
+
+<!-- more -->
+
+
+<pre><code>        // Speed up dequeue by getting out quickly if this is just a lookup
+
+        /// 一般而言，我們無需特別傳入 data 這個數值陣列，因為 queue() 會自動把 elem 本身的動作排入
+
+
+        /// 所以，倘若你沒有指定其他的事件時，他就直接返回以 elem 自身動作為主的排程
+
+
+        /// queue() 你可以把他想成，一種事件能夠依序執行的『排程』
+
+
+
+        if ( !data ) {
+            return q || [];
+        }
+
+        /// 相反的，倘若你指定了其他事件，他就會堆入 queue() 的流程裡面
+
+
+
+        /// 值得注意的是，你追加了多少事件，就增加的多少個 queue() 的排程
+
+        if ( !q || jQuery.isArray(data) ) {
+            q = jQuery.data( elem, type, jQuery.makeArray(data) );
+
+        } else {
+            q.push( data );
+        }
+
+        return q;
+    },
+
+
+
+
+
+    dequeue: function( elem, type ) {
+        type = type || "fx";
+
+        var queue = jQuery.queue( elem, type ), fn = queue.shift();
+
+        // If the fx queue is dequeued, always remove the progress sentinel
+
+        /// 移除 queue() 的方式很神，他是先斬後奏，他先取出第一個 queue() 然後判斷是不是 "inprogress"
+
+        /// 如果是，繼續往下取，而因為是"一個接著一個"的方式去做，所以下一個儼然就不是 "inprogress"
+
+        /// 如果不是，就沒甚麼好說的，繼續往下做
+
+
+        if ( fn === "inprogress" ) {
+            fn = queue.shift();
+        }
+
+
+        /// fn 有值嗎？當然有，如果沒有表示 queue() 已經被執行完畢。
+
+
+        /// 如果 type 相符（意同於呼叫一個自訂 queue()，預設是 fx），就在原有的 queue 堆一個 "inprogress" 在前面
+
+        /// 最後回呼下一個 fn，然後再次 dequeue()，達到『先斬後奏』的方法。
+
+        if ( fn ) {
+            // Add a progress sentinel to prevent the fx queue from being
+            // automatically dequeued
+            if ( type === "fx" ) {
+                queue.unshift("inprogress");
+            }
+
+            fn.call(elem, function() {
+                jQuery.dequeue(elem, type);
+            });
+        }
+    }
+});
+</code></pre>
+
+<p>大抵上來說，我們需要停止或是暫停某些效果時，確實是使用 stop(true,true) 是最為妥當的一個方式，更甚是連帶的將你所設定的 queue 排程清空──其實等同於 stop 的第一個 true 的結果──來確保不會發生意外。然而，如果你需要的是<span style="font-weight: bold; color: rgb(255, 0, 0);">暫時停止</span>，那 <span style="font-weight: bold; color: rgb(255, 0, 0);">stop() 的任何設置可能都無法很直覺的使用</span>！</p>
+
+<p>所以，倘若你的動態效果<span style="font-weight: bold; color: rgb(255, 0, 0);">超過兩個步驟</span>以上，需要可以中途停止並且能繼續執行，請不要使用 . 連字號來使用 queue() 與 dequeue() 這兩個方法，除非你<span style="text-decoration: line-through;">不要停！不要停！不要停！</span>不想停！不想停！不想停！老師叫你停你都沒有再聽，你看看現在停不下來了吧（丟滑鼠）。</p>
+
+<ol><li>原生 queue() 與 dequeue() 因為先斬後奏，所以要由原生 jQuery 來做到是不可能的。</li><li>使用 . 連字號也是不可暫停的。</li></ol>
+
+
+<p>那我要怎麼暫停？</p>
+
+<ol><li>將動態效果拆入陣列中，當作是 data 傳入 queue()。</li><li>將動態效果陣列另存成一個陣列（例如：myQueue），他是可變動的。
+</li><li>呼叫 dequeue() ──動態效果開始的每一個步驟──之前，紀錄下陣列鍵值。</li><li>請用下列方式去調停 queue()：
+    
+    var $box = $(&#8216;#div-a&#8217;);
+            $box.queue([]);
+            $box.each(function() {
+                var timers = jQuery.timers;
+                // go in reverse order so anything added to the queue during the loop is ignored
+                for ( var i = timers.length - 1; i >= 0; i&#8211; ) {
+                    if ( timers[i].elem === this ) {
+                        timers.splice(i, 1);
+                    }
+                }
+            });
+
+</li><li>當在次按下開始的時候，將 myQueue 中，小於該步驟紀錄鍵值的 data 全數 shift() 掉，再將這個新的 myQueue 傳入。</li><li>往後的步驟都是這樣做，直到整個 myQueue 被執行完畢。</li></ol>
+
+
+<p><font style="color: rgb(255, 0, 0);" size="6"><span style="font-weight: bold;">範例呢？</span><br style="font-weight: bold;"><span style="font-weight: bold;">在電鍋裡，請自己盛！</span></font></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">hinablue</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-03-01T16:41:00+08:00" pubdate data-updated="true">Mar 1<span>st</span>, 2010</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/jquery/'>jQuery</a>, <a class='category' href='/categories/javascript/'>javascript</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://blog.hinablue.me/entry/jQuery-queue-and-sure-your-stop-really-stop-part-2/" data-via="hinablue" data-counturl="http://blog.hinablue.me/entry/jQuery-queue-and-sure-your-stop-really-stop-part-2/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/entry/jQuery-queue-and-sure-your-stop-really-stop/" title="Previous Post: [jQuery tech.] 你的 stop() 真的 stop 了嗎 - 漫談 queue() part 1">&laquo; [jQuery tech.] 你的 stop() 真的 stop 了嗎 - 漫談 queue() part 1</a>
+      
+      
+        <a class="basic-alignment right" href="/entry/photos-2010-03-08-sakura-in-the-Tianyuan-palace/" title="next Post: [影像] 人比花多，天元宮吉野櫻">[影像] 人比花多，天元宮吉野櫻 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Me</h1>
+  <img src="/images/hniablue_icon.jpg" width="195" height="195" alt="Hina, Cain Chen." />
+  <p>我是閃光洽！</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+  </ul>
+</section>
+<script type="text/javascript">
+    $.domReady(function() {
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+        (function() {
+            $.ajax({
+                url: '/atom.xml',
+                dataType: 'xml',
+                success: function(xml) {
+                    var parser, expectedXML;
+                    if (window.DOMParser) {
+                        parser = new DOMParser();
+                        expectedXML = parser.parseFromString(decodeURIComponent(xml.response),"text/xml");
+                    } else {
+                        expectedXML = new ActiveXObject("Microsoft.XMLDOM");
+                        expectedXML.async = false;
+                        expectedXML.loadXML(decodeURIComponent(xml.response));
+                    }
+
+                    var entries = expectedXML.getElementsByTagName('entry');
+                    var entries_limit = entries.length > 5 ? 5 : entries.length;
+                    for(var i=0; i<entries_limit; i++) {
+                        $('<a/>')
+                        .attr('href', entries[i].childNodes[3].attributes[0].nodeValue)
+                        .text(entries[i].childNodes[1].childNodes[0].nodeValue)
+                        .appendTo($('<li/>').addClass('post').appendTo($('#recent_posts')));
+                    }
+                },
+                error: function(err) {
+                    $('<li/>').addClass('post').text('Error Loading feed').appendTo($('#recent_posts'));
+                }
+            });
+        })();
+    });
+</script>
+
+<section>
+  <h1>Github Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/hinablue">@hinablue</a> on Github
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'hinablue',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("hinablue", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/hinablue" class="twitter-follow-button" data-width="208px" data-show-count="false">Follow @hinablue</a>
+  
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/104812280860478253996?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2011 - hinablue -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'hinablue';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.hinablue.me/entry/jQuery-queue-and-sure-your-stop-really-stop-part-2/';
+        var disqus_url = 'http://blog.hinablue.me/entry/jQuery-queue-and-sure-your-stop-really-stop-part-2/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,460 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[CSS note.] SASS - Say a sexy styling（刪除線） - HINA::工程幼稚園</title>
+  <meta name="author" content="hinablue">
+
+  
+  <meta name="description" content="SASS 全名是 Syntactically Awesome Stylesheets，當然不是我說得那個（媽媽有說，認真就輸了（揍飛），也許有人會說，踏碼的有一個 CSS 就已經很難搞了，現在來搞一個 SASS 來自作孽幹麼？或者是，這一切一定都是你們這些 programmer 在自 HIGH &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.hinablue.me/entry/css-note-sass-del-say-a-sexy-styling-del">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/hinablue" rel="alternate" title="HINA::工程幼稚園" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-259895-17']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">HINA::工程幼稚園</a></h1>
+  
+    <h2>偏執與強迫症的患者，算不上是無可救藥，只是我已經遇上我的良醫了。</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/hinablue" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.hinablue.me" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[CSS Note.] SASS - Say a Sexy Styling（刪除線）</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-26T17:45:00+08:00" pubdate data-updated="true">Jul 26<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><span style="color:#ff3399;font-weight:bold;font-size: 128px;">SASS</span></p>
+
+<p>全名是 Syntactically Awesome Stylesheets，當然不是我說得那個（媽媽有說，認真就輸了（揍飛），也許有人會說，<del>踏碼的</del>有一個 CSS 就已經很難搞了，現在來搞一個 SASS 來自作孽幹麼？或者是，這一切一定都是<del>你們這些 programmer 在自 HIGH 用的啦</del>，<del>一切都是阿共啊A陰謀啦</del>～之類的。<strong>BUT！</strong></p>
+
+<p>人生最厲害的就是這個 BUT！（<del>這梗你要用幾次啦！</del></p>
+
+<p>俗話說得好，好的老師帶你上天堂，不好的老師讓你住套房，好的工具帶你上天堂，<del>沒有工具讓你住病房！</del>這也不是沒有道理的！這就是一個好工具，當然，好工具就一定會有一個前提！</p>
+
+<p><strong><font color="#ff0000">請對 CSS 有一定的熟悉程度再來玩，這不是門檻，而是必備條件。</font></strong></p>
+
+<p>SASS 是一個語言，是一個將 CSS 給簡化，並加入可程式化的特性的一種語言。你可以不要那麼緊張的把他想成那眾多的程式語言。不諱言，你要說他是，那他就是，你要說他不是，那他就不是。至於他可以做到什麼事情？請看：</p>
+
+<ul><li>可以用變數（$）。</li><li>可以做運算（+, -, \*, /, %）。</li><li>可以用函式（@mixin）。</li><li>可以載入（@import）與擴展（@extend）。</li><li>可以用判斷式（@if, @else if, @else）。</li><li>可以用迴圈（@for, @while）。</li></ul>
+
+
+<p>安裝方法，在<a href="http://sass-lang.com/" target="_blank">官方有寫</a>。不過這是在 Ruby 的環境底下，所以請先準備好 Ruby 的環境喔（<del>啾咪！</del>）所以，裝好之後呢，我們就可以來寫 SASS 了。就這麼簡單？是的，就這麼簡單<meta http-equiv="content-type" content="text/html; charset=utf-8">， <del>90 萬人都在用，就這麼簡單</del>。</p>
+
+<!-- more -->
+
+
+<p>首先，我們先來認識一下 SASS 到底是什麼東西。首先，他有兩種寫法，一種是 sass，另一種是 scss，這兩種有什麼差別呢？</p>
+
+<pre><code>/* 這種叫做 scss
+    $color: "#ff3333";
+    #h1 {
+      background-color: #{$color};
+    }
+/* 這種叫做 sass
+$color: "#ff3333"
+    #h1
+      background-color: #{$color}
+</code></pre>
+
+<p><span style="color:#ff3399;font-weight:bold;font-size: 72px;">我已經回不去了。</span></p>
+
+<p>一旦開使用 SASS 之後，基本上應該就不會回去寫 CSS 了。底下來介紹一下一些基本用法：</p>
+
+<pre><code>/* 變數建立方式
+$color: "#ff3333"
+$width: 1000px
+/* 函式建立方式（@mixin
+@mixin box_radius($radius: 10px)
+  -moz-box-radius: #{$radius}
+  -webkit-box-radius: #{$radius}
+  box-radius: #{$radius}
+/* 關聯式寫法（Nesting and Nesting properties）
+h1 span
+  margin: 0
+  a
+    color: #ff3333
+    &amp;:hover
+      color: #ffff33
+  &gt;span
+    color: #3333ff
+    font:
+      weight: bold
+      size: 14px
+/* 引入與擴展（@import, @extend）
+    外部的 sass 檔案前面必須前置底線（所以外部名稱實為：_import_css.sass）
+@import "import_css"
+.extend_class
+    margin: 0
+.my_class
+  @extend .extend_class
+  padding: 0
+/* 運算
+$width: 1000px
+.my_class
+    width: $width - 300px
+/* 傳入值（Interpolation）
+    我們傳入變數的方式有兩種，一種是傳入變數的值，一種是傳入變數。
+    其中 #{ } 的寫法就是傳入值。
+    倘若我們在這個例子的 .my_class1 使用 $color1，
+    則產生出來的 css 的 color 就會變成 "#ff3333" 了。
+    而倘若把 $color2 使用 # { } 傳入，則不影響所傳入的值。
+    傳入值有什麼好處？請看 .my_class3 應該就很清楚。
+$color1: "#ff3333"
+$color2: #3333ff
+$color3: "white"
+.my_class1
+  color: #{$color1}
+.my_class2
+  color: $color2
+.my_class3
+  a.#{$color3}
+    color: #{$color3}  
+/* 迴圈
+@for $i from 1 through 3
+  .my_class_#{$i}
+    width: 100px * $i
+/* 判斷式
+$color: "white"
+p
+  @if $color == "white"
+    color: white
+  @else if $color == "blue"
+    color: blue
+  @else
+    color: block
+</code></pre>
+
+<p>然後，還有一個超強的工具，叫做 <a href="http://compass-style.org/" target="_blank">Compass</a>！關於這個東西 <a href="http://blog.xdite.net/?p=2097" target="_blank">XDite 寫了一篇介紹</a>！我也有在使用，一樣也是要 Ruby 環境的，而且他還有賣 GUI 的工具。不過我已經習慣用指令去做了，所以對我來說是沒差的。</p>
+
+<p><span style="color:#ff3399;font-weight:bold;font-size: 64px;">Compass 也是超強！</span></p>
+
+<p>好工具，不用嗎？</p>
+
+<p>更多介紹：</p>
+
+<p><a href="http://blog.longwin.com.tw/" target="_blank">Tsung&#8217;s Blog</a>：<a href="http://blog.longwin.com.tw/2011/06/linux-sass-install-usage-2011/#more-2442" target="_blank">於 Linux 安裝 與 SASS 簡易使用紀錄</a>
+<a href="http://blog.wu-boy.com/" target="_blank">小惡魔（wu-boy）</a>：<a href="http://blog.wu-boy.com/2011/05/%E5%8A%A0%E9%80%9F%E9%96%8B%E7%99%BC-css-%E5%B7%A5%E5%85%B7-sass/" target="_blank">加速開發 CSS 工具: Sass</a></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">hinablue</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-26T17:45:00+08:00" pubdate data-updated="true">Jul 26<span>th</span>, 2011</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/jquery/'>jQuery</a>, <a class='category' href='/categories/javascript/'>javascript</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://blog.hinablue.me/entry/css-note-sass-del-say-a-sexy-styling-del/" data-via="hinablue" data-counturl="http://blog.hinablue.me/entry/css-note-sass-del-say-a-sexy-styling-del/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/entry/photos-nantou-chushang-2011-fin/" title="Previous Post: [影像] 南投，中興新村，句點">&laquo; [影像] 南投，中興新村，句點</a>
+      
+      
+        <a class="basic-alignment right" href="/entry/css-note-powerful-tool-compass-base-on-sass/" title="next Post: [CSS note.] 強大的 Compass 來產出 CSS">[CSS note.] 強大的 Compass 來產出 CSS &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Me</h1>
+  <img src="/images/hniablue_icon.jpg" width="195" height="195" alt="Hina, Cain Chen." />
+  <p>我是閃光洽！</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+  </ul>
+</section>
+<script type="text/javascript">
+    $.domReady(function() {
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+        (function() {
+            $.ajax({
+                url: '/atom.xml',
+                dataType: 'xml',
+                success: function(xml) {
+                    var parser, expectedXML;
+                    if (window.DOMParser) {
+                        parser = new DOMParser();
+                        expectedXML = parser.parseFromString(decodeURIComponent(xml.response),"text/xml");
+                    } else {
+                        expectedXML = new ActiveXObject("Microsoft.XMLDOM");
+                        expectedXML.async = false;
+                        expectedXML.loadXML(decodeURIComponent(xml.response));
+                    }
+
+                    var entries = expectedXML.getElementsByTagName('entry');
+                    var entries_limit = entries.length > 5 ? 5 : entries.length;
+                    for(var i=0; i<entries_limit; i++) {
+                        $('<a/>')
+                        .attr('href', entries[i].childNodes[3].attributes[0].nodeValue)
+                        .text(entries[i].childNodes[1].childNodes[0].nodeValue)
+                        .appendTo($('<li/>').addClass('post').appendTo($('#recent_posts')));
+                    }
+                },
+                error: function(err) {
+                    $('<li/>').addClass('post').text('Error Loading feed').appendTo($('#recent_posts'));
+                }
+            });
+        })();
+    });
+</script>
+
+<section>
+  <h1>Github Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/hinablue">@hinablue</a> on Github
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'hinablue',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("hinablue", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/hinablue" class="twitter-follow-button" data-width="208px" data-show-count="false">Follow @hinablue</a>
+  
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/104812280860478253996?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2011 - hinablue -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'hinablue';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.hinablue.me/entry/css-note-sass-del-say-a-sexy-styling-del/';
+        var disqus_url = 'http://blog.hinablue.me/entry/css-note-sass-del-say-a-sexy-styling-del/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

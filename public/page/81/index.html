@@ -1,0 +1,421 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>HINA::工程幼稚園</title>
+  <meta name="author" content="hinablue">
+
+  
+  <meta name="description" content="首先是 FCKEditor 的一個升級之後出現的 bug。原因不明，只知道在 IE6/7 底下會出狀況，之前的版本似乎不會，解決的辦法：沒有。詳細網址如下： http://www.fckeditor.net/forums/viewtopic.php?f=6&amp;t=8814&amp;start &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.hinablue.me/page/81">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/hinablue" rel="alternate" title="HINA::工程幼稚園" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-259895-17']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">HINA::工程幼稚園</a></h1>
+  
+    <h2>偏執與強迫症的患者，算不上是無可救藥，只是我已經遇上我的良醫了。</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/hinablue" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.hinablue.me" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/entry/what-the-fucking-IE-with-FCKEditor-bugs/">[FCKEditor 筆記] 我操你媽 IE</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-02-17T13:25:00+08:00" pubdate data-updated="true">Feb 17<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>首先是 FCKEditor 的一個升級之後出現的 bug。原因不明，只知道在 IE6/7 底下會出狀況，之前的版本似乎不會，解決的辦法：沒有。詳細網址如下：</p>
+
+<p><a href="http://www.fckeditor.net/forums/viewtopic.php?f=6&t=8814&start=0&st=0&sk=t&sd=a" target="_blank">http://www.fckeditor.net/forums/viewtopic.php?f=6&amp;t=8814&amp;start=0&amp;st=0&amp;sk=t&amp;sd=a</a></p>
+
+<p>嗯，這是個很嚴重的問題。因為在這個編輯器底下，我需要這種功能。後來透過一些垃圾方法測試過後發現，其實他不是失效，而是對於 DOM 裡面的 elements 有點感冒。換句話說，在選取這個動作，如果不是選取一個＂元件＂的話，其實他是可以正常運作的，但是，如果單單選取了某個元件的話，那麼它就會失效了。</p>
+
+<p>解決的辦法是，從 DOM Tree 去 Hack 掉！方法一樣很垃圾，但是沒辦法，為了要能夠使用，所以只能這樣做。至於說，如果從編輯器裡面把元件洗出來編輯，那要怎麼放回編輯器呢？這種問題交給後端處理就好了，不用太傷腦筋啦（無責）。只是，這種 Hack 的方式，可能把它寫成 prototype 會比較方便一點吧（僅猜測、純嘴砲）。</p>
+
+<p>[code]
+function FCKeditor_OnComplete( editorInstance )
+{</p>
+
+<pre><code>try {
+</code></pre>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/entry/what-the-fucking-IE-with-FCKEditor-bugs/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/entry/work-today-is-not-my-day-20090216/">[工作] 計利以聽，乃為之勢，以佐其外。</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-02-16T17:03:00+08:00" pubdate data-updated="true">Feb 16<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><blockquote>While heeding the profit of my counsel, avail yourself also of
+ any helpful circumstances over and byond the ordinary urles.
+
+－孫子兵法</blockquote>
+
+
+<p>什麼意思不要問我，請去問問<a href="http://www.google.com.tw" target="_blank">大神</a>。</p>
+
+<p>今天的工作不知道是怎樣，事情沒有多順利。雖然跟 Yahoo! 方面的技術部分已經定案，不過上頭的測試卻一直拖延，搞得我不知道怎麼跟 Yahoo! 的窗口交代。但是這件事情今天一定要解決就是，總覺得在某些事情的執行上，有種無力感。而且，我突然發現，其實主管的工作跟頭銜八竿子打不著，所以，職務代理這種事情，就當作是，沒那回事可能會比較好一點（肯定的）。</p>
+
+<p>最近在看書，不過這種書不是一般人看的（肯定的），所以<a href="http://books.google.com.tw/books?id=HfcMDvxb43AC" target="_blank">放個鏈結</a>就好了，有興趣的人自己點過去看。雖然不能說是工作上的需要，只是自己拿來充電用的，不過，這種書看久了真的會覺得，靠，原來我之前的 SQL 經驗都是個屎啊（認真）！畢竟理論是一回事，實務上又是另一回事！這樣說似乎有點太過於吹捧這種系列的書籍，不過，畢竟一分經驗就是一分實力，這種東西多吸收只有好沒有壞吧。</p>
+
+<p>哦，我當然是買中文版的（踹飛）。</p>
+
+<p>我想除了工作上的瑣碎事情之外，其他的大概都是人的問題。我只能說，所有的公司大概都是大同小異吧，畢竟是營利事業又不是慈善單位，只是自己對於那些老是犯下同樣的錯誤，老是聽到同樣的爭執，卻永遠都可以安穩的坐在位子上的人，感到不可思議。這讓我想到那個獅子的笑話。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/entry/work-today-is-not-my-day-20090216/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/entry/non-photos-f10-MF-mode-in-Leica-with-Noctilux-50mm/">[非關影像] 看看神人</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-02-13T17:00:00+08:00" pubdate data-updated="true">Feb 13<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>版權問題，所以請自行觀賞。</p>
+
+<p><a href="http://www.shinozuka.org/f1/">http://www.shinozuka.org/f1/</a></p>
+
+<p>希望哪天我的手也能這麼穩（再練個一百年吧）。</p>
+
+<blockquote><span style="border-collapse: separate; color: rgb(0, 0, 0); font-family: 'times new roman'; font-size: 16px; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: 2; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px;"><b>every image</b><span class="Apple-converted-space">&nbsp;</span>on this page was<span class="Apple-converted-space"> </span>taken by the Leica Noctilux 50mm at<span class="Apple-converted-space"> f1.0</span></span></blockquote>
+
+
+<p>雖然說神人可能有點超過，但是能這麼準焦，我想神之手應該不為過吧。</p>
+
+<p>ps. 陷阱對焦？誰要實驗一下。
+<a href="http://eosdoc.com/manuals/?q=E7TrapFocus" target="_blank">http://eosdoc.com/manuals/?q=E7TrapFocus</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/page/82/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/page/80/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Me</h1>
+  <img src="/images/hniablue_icon.jpg" width="195" height="195" alt="Hina, Cain Chen." />
+  <p>我是閃光洽！</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+  </ul>
+</section>
+<script type="text/javascript">
+    $.domReady(function() {
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+        (function() {
+            $.ajax({
+                url: '/atom.xml',
+                dataType: 'xml',
+                success: function(xml) {
+                    var parser, expectedXML;
+                    if (window.DOMParser) {
+                        parser = new DOMParser();
+                        expectedXML = parser.parseFromString(decodeURIComponent(xml.response),"text/xml");
+                    } else {
+                        expectedXML = new ActiveXObject("Microsoft.XMLDOM");
+                        expectedXML.async = false;
+                        expectedXML.loadXML(decodeURIComponent(xml.response));
+                    }
+
+                    var entries = expectedXML.getElementsByTagName('entry');
+                    var entries_limit = entries.length > 5 ? 5 : entries.length;
+                    for(var i=0; i<entries_limit; i++) {
+                        $('<a/>')
+                        .attr('href', entries[i].childNodes[3].attributes[0].nodeValue)
+                        .text(entries[i].childNodes[1].childNodes[0].nodeValue)
+                        .appendTo($('<li/>').addClass('post').appendTo($('#recent_posts')));
+                    }
+                },
+                error: function(err) {
+                    $('<li/>').addClass('post').text('Error Loading feed').appendTo($('#recent_posts'));
+                }
+            });
+        })();
+    });
+</script>
+
+<section>
+  <h1>Github Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/hinablue">@hinablue</a> on Github
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'hinablue',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("hinablue", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/hinablue" class="twitter-follow-button" data-width="208px" data-show-count="false">Follow @hinablue</a>
+  
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/104812280860478253996?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2011 - hinablue -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'hinablue';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

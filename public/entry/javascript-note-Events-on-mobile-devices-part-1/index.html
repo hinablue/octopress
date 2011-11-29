@@ -1,0 +1,389 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[javascript note.] Events on mobile devices - HINA::工程幼稚園</title>
+  <meta name="author" content="hinablue">
+
+  
+  <meta name="description" content="W3C 所定義的 Touches 文件：http://www.w3.org/TR/touch-events/
+HTML5 Rocks 所寫多點觸控文件：http://www.html5rocks.com/en/mobile/touch.html jQuery Mobile 關於觸控的 Event： &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.hinablue.me/entry/javascript-note-Events-on-mobile-devices-part-1">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/hinablue" rel="alternate" title="HINA::工程幼稚園" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-259895-17']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">HINA::工程幼稚園</a></h1>
+  
+    <h2>偏執與強迫症的患者，算不上是無可救藥，只是我已經遇上我的良醫了。</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/hinablue" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.hinablue.me" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[Javascript Note.] Events on Mobile Devices</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-08T15:40:00+08:00" pubdate data-updated="true">Jul 8<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>W3C 所定義的 Touches 文件：<a href="http://www.w3.org/TR/touch-events/">http://www.w3.org/TR/touch-events/</a>
+HTML5 Rocks 所寫多點觸控文件：<a href="http://www.html5rocks.com/en/mobile/touch.html">http://www.html5rocks.com/en/mobile/touch.html</a></p>
+
+<p>jQuery Mobile 關於觸控的 Event：<a href="http://jquerymobile.com/demos/1.0b1/#/demos/1.0b1/docs/api/events.html">http://jquerymobile.com/demos/1.0b1/#/demos/1.0b1/docs/api/events.html</a></p>
+
+<p>Safari Blog 所解釋的 Touch 與手勢流程：<a href="http://developer.apple.com/library/safari/#documentation/AppleApplications/Reference/SafariWebContent/HandlingEvents/HandlingEvents.html">http://developer.apple.com/library/safari/#documentation/AppleApplications/Reference/SafariWebContent/HandlingEvents/HandlingEvents.html</a></p>
+
+<p>這些東西現在我測試的環境下，只有 Safari 或是 Webkit 核心的瀏覽器比較能夠正常反應。像是 Firefox 雖然也有支援多點觸控，但是我用 MozTouch* 都沒有反應（在 Android 上面的 Firefox 5 Mobile 是無反應的）。至於 jQueryMobile 我並沒有拿到 Firefox 上面測試，所以我這裡就先不提 jQueryMobile 所提供的 Events 了。</p>
+
+<p><strong><font size="6">超強的 Touch* 系列</font></strong></p>
+
+<p>大概很好奇為什麼這樣說？如果我們有一個元件，本身綁定了 touchstart 這個動作的話，那麼，在這個元件所屬的字元件，如果再綁定 touchstart 或是 click 的話，<strong>非常有機會被父元件的 touchstart 吃掉</strong>。也許你會很好奇，依照 DOM 的規則來說，子元件在上，應該是由子元件向下傳遞轉向父元件才對，偏偏，我在手機上測試的結果並不如預期。</p>
+
+<!-- more -->
+
+
+<p><img src="http://static.hinablue.me/blog/4520211372.png" width="700" height="700" /></p>
+
+<p>這樣的圖示應該很清楚了吧！</p>
+
+<p>在某些情況（甚至無法知道是什麼條件）下，外部所進入的 Event 會跳過子元件，直接由父元件所接收，依照 DOM 的條件，我父元件所包含的子元件，理當應該是兒子先接收，之後在傳遞給老爸，然而，我實際在手機上面測試的，恰好相反。BUT！</p>
+
+<p>人生最厲害的就是這個 BUT！</p>
+
+<p>子元件倘若是一樣使用 touchstart（或是 mousedown） ，你是有機會讓子元件的動作被執行的，不過只是有機會，像是我按了子元件 3~5 次，才有可能被引發一次而已！這是很弔詭的地方，倘若只是單純的 return false 或是 return true，子元件一樣會被忽略，然後繼續由父元件執行。BUT！</p>
+
+<p>人生最厲害的就是這個 BUT！</p>
+
+<p>倘若子元件發出中斷訊息（像是 Alert() 這種），那麼瀏覽器就會很乖的先把兒子的 Alert() 給秀出來，然後再交由老爸去執行。<br></p>
+
+<p><strong><font size="5">BUT！天殺地誰會先 Alert() 再繼續做其他事情的，你說說看，你說說看啊（丟滑鼠！</font></strong></p>
+
+<p>所以，根據三天三夜的的測試，關於觸控的東西，倘若要使用在複雜元件中，還是得<strong>將你所要使用的熱區（hot-area）給切割開來</strong>，除了避免 Events 互相干擾之外，也可以避開各種 Mobile devices 的瀏覽器所衍生出來的問題。所以說，像是我的 jQuery iPhone Slide 就不能在滑動頁面中加入鍊結或是可點擊的元件，會被干擾（這是一個可愛的歪國人提出來的需求）。</p>
+
+<p>解決的辦法就是，將 slide 滑動熱區換到別的地方，然後內容頁面就可以很正常的利用其他的 Events 來作動作。主要還是因為 Touch* 的動作，在不同的裝置上，很有可能都會有不同的反應（請看 Safari 對於觸控的那篇文章）。雖然那是針對 iOS 所做的說明，而，我想各家的方式可能<strong><strong>都不太一樣</strong></strong>。</p>
+
+<p>總結就是，如果要使用觸控功能，還是不要混在一起用比較好。畢竟，現在市面上也只有 iOS 有說明他的執行方式（雖然也未必準確），其他家的只能自己猜測而已（翻桌）。</p>
+
+<p>下次再來聊聊 jQueryMobile 的觸控功能吧。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">hinablue</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-08T15:40:00+08:00" pubdate data-updated="true">Jul 8<span>th</span>, 2011</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/jquery/'>jQuery</a>, <a class='category' href='/categories/javascript/'>javascript</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://blog.hinablue.me/entry/javascript-note-Events-on-mobile-devices-part-1/" data-via="hinablue" data-counturl="http://blog.hinablue.me/entry/javascript-note-Events-on-mobile-devices-part-1/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/entry/photos-yilan-2011/" title="Previous Post: [影像] 宜蘭半日遊，小熊書房">&laquo; [影像] 宜蘭半日遊，小熊書房</a>
+      
+      
+        <a class="basic-alignment right" href="/entry/mongodb-note-ubuntu-apache-php-mongodb-quick-start/" title="next Post: [mongoDB note.] Ubuntu + MongoDB + CakePHP = 芒果蛋糕">[mongoDB note.] Ubuntu + MongoDB + CakePHP = 芒果蛋糕 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Me</h1>
+  <img src="/images/hniablue_icon.jpg" width="195" height="195" alt="Hina, Cain Chen." />
+  <p>我是閃光洽！</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+  </ul>
+</section>
+<script type="text/javascript">
+    $.domReady(function() {
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+        (function() {
+            $.ajax({
+                url: '/atom.xml',
+                dataType: 'xml',
+                success: function(xml) {
+                    var parser, expectedXML;
+                    if (window.DOMParser) {
+                        parser = new DOMParser();
+                        expectedXML = parser.parseFromString(decodeURIComponent(xml.response),"text/xml");
+                    } else {
+                        expectedXML = new ActiveXObject("Microsoft.XMLDOM");
+                        expectedXML.async = false;
+                        expectedXML.loadXML(decodeURIComponent(xml.response));
+                    }
+
+                    var entries = expectedXML.getElementsByTagName('entry');
+                    var entries_limit = entries.length > 5 ? 5 : entries.length;
+                    for(var i=0; i<entries_limit; i++) {
+                        $('<a/>')
+                        .attr('href', entries[i].childNodes[3].attributes[0].nodeValue)
+                        .text(entries[i].childNodes[1].childNodes[0].nodeValue)
+                        .appendTo($('<li/>').addClass('post').appendTo($('#recent_posts')));
+                    }
+                },
+                error: function(err) {
+                    $('<li/>').addClass('post').text('Error Loading feed').appendTo($('#recent_posts'));
+                }
+            });
+        })();
+    });
+</script>
+
+<section>
+  <h1>Github Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/hinablue">@hinablue</a> on Github
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'hinablue',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("hinablue", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/hinablue" class="twitter-follow-button" data-width="208px" data-show-count="false">Follow @hinablue</a>
+  
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/104812280860478253996?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2011 - hinablue -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'hinablue';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.hinablue.me/entry/javascript-note-Events-on-mobile-devices-part-1/';
+        var disqus_url = 'http://blog.hinablue.me/entry/javascript-note-Events-on-mobile-devices-part-1/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

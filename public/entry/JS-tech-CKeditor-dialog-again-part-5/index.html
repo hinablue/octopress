@@ -1,0 +1,669 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[JS tech.] CKeditor Dialog 再起 part 5 - HINA::工程幼稚園</title>
+  <meta name="author" content="hinablue">
+
+  
+  <meta name="description" content="在這裡開始之前，我必須告訴你們一件事情，CKeditor 內含的 Event，也就是總共可以被 fire 的監聽事件，分門別類總共有 56 種之多！其中因為 IE 的關係，selectionChange 的監聽事件分出了 IE 專用的 selectionchange（是的，僅大小寫不同）， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.hinablue.me/entry/JS-tech-CKeditor-dialog-again-part-5">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/hinablue" rel="alternate" title="HINA::工程幼稚園" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-259895-17']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">HINA::工程幼稚園</a></h1>
+  
+    <h2>偏執與強迫症的患者，算不上是無可救藥，只是我已經遇上我的良醫了。</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/hinablue" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.hinablue.me" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[JS Tech.] CKeditor Dialog 再起 Part 5</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-05-27T18:56:00+08:00" pubdate data-updated="true">May 27<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>在這裡開始之前，我必須告訴你們一件事情，CKeditor 內含的 Event，也就是總共可以被 fire 的監聽事件，分門別類總共有 56 種之多！其中因為 IE 的關係，selectionChange 的監聽事件分出了 IE 專用的 selectionchange（是的，僅大小寫不同），再扣除測試的兩種監聽 someEvent 與 testEvent，還有原本就在 DOM 常見的監聽式以外，CKeditor 所使用的 Event 還是高達 46 種。</p>
+
+<p>不過，這跟 Dialog 有什麼關係？好，要啟動 Dialog 之前，由於 dialog 在 CKeditor 是一個 plugin，所以必須要先滿足一個條件：
+<span style="font-weight: bold; color: rgb(212, 26, 1);">確定 plugin 已經讀取完成，那麼，我們就必須監聽 pluginsLoaded，用以得知 plugin 已經載入完畢。</span></p>
+
+<p>CKeditor 很慷慨的分享出 JavaScript API Document，但是我很殘酷的告訴你，event 到底在幹麼他支字未提。好的，暫且將 Event 放一邊，你只要知道有這件事情就好了。往後倘若遇到 fire 事件時，再回來查吧（文末會附上列表）。</p>
+
+<p>我們在這裡所需要準備的環境，其實很簡單，由於 CKeditor 後來提供了 jQuery Adapter 的方式來初始化編輯器，所以我們就從 jQuery 開始。</p>
+
+<pre><code>&lt;script type="text/javascript"&gt;
+//&lt;![CDDA[
+</code></pre>
+
+<!-- more -->
+
+
+<pre><code>$(document).ready(function() {
+    var config = {};
+    $("#editor").ckeditor(function() { /*...callback here...*/ }, config);
+});
+//]]&gt;
+&lt;/script&gt;
+</code></pre>
+
+<p>然後，我們從 callback 的地方開始我們的 dialog 設定，在這裡面我們要做很多事情：</p>
+
+<ol><li>設定 Dialog</li><li>建立 Dialog</li><li>註冊 Dialog 元件</li><li>指定 Toolbar 按鈕</li><li>指定 Toolbar 按鈕命令</li></ol>
+
+
+<p>不囉唆，請看碼說故事。</p>
+
+<pre><code>&lt;script type="text/javascript"&gt;
+//&lt;![CDDA[
+$(document).ready(function() {
+    var config = {};
+    $("#editor").ckeditor(function() {
+        var editor = this;
+        // 監聽 pluginsLoaded，完成才執行。
+        editor.on('pluginsLoaded', function( ev ) {
+            // 檢查要建立的 dialog 是否存在，不存在則建立。
+            if (!CKEDITOR.dialog.exists('myDialog')) {
+                // 註冊這個 Dialog，注意，官方範例中，這裡是使用載入外部 JavaScript 來完成的。
+                // 這裡的 Dialog 我直接取用上一篇的介紹，寫入檔案上傳的對話框。
+                CKEDITOR.dialog.add( 'myDialog', function( editor )
+                {
+                    return {
+            title : 'My Dialog',
+            minWidth : 400,
+            minHeight : 200,
+            contents : [
+            {
+                id : 'Upload',
+                hidden : true,
+                filebrowser : 'uploadButton',
+                label : editor.lang.image.upload,
+                // 在 Dialog 中註冊元件
+                elements :
+                [
+                    {
+                    type : 'file',
+                    id : 'upload',
+                    label : editor.lang.image.btnUpload,
+                    style: 'height:40px',
+                    size : 38
+                    },
+                    {
+                    type : 'fileButton',
+                    id : 'uploadButton',
+                    filebrowser : 'info:txtUrl',
+                    label : editor.lang.image.btnUpload,
+                    'for' : [ 'Upload', 'upload' ]
+                    }
+                ]
+            }
+            ]
+            };
+                });
+                // 與官方不同的是，我們把工具列命令放在這裡，當然是建立 dialog 之後在給命令。
+                editor.addCommand('myDialogCmd', new CKEDITOR.dialogCommand('myDialog'));
+                // 同樣的，註冊一個按鈕，也放在這裡面。
+                editor.ui.addButton( 'MyButton',
+        {
+            label : 'My Dialog',
+            command : 'myDialogCmd'
+        });
+            }
+        });
+    }, config);
+});
+//]]&gt;
+&lt;/script&gt;
+
+
+    var config = {
+    toolbar: [
+        // 前略
+        ['MyButton']
+    ]
+    };
+</code></pre>
+
+<p>在加入對話框的時候，發生了什麼事情？首先是對話框的名稱，請留意這個名稱在 dialog 中必須是獨一無二的。再來，我們來看看設定的部份：</p>
+
+<ul><li>button
+設定對話框按鈕，但是他不是實際可以使用的 API，請忽略他，因為他不能用（目前為只是這樣）。</li><li>content
+設定對話框內容，對話框的內容由 contentDefinition 產生物件並以陣列的方式傳入。</li><li>title
+設定對話框標題，必填！</li><li>minHeight
+對話框最小高度。</li><li>minWidth
+對話框最小寬度。</li><li>onCancel
+對話框按下取消的時候，觸發這個函式。</li><li>onLoad
+對話框載入的時候，觸發這個函式。</li><li>onOk
+對話框按下確定的時候，觸發這個函式。</li><li>resizable
+變更對話框的尺寸，預設是無法變更，不過我套用了其他三種設定也無法使用，不知道是什麼緣故。可用的數值有：
+CKEDITOR.DIALOG_RESIZE_NONE
+CKEDITOR.DIALOG_RESIZE_WIDTH
+CKEDITOR.DIALOG_RESIZE_HEIGHT
+CKEDITOR.DIALOG_RESIZE_BOTH</li></ul>
+
+
+<p>接下來，我們來看 contentDefinition 做了什麼事情。他是用來定義對話框中顯示的元件，以物件方式傳入：</p>
+
+<ul><li>accessKey
+CTRL 熱鍵組合，可以快速切換到該頁內容。</li><li>elements
+對話框中的 UI 元件（有限制），使用 uiElementDefinition 產生物件並以陣列的方式傳入。</li><li>title
+該頁面的訊息。</li><li>label
+該頁面的頁籤（tab）。</li><li>id
+該頁面的 id 屬性。</li></ul>
+
+
+<p>最後，我們來看 uiElementDefinition 做了什麼事情。他是用來定義對話框內容元件 UI，以物件方式傳入：</p>
+
+<ul><li>className
+該物件所套用的 CSS 類別樣式。</li><li>id
+該物件所使用的 id 屬性。</li><li>type
+該物件的類別，這裡的類別決定你要放置的元件設定。</li><li>onHide
+該物件隱藏的時候，觸發這個函式。</li><li>onLoad
+該物件載入的時候，觸發這個函式。</li><li>onShow
+該物件顯示的時候，觸發這個函式。</li><li>style
+該物件可以設定的行內樣式。</li></ul>
+
+
+<p>這樣就結束了嗎？還沒還沒，我們再來針對 type 這個設定來看，uiElementDefinition 其實繼承（或說沿用）了 ui.dialog.uiElement 的類別。所以，他能做到的事情遠比你想像中的要複雜的多。我們先來看看到底可以在對話框中，能加入什麼東西。</p>
+
+<ul><li>type: &#8216;file&#8217;
+提供一個檔案上傳的端口，通常搭配 fileButton 使用。</li><li>type: &#8216;fileButton&#8217;
+將 file 所提供的檔案做上傳等動作，也可以搭配 CKFinder 做檔案總管之類的動作。</li><li>type: &#8216;hbox&#8217;
+加入一個水平的方塊元件（通常是 DIV boxing）必須指定 children，可與 vbox 搭配使用做出擬似表格的顯示。</li><li>type: &#8216;vbox&#8217;
+加入一個垂直的方塊元件（通常是 DIV boxing）必須指定 children，可與 hbox 搭配使用做出擬似表格的顯示。</li><li>type: &#8216;html&#8217;
+直接寫入 HTML 標記語言，必須傳入指定內容（使用 html）。</li><li>type: &#8216;text&#8217;
+加入一個 input 欄位，屬性為 text，注意，並沒有 password 可用。</li><li>type: &#8216;textarea&#8217;
+加入一個 textarea 欄位。</li><li>type: &#8216;checkbox&#8217;
+加入一個 checkbox 項目。</li><li>type: &#8216;radio&#8217;
+加入 radio 項目，必須傳入指定項目陣列（使用 item）。</li><li>type: &#8216;select&#8217;
+加入 select 項目，必須傳入指定項目陣列（使用 item）。</li></ul>
+
+
+<p>我們把上面的範例再拿來修改一下：</p>
+
+<pre><code>elements :
+[
+    {
+    type : 'file',
+    id : 'upload',
+    label : editor.lang.image.btnUpload,
+    style: 'height:40px',
+    size : 38
+    },
+    {
+    type : 'fileButton',
+    id : 'uploadButton',
+    filebrowser : 'info:txtUrl',
+    label : editor.lang.image.btnUpload,
+    'for' : [ 'Upload', 'upload' ]
+    },
+    {
+    type : 'html',
+    html: '&lt;div style="background-color:#f33;"&gt;這裡是自訂的 HTML 內容&lt;/div&gt;'
+    },
+    {
+    type : 'vbox',
+    height : ['30%','70%'],
+    children : [
+        {
+        type : 'hbox',
+        widths : ['60%','40%'],
+        children : [
+            {
+            type : 'radio',
+            items : [
+                ['選項 1','1'],
+                ['選項 2','2'],
+                ['選項 3','3']
+            ]
+            },
+            {
+            type : 'textarea',
+            cols : 5,
+            rows : 5,
+            label : '請亂填'
+            }
+        ]
+        },
+        {
+        type : 'select',
+        style : 'width:100%',
+        items : [
+            ['選項 1','1'],
+            ['選項 2','2'],
+            ['選項 3','3']
+        ]
+        },           
+        {
+        type : 'checkbox',
+        label : '請勾選'
+        }
+    ]
+    },
+]
+</code></pre>
+
+<p><img src="http://static.hinablue.me/blog/4221529725.png" width="450" height="468" /></p>
+
+<p>那麼？你有覺得 Dialog 有好用一點點了嗎？至於剛剛說的 Event 列表，真的有人想看嗎？</p>
+
+<div>[#M_ 按這裡看 Event 清單.. | 關閉清單.. |themeSpace
+
+saveSnapshot
+
+ariaWidget
+
+dialogDefinition
+
+cancel
+
+show
+
+dialogShow
+
+hide
+
+dialogHide
+
+ok
+
+menuShow
+
+key
+
+contentDom
+
+mode
+
+dataReady
+
+contentDomUnload
+
+showScaytState
+
+scaytDialog
+
+afterCommandExec
+
+contextmenu
+
+beforepaste
+
+pasteDialog
+
+afterUndo
+
+afterRedo
+
+state
+
+beforeCleanWord
+
+paste
+
+instanceReady
+
+beforeModeUnload
+
+selectionChange
+
+selectionchange
+
+pluginsLoaded
+
+instanceCreated
+
+destroy
+
+instanceDestroyed
+
+beforeCommandExec
+
+beforeGetData
+
+getData
+
+getSnapshot
+
+loadSnapshot
+
+setData
+
+afterSetData
+
+insertHtml
+
+insertElement
+
+loaded
+
+currentInstance
+
+state
+
+download_M#]</div>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">hinablue</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-05-27T18:56:00+08:00" pubdate data-updated="true">May 27<span>th</span>, 2010</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/ckeditor/'>CKeditor</a>, <a class='category' href='/categories/fckeditor/'>FCKEditor</a>, <a class='category' href='/categories/javascript/'>Javascript</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://blog.hinablue.me/entry/JS-tech-CKeditor-dialog-again-part-5/" data-via="hinablue" data-counturl="http://blog.hinablue.me/entry/JS-tech-CKeditor-dialog-again-part-5/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/entry/no-photos-toycamera-analog-color-software/" title="Previous Post: [非關影像] 後製軟體 - Analog Color">&laquo; [非關影像] 後製軟體 - Analog Color</a>
+      
+      
+        <a class="basic-alignment right" href="/entry/photos-2010-Jhensibao/" title="next Post: [影像] 尖石鄉鎮西堡">[影像] 尖石鄉鎮西堡 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Me</h1>
+  <img src="/images/hniablue_icon.jpg" width="195" height="195" alt="Hina, Cain Chen." />
+  <p>我是閃光洽！</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+  </ul>
+</section>
+<script type="text/javascript">
+    $.domReady(function() {
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+        (function() {
+            $.ajax({
+                url: '/atom.xml',
+                dataType: 'xml',
+                success: function(xml) {
+                    var parser, expectedXML;
+                    if (window.DOMParser) {
+                        parser = new DOMParser();
+                        expectedXML = parser.parseFromString(decodeURIComponent(xml.response),"text/xml");
+                    } else {
+                        expectedXML = new ActiveXObject("Microsoft.XMLDOM");
+                        expectedXML.async = false;
+                        expectedXML.loadXML(decodeURIComponent(xml.response));
+                    }
+
+                    var entries = expectedXML.getElementsByTagName('entry');
+                    var entries_limit = entries.length > 5 ? 5 : entries.length;
+                    for(var i=0; i<entries_limit; i++) {
+                        $('<a/>')
+                        .attr('href', entries[i].childNodes[3].attributes[0].nodeValue)
+                        .text(entries[i].childNodes[1].childNodes[0].nodeValue)
+                        .appendTo($('<li/>').addClass('post').appendTo($('#recent_posts')));
+                    }
+                },
+                error: function(err) {
+                    $('<li/>').addClass('post').text('Error Loading feed').appendTo($('#recent_posts'));
+                }
+            });
+        })();
+    });
+</script>
+
+<section>
+  <h1>Github Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/hinablue">@hinablue</a> on Github
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'hinablue',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("hinablue", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/hinablue" class="twitter-follow-button" data-width="208px" data-show-count="false">Follow @hinablue</a>
+  
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/104812280860478253996?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2011 - hinablue -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'hinablue';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.hinablue.me/entry/JS-tech-CKeditor-dialog-again-part-5/';
+        var disqus_url = 'http://blog.hinablue.me/entry/JS-tech-CKeditor-dialog-again-part-5/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

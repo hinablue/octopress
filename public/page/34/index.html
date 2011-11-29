@@ -1,0 +1,414 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>HINA::工程幼稚園</title>
+  <meta name="author" content="hinablue">
+
+  
+  <meta name="description" content="其實我是農夫（喂），所以工程師的事情我不太會也是很合理的！當完兵之後，懵懂不經事就學人家出社會，結果現在出來跑該還得都還沒還，不過這不是重點（疑）！在這個行業待了幾個年頭，不難會發現台灣的中小企業都跟農會一樣（喂喂），只給你一種肥料，就覺得稻米會長的很好，然後等到收成的時候，又因為他是老大， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.hinablue.me/page/34">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/hinablue" rel="alternate" title="HINA::工程幼稚園" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-259895-17']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">HINA::工程幼稚園</a></h1>
+  
+    <h2>偏執與強迫症的患者，算不上是無可救藥，只是我已經遇上我的良醫了。</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/hinablue" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.hinablue.me" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/entry/css-tech-about-layout-with-css-and-xhtml-note/">[CSS Tech] 在 CSS/XHTML 關於輸出的心得</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-08-03T13:25:00+08:00" pubdate data-updated="true">Aug 3<span>rd</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>其實我是農夫（喂），所以工程師的事情我不太會也是很合理的！當完兵之後，懵懂不經事就學人家出社會，結果現在出來跑該還得都還沒還，不過這不是重點（疑）！在這個行業待了幾個年頭，不難會發現台灣的中小企業都跟農會一樣（喂喂），只給你一種肥料，就覺得稻米會長的很好，然後等到收成的時候，又因為他是老大，所以可以<s>隨便喊價</s>以量制價，產的比較好，單價就壓低，產的爛，就稍微提高一點點。</p>
+
+<p>還好我小時候都吃自家的米，沒吃到農會的爛米（喂喂喂），不過當兵那陣子吃了一年半載的爛米，難怪會那麼癡肥（疑）。反正，吃米不知道米價這件事情，其實大家都習以為常了。然後就開始惡性循環，一開始的時候，找了一個萬能的 PG（Programmer）當作是瑪利亞，但是瑪利亞都有在看電視，PG 通常都沒時間看電視，所以拖地是行不通的（肯定的）。</p>
+
+<p>稍微高級一點的，會有一個 PM（Project Manager） 來帶領團隊，然後會有 VD（Virtual Designer）跟 PG 配合。理想狀態是這樣，當有一個產品要開發時，PM 整合客戶的意見，然後與 VD, PG 討論，由 VD 產生視覺與 PM 跟客戶交涉，最後由 PG 實現功能。當然，這是理想，是一種遙不可及的夢想，正所謂，<strong>有夢最美，李想呼系（台語）</strong>！實際狀況大概是，PM 口頭轉述加油添醋，VD 客戶優先專業次之美學無視，PG 先做出來試用一下！</p>
+
+<p>我都遇過（讓我寫個慘字）！至於 FE（Frontend Engineer），基本上，有聽過就要偷笑了（肯定的）。關於視覺設計與程式設計之間的恩恩怨怨，我想只有身在其中的人才能體會。只是，我覺得很悲哀的事情是，市場上真正專職的 WEB VD 到底有多少？君不見把把都是平面設計轉網路，阿撒不魯轉網路，農夫轉網路（就是我），好像人人都可以轉到網路業來發展，這是多美妙的世界啊（喂）！</p>
+
+<p>造就了什麼？請自行想像。</p>
+
+<p>我是 PG，我也做 FE，但是我並不是踰矩，因為我不專業啊（無誤）！程式不會寫是天經地義的事情，所以只好寫一點 CSS/XHTML 來平衡一下。其實我並不太理解的是，為什麼，所謂的專業，或是專職的網頁設計，對於 CSS 或是 XHTML/HTML 會一點辦法也沒有？這是很詭譎的事情，因為這些東西並不是新的技術或是方法，難道網頁設計沉淪到這種地步了嘛？</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/entry/css-tech-about-layout-with-css-and-xhtml-note/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/entry/photos-2010-07-chiufen/">[影像] 九份隨性遊</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-08-02T21:41:00+08:00" pubdate data-updated="true">Aug 2<span>nd</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>睡飽之後興起之餘，騎車到九份去了。九份的薰衣草森林，就只是賣小東西的而已。
+<a href="http://www.flickr.com/photos/hinablue/4852166009/"><img src="http://farm5.static.flickr.com/4077/4852166009_d43bbeb785.jpg" alt="IMG_6110" /></a></p>
+
+<p><a href="http://www.flickr.com/photos/hinablue/4852167339/"><img src="http://farm5.static.flickr.com/4114/4852167339_40540a5e81.jpg" alt="IMG_6112" /></a></p>
+
+<p>天氣熱跑去喝下午茶吹冷氣，吹到都想睡覺了。
+<a href="http://www.flickr.com/photos/hinablue/4852169993/"><img src="http://farm5.static.flickr.com/4134/4852169993_77d20ce5aa.jpg" alt="IMG_6118" /></a></p>
+
+<p><a href="http://www.flickr.com/photos/hinablue/4852170995/"><img src="http://farm5.static.flickr.com/4075/4852170995_1288ccafb1.jpg" alt="IMG_6123" /></a></p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/entry/photos-2010-07-chiufen/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/entry/photos-my-niece-2010-07/">[影像] 久違的小姪女</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-07-28T22:26:00+08:00" pubdate data-updated="true">Jul 28<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>我不懂為什麼他要正襟危坐的給我拍照，跟他說要比 Ya~ 他就說要這樣啦（坐正），沒辦法所以只好就這樣拍啦！我只能說，別人家的小孩最好玩（喂喂喂），這次去海生館，看到這個海馬側背包，就買給他當禮物啦！</p>
+
+<p>小姪女表示：這個包包太小了啦，你要買大一點的給我，這樣我才能裝書（從背後拿出圖畫故事書）！
+我：那有一個大的企鵝包包，可是你背得動嗎？
+小姪女表示：我背不動啊（樂奔，跑去拿玩具要來跟我玩）
+<img src="http://static.hinablue.me/blog/1564627515.jpg" width="532" height="800" /></p>
+
+<p>我：這是海馬，你知道海馬嗎？
+小姪女表示：這是老鷹啦，<strong>你懂不懂啊！</strong>
+<img src="http://static.hinablue.me/blog/3605829349.jpg" width="532" height="800" /></p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/entry/photos-my-niece-2010-07/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/page/35/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/page/33/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Me</h1>
+  <img src="/images/hniablue_icon.jpg" width="195" height="195" alt="Hina, Cain Chen." />
+  <p>我是閃光洽！</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+  </ul>
+</section>
+<script type="text/javascript">
+    $.domReady(function() {
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+        (function() {
+            $.ajax({
+                url: '/atom.xml',
+                dataType: 'xml',
+                success: function(xml) {
+                    var parser, expectedXML;
+                    if (window.DOMParser) {
+                        parser = new DOMParser();
+                        expectedXML = parser.parseFromString(decodeURIComponent(xml.response),"text/xml");
+                    } else {
+                        expectedXML = new ActiveXObject("Microsoft.XMLDOM");
+                        expectedXML.async = false;
+                        expectedXML.loadXML(decodeURIComponent(xml.response));
+                    }
+
+                    var entries = expectedXML.getElementsByTagName('entry');
+                    var entries_limit = entries.length > 5 ? 5 : entries.length;
+                    for(var i=0; i<entries_limit; i++) {
+                        $('<a/>')
+                        .attr('href', entries[i].childNodes[3].attributes[0].nodeValue)
+                        .text(entries[i].childNodes[1].childNodes[0].nodeValue)
+                        .appendTo($('<li/>').addClass('post').appendTo($('#recent_posts')));
+                    }
+                },
+                error: function(err) {
+                    $('<li/>').addClass('post').text('Error Loading feed').appendTo($('#recent_posts'));
+                }
+            });
+        })();
+    });
+</script>
+
+<section>
+  <h1>Github Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/hinablue">@hinablue</a> on Github
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'hinablue',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("hinablue", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/hinablue" class="twitter-follow-button" data-width="208px" data-show-count="false">Follow @hinablue</a>
+  
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/104812280860478253996?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2011 - hinablue -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'hinablue';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

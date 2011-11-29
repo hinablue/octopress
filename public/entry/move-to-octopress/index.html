@@ -1,0 +1,839 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>搬家到 Octopress - HINA::工程幼稚園</title>
+  <meta name="author" content="hinablue">
+
+  
+  <meta name="description" content="身為一個Geek工程師，用 VIM 來寫部落格應該也是很合理的。所以，我就這麼樣拋棄我長久以來維護的 TextCube 跳槽到 Octopress 了。不過，眾多（？）TextCube 的用戶也不用擔心，基本上我還是會維護的，只是官方那種趨於牛步的更新速度，實在讓人覺得很無力啊！官方最後一次的更新 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.hinablue.me/entry/move-to-octopress">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/hinablue" rel="alternate" title="HINA::工程幼稚園" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-259895-17']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">HINA::工程幼稚園</a></h1>
+  
+    <h2>偏執與強迫症的患者，算不上是無可救藥，只是我已經遇上我的良醫了。</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/hinablue" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.hinablue.me" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">搬家到 Octopress</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-11-29T10:47:00+08:00" pubdate data-updated="true">Nov 29<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>身為一個<strike>Geek</strike>工程師，用 VIM 來寫部落格應該也是很合理的。所以，我就這麼樣拋棄我長久以來維護的 TextCube 跳槽到 Octopress 了。不過，眾多（？）TextCube 的用戶也不用擔心，基本上我還是會維護的，只是官方那種趨於牛步的更新速度，實在讓人覺得很無力啊！官方最後一次的更新，在 svn 上面竟然已經是四月的事情了（眼神死</p>
+
+
+
+
+<p>所以我就理所當然入主 <a href="http://octopress.org/">Octopress</a> 了！</p>
+
+
+
+
+<!-- more -->
+
+
+
+
+<p>網路上已經有很多教學，我就不再野人獻曝，請大家參考底下文章：</p>
+
+
+
+
+<ul>
+<li><a href="http://blog.xdite.net/posts/2011/10/07/what-is-octopress/">XDite, Why Octopress?</a></li>
+<li><a href="http://blog.eddie.com.tw/2011/10/11/how-to-install-octopress-on-heroku/">龍哥, How to install octopress on heroku</a></li>
+<li><a href="http://hychen.wuweig.org/blog/2011/11/13/huan-dao-octopress/">無為閣, 換到 octopress</a></li>
+<li><a href="http://blog.yorkxin.org/2011/11/26/import-from-wpcom-to-octopress/">鴉7, Octopress 搬家記 (1)</a></li>
+<li><a href="http://blog.yorkxin.org/2011/11/26/my-octopress-workflow/">鴉7, Octopress 搬家記 (2)</a></li>
+<li><a href="http://blog.yorkxin.org/2011/11/26/octopress-redirect-to-old-site/">鴉7, Octopress 搬家記 (3)</a></li>
+<li><a href="http://www.yodi.me/blog/2011/10/24/github-custom-domain-with-octopress-in-ubuntu-oneiric-11-dot-10/">Github Custom Domain With Octopress in Ubuntu Oneiric 11.10</a></li>
+<li><a href="http://markdown.tw">Markdown 語法說明</a></li>
+</ul>
+
+
+
+
+<h3>我用 Octopress</h3>
+
+
+
+
+<p>簡而言之是一種<strike>Geek用</strike>純文字編輯的部落格系統。你需要有 git, ruby, markdown 等環境，對一般人來說可能不是那麼討喜。不過我拋棄 Windows 已經三年多了（除了 Canon RAW 要轉檔（眼神死），所以在 Ubuntu 底下有這些環境也是很合理的。</p>
+
+
+
+
+<p>他是一個使用 Markdown 來撰寫文章的系統，透過 <code>rake generate</code> 來產生整個部落格所需要的檔案，然後在藉由 git 來將部落格給發佈到遠端，你可以使用 <a href="https://github.com/">gitHub</a> 或是 <a href="http://www.heroku.com/">Heroku</a> 這兩個服務商。</p>
+
+
+
+
+<h3>何不 TextCube</h3>
+
+
+
+
+<p>我也用了很久，打從他 0.96 版的時候我就開使用，只是人次沒破百萬而已（笑）。他是一套韓國開發的開放原始碼部落格系統，當 Wordpress 在台灣還不是那麼紅的時候，這個系統也曾經有許多使用者在用，<strong>但是</strong>，為什麼使用者流失的這麼快？原因出在於大幅度改版，與舊版不相容等問題，導致一堆人離家出走。</p>
+
+
+
+
+<p>我之所以一直使用的原因，其實我並不覺得他難用，對我來說 Wordpress 反而很難用，我兩種都用過好一陣子，就<strong>使用者親和力</strong>來說，當初 TextCube 我覺得是比 Wordpress 好得多的。</p>
+
+
+
+
+<p>嗯，其實我的 Textcube 還活著，在這裡 <a href="http://tc.hinablue.me">http://tc.hinablue.me/</a>，其實我一直在等官方把 TC2.0 釋出，可是已經快兩年過去了，完全沒有消息，雖然偶爾還是會跟官方的開發者聯繫（大多都是 debug 就是），只是，就這樣了吧，等到他真的發佈再說了。</p>
+
+
+
+
+<h3>TC to OC</h3>
+
+
+
+
+<p>說轉換無痛其實是騙人的（喂）。不過如果是 TC 1.6 以上的版本，要轉換其實並沒有太大的困難。Octopress 本身是使用 permalink 來當作網址，所以，在 TC 裡面就必須要有 slogan 的項目設定。一般來說，會使用數字當作是文章網址，除非你特別設定使用 slogan 當網址，否則預設都是數字。</p>
+
+
+
+
+<p>數字也可以轉換到 Octopress 來，只是檔名就沒那麼好理解了。因為 Octopress 是以檔案來當作<em>草稿</em>，所以當你出現一堆 300.markdown, 301.markdown 的時候，鬼才知道裡面到底寫了什麼東西。所以不是不行，而是後續維護上可能會造成一些不必要得麻煩。</p>
+
+
+
+
+<p>我有寫了簡單的兩隻程式幫我轉，資料庫是用 <a href="https://github.com/j4mie/idiorm">Idiorm</a> 這個套件，你可以自行去 gitHub 下載。底下的範例是使用我的網址，請不要照抄，另外，如果你有使用我的 HC_Emoticons 外掛，也會一併轉換。</p>
+
+
+
+
+<p>裡面會把原本部落格使用的圖片，轉去一個靜態網址 <code>http://static.hinablue.me/blog</code>，然後 HC_Emoticons 會轉去這個靜態網址 <code>http://static.hinablue.me/blog/emoticons</code>，這兩個網址請自行設定。</p>
+
+
+
+
+<figure class='code'><figcaption><span>tc_convert.php</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="x">#!/usr/bin/php -q </span>
+</span><span class='line'><span class="cp">&lt;?php</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">require_once</span> <span class="s2">&quot;idiorm/idiorm.php&quot;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nx">ORM</span><span class="o">::</span><span class="na">configure</span><span class="p">(</span><span class="s1">&#39;mysql:host=localhost;dbname=tcback&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="nx">ORM</span><span class="o">::</span><span class="na">configure</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">,</span> <span class="s1">&#39;root&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="nx">ORM</span><span class="o">::</span><span class="na">configure</span><span class="p">(</span><span class="s1">&#39;password&#39;</span><span class="p">,</span> <span class="s1">&#39;CalineILoveYou&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="nx">ORM</span><span class="o">::</span><span class="na">configure</span><span class="p">(</span><span class="s1">&#39;driver_options&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="nx">PDO</span><span class="o">::</span><span class="na">MYSQL_ATTR_INIT_COMMAND</span> <span class="o">=&gt;</span> <span class="s1">&#39;SET NAMES utf8&#39;</span><span class="p">));</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$regx</span> <span class="o">=</span> <span class="s2">&quot;/&lt;a href=</span><span class="se">\&quot;</span><span class="s2">http:\/\/www\.flickr\.com\/photos\/(?P&lt;userid&gt;[^\/]+)\/(?P&lt;photoid&gt;.*)</span><span class="se">\&quot;</span><span class="s2"> title=</span><span class="se">\&quot;</span><span class="s2">(?P&lt;title&gt;.*)</span><span class="se">\&quot;</span><span class="s2"> target=</span><span class="se">\&quot;</span><span class="s2">_blank</span><span class="se">\&quot;</span><span class="s2">&gt;&lt;img src=</span><span class="se">\&quot;</span><span class="s2">(?P&lt;src&gt;(.*)\.jpg)</span><span class="se">\&quot;</span><span class="s2"> border=</span><span class="se">\&quot;</span><span class="s2">0</span><span class="se">\&quot;</span><span class="s2">&gt;&lt;\/a&gt;/i&quot;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// 依照類別將文章匯出</span>
+</span><span class='line'><span class="nv">$posts</span> <span class="o">=</span> <span class="nx">ORM</span><span class="o">::</span><span class="na">for_table</span><span class="p">(</span><span class="s1">&#39;tc_Entries&#39;</span><span class="p">)</span>
+</span><span class='line'>    <span class="o">-&gt;</span><span class="na">where_in</span><span class="p">(</span><span class="s1">&#39;category&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>    <span class="o">-&gt;</span><span class="na">find_many</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// 請把 hinablue 改成你的 flickr username</span>
+</span><span class='line'><span class="k">function</span> <span class="nf">flickr_replace</span><span class="p">(</span><span class="nv">$m</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="s1">&#39;[![&#39;</span><span class="o">.</span><span class="nb">str_replace</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span><span class="s1">&#39;\_&#39;</span><span class="p">,</span><span class="nv">$m</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span><span class="o">.</span><span class="s1">&#39;](&#39;</span><span class="o">.</span><span class="nv">$m</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="s1">&#39;)](http://www.flickr.com/photos/hinablue/&#39;</span><span class="o">.</span><span class="nv">$m</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="s1">&#39;)&#39;</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">exec</span><span class="p">(</span><span class="s1">&#39;mkdir -p entry&#39;</span><span class="p">);</span>
+</span><span class='line'><span class="nb">exec</span><span class="p">(</span><span class="s1">&#39;rm -rf ./entry/*.markdown&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">foreach</span><span class="p">(</span><span class="nv">$posts</span> <span class="k">as</span> <span class="nv">$post</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// 底下的 categoires 是自訂的分類</span>
+</span><span class='line'><span class="c1">// 你可以寫一個，像是 [Life]</span>
+</span><span class='line'><span class="c1">// 或是多個，像是 [Life, Chats]</span>
+</span><span class='line'><span class="nv">$data</span> <span class="o">=</span> <span class="s1">&#39;---</span>
+</span><span class='line'><span class="s1">layout: post</span>
+</span><span class='line'><span class="s1">title: &quot;&#39;</span><span class="o">.</span><span class="nb">str_replace</span><span class="p">(</span><span class="s1">&#39;&quot;&#39;</span><span class="p">,</span><span class="s1">&#39;\&quot;&#39;</span><span class="p">,</span><span class="nv">$post</span><span class="o">-&gt;</span><span class="na">title</span><span class="p">)</span><span class="o">.</span><span class="s1">&#39;&quot;</span>
+</span><span class='line'><span class="s1">date: &#39;</span><span class="o">.</span><span class="nb">date</span><span class="p">(</span><span class="s2">&quot;Y-m-d H:i&quot;</span><span class="p">,</span> <span class="nv">$post</span><span class="o">-&gt;</span><span class="na">created</span><span class="p">)</span><span class="o">.</span><span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">comments: true</span>
+</span><span class='line'><span class="s1">categories: []</span>
+</span><span class='line'><span class="s1">---</span>
+</span><span class='line'>
+</span><span class='line'><span class="s1">&#39;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$entry</span> <span class="o">=</span> <span class="nv">$post</span><span class="o">-&gt;</span><span class="na">content</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$entry</span> <span class="o">=</span> <span class="nb">preg_replace</span><span class="p">(</span><span class="s2">&quot;/&lt;br&gt;/i&quot;</span><span class="p">,</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span><span class="nv">$entry</span><span class="p">);</span>
+</span><span class='line'><span class="nv">$entry</span> <span class="o">=</span> <span class="nb">preg_replace_callback</span><span class="p">(</span><span class="nv">$regx</span><span class="p">,</span> <span class="s2">&quot;flickr_replace&quot;</span><span class="p">,</span> <span class="nv">$entry</span><span class="p">);</span>
+</span><span class='line'><span class="nv">$entry</span> <span class="o">=</span> <span class="nb">str_replace</span><span class="p">(</span><span class="s2">&quot;[##_ATTACH_PATH_##]&quot;</span><span class="p">,</span> <span class="s2">&quot;http://static.hinablue.me/blog&quot;</span><span class="p">,</span> <span class="nv">$entry</span><span class="p">);</span>
+</span><span class='line'><span class="nv">$entry</span> <span class="o">=</span> <span class="nb">str_replace</span><span class="p">(</span><span class="s2">&quot;http://blog.hinablue.me/attach/1/&quot;</span><span class="p">,</span> <span class="s2">&quot;http://static.hinablue.me/blog/&quot;</span><span class="p">,</span> <span class="nv">$entry</span><span class="p">);</span>
+</span><span class='line'><span class="nv">$entry</span> <span class="o">=</span> <span class="nb">preg_replace</span><span class="p">(</span><span class="s2">&quot;/\[##_1(?|L|R)\|([0-9]+)\.jpg\|([^#]+)\|_##\]/i&quot;</span><span class="p">,</span> <span class="s1">&#39;&lt;img src=&quot;http://static.hinablue.me/blog\1.jpg&quot; \2 /&gt;&#39;</span><span class="p">,</span> <span class="nv">$entry</span><span class="p">);</span>
+</span><span class='line'><span class="nv">$entry</span> <span class="o">=</span> <span class="nb">str_replace</span><span class="p">(</span><span class="s2">&quot;/plugins/HC_Emoticons/&quot;</span><span class="p">,</span> <span class="s2">&quot;http://static.hinablue.me/blog/&quot;</span><span class="p">,</span> <span class="nv">$entry</span><span class="p">);</span>
+</span><span class='line'><span class="nv">$entry</span> <span class="o">=</span> <span class="nb">preg_replace</span><span class="p">(</span><span class="s2">&quot;/\[##_HCEMO_([^_#]+)_##\]/i&quot;</span><span class="p">,</span> <span class="s1">&#39;\1&#39;</span><span class="p">,</span> <span class="nv">$entry</span><span class="p">);</span>
+</span><span class='line'><span class="nv">$entry</span> <span class="o">=</span> <span class="nb">preg_replace</span><span class="p">(</span><span class="s1">&#39;/longdesc=&quot;([^&quot;]+)&quot;/i&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="nv">$entry</span><span class="p">);</span>
+</span><span class='line'><span class="nv">$entry</span> <span class="o">=</span> <span class="nb">str_replace</span><span class="p">(</span><span class="s1">&#39;http://blog.hinablue.mehttp&#39;</span><span class="p">,</span> <span class="s1">&#39;http&#39;</span><span class="p">,</span> <span class="nv">$entry</span><span class="p">);</span>
+</span><span class='line'><span class="nv">$data</span> <span class="o">.=</span> <span class="nv">$entry</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// 這裡是使用 $post-&gt;slogan 來當作檔名</span>
+</span><span class='line'><span class="c1">// 如果你要用數字，則改為 $post-&gt;id 即可</span>
+</span><span class='line'><span class="nv">$fp</span> <span class="o">=</span> <span class="nb">fopen</span><span class="p">(</span><span class="s2">&quot;./entry/&quot;</span><span class="o">.</span><span class="nb">date</span><span class="p">(</span><span class="s2">&quot;Y-m-d&quot;</span><span class="p">,</span> <span class="nv">$post</span><span class="o">-&gt;</span><span class="na">created</span><span class="p">)</span><span class="o">.</span><span class="s1">&#39;-&#39;</span><span class="o">.</span><span class="nb">str_replace</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="nv">$post</span><span class="o">-&gt;</span><span class="na">slogan</span><span class="p">)</span><span class="o">.</span><span class="s1">&#39;.markdown&#39;</span><span class="p">,</span> <span class="s2">&quot;w+&quot;</span><span class="p">);</span>
+</span><span class='line'><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nb">fwrite</span><span class="p">(</span><span class="nv">$fp</span><span class="p">,</span> <span class="nv">$data</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">echo</span> <span class="nv">$post</span><span class="o">-&gt;</span><span class="na">id</span><span class="o">.</span><span class="s2">&quot; failed.</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">fclose</span><span class="p">(</span><span class="nv">$fp</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// 這邊會檢查檔案，如果有 ## 這種 TextCube 專用 replace 存在</span>
+</span><span class='line'><span class="c1">// 則會告訴你這些檔案，你可能有需要做修改</span>
+</span><span class='line'><span class="k">if</span><span class="p">(</span><span class="nb">preg_match</span><span class="p">(</span><span class="s2">&quot;/##/i&quot;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">echo</span> <span class="s2">&quot;./entry/&quot;</span><span class="o">.</span><span class="nb">date</span><span class="p">(</span><span class="s2">&quot;Y-m-d&quot;</span><span class="p">,</span> <span class="nv">$post</span><span class="o">-&gt;</span><span class="na">created</span><span class="p">)</span><span class="o">.</span><span class="s1">&#39;-&#39;</span><span class="o">.</span><span class="nb">str_replace</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">,</span> <span class="s2">&quot;-&quot;</span><span class="p">,</span> <span class="nv">$post</span><span class="o">-&gt;</span><span class="na">slogan</span><span class="p">)</span><span class="o">.</span><span class="s1">&#39;.markdown&#39;</span><span class="o">.</span><span class="s2">&quot; &quot;</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="cp">?&gt;</span><span class="x"></span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<p>這裡還有第二個檔案，他是將 .markdown 檔案<em>逐行取出</em>，然後做一些字串的過濾等等。</p>
+
+
+
+
+<figure class='code'><figcaption><span>tc_convert_filter.php</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="x">#!/usr/bin/php -q </span>
+</span><span class='line'><span class="cp">&lt;?php</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">exec</span><span class="p">(</span><span class="s1">&#39;ls ./entry/*.markdown&#39;</span><span class="p">,</span> <span class="nv">$rst</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">foreach</span><span class="p">(</span><span class="nv">$rst</span> <span class="k">as</span> <span class="nv">$file</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nv">$fp</span> <span class="o">=</span> <span class="nb">fopen</span><span class="p">(</span><span class="nv">$file</span><span class="p">,</span> <span class="s2">&quot;r+&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="nv">$lines</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>    <span class="nv">$data</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+</span><span class='line'>    <span class="nv">$is_code</span> <span class="o">=</span> <span class="k">false</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">while</span><span class="p">(</span><span class="o">!</span><span class="nb">feof</span><span class="p">(</span><span class="nv">$fp</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>        <span class="c1">// 逐行取出</span>
+</span><span class='line'>        <span class="nv">$line</span> <span class="o">=</span> <span class="nb">fgets</span><span class="p">(</span><span class="nv">$fp</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="c1">// 換掉 [code] 套件的原始碼區塊</span>
+</span><span class='line'>        <span class="k">if</span><span class="p">(</span><span class="nb">preg_match</span><span class="p">(</span><span class="s2">&quot;/\[code ([a-z0-9]+)\]/i&quot;</span><span class="p">,</span> <span class="nv">$line</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nv">$is_code</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+</span><span class='line'>            <span class="nv">$line</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="k">if</span><span class="p">(</span><span class="nb">preg_match</span><span class="p">(</span><span class="s2">&quot;/\[\/code\]/i&quot;</span><span class="p">,</span> <span class="nv">$line</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nv">$is_code</span> <span class="o">=</span> <span class="k">false</span><span class="p">;</span>
+</span><span class='line'>            <span class="nv">$line</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="k">if</span><span class="p">(</span><span class="nv">$is_code</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">if</span><span class="p">(</span><span class="nx">trim</span><span class="p">(</span><span class="nv">$line</span><span class="p">)</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>                <span class="nv">$line</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\t</span><span class="s2">&quot;</span><span class="o">.</span><span class="nv">$line</span><span class="p">;</span>
+</span><span class='line'>                <span class="nv">$data</span> <span class="o">.=</span> <span class="nv">$line</span><span class="p">;</span>
+</span><span class='line'>            <span class="p">}</span>
+</span><span class='line'>        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nv">$data</span> <span class="o">.=</span> <span class="nv">$line</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="c1">// 超過 20 行則插入 read more</span>
+</span><span class='line'>        <span class="nv">$lines</span><span class="o">++</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">if</span><span class="p">(</span><span class="nv">$lines</span> <span class="o">==</span> <span class="mi">20</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nv">$data</span> <span class="o">.=</span> <span class="s2">&quot;&lt;!-- more --&gt;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="c1">// HTML Code 替換</span>
+</span><span class='line'>        <span class="nv">$data</span> <span class="o">=</span> <span class="nb">str_replace</span><span class="p">(</span><span class="s2">&quot;&amp;nbsp;&quot;</span><span class="p">,</span> <span class="s2">&quot; &quot;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
+</span><span class='line'>        <span class="nv">$data</span> <span class="o">=</span> <span class="nb">htmlspecialchars_decode</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
+</span><span class='line'>        <span class="nv">$data</span> <span class="o">=</span> <span class="nb">str_replace</span><span class="p">(</span><span class="s1">&#39;&lt;meta http-equiv=&quot;content-type&quot; content=&quot;text/html; charset=utf-8&quot;&gt;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nb">fclose</span><span class="p">(</span><span class="nv">$fp</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// HC_Emoticons 錯誤替換</span>
+</span><span class='line'>    <span class="nv">$data</span> <span class="o">=</span> <span class="nb">str_replace</span><span class="p">(</span><span class="s1">&#39;blog/emo&#39;</span><span class="p">,</span><span class="s1">&#39;emo&#39;</span><span class="p">,</span><span class="nv">$data</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nb">file_put_contents</span><span class="p">(</span><span class="nv">$file</span><span class="p">,</span> <span class="nv">$data</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="cp">?&gt;</span><span class="x"></span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<p>我用上面這兩個小程式轉完了五百多篇文章，當然不會完全沒有問題。不過，因為我用的外掛不多，加上圖片大多數都已經在 Flickr 上面了，所以轉換起來也沒有什麼太大的問題。而因為是使用 Markdown 的關係，有許多跳脫符號是必須要去留意的，這個可能就真的得土法煉鋼，<strike>用正規作掉</strike>慢慢看了。</p>
+
+
+
+
+<h3>Generate too long</h3>
+
+
+
+
+<p>這是這個部落格系統唯一的問題癥結點吧。雖然龍哥有提過使用 <code>rake isolate</code> 跟 <code>rake integrate</code> 可以用於測試文章時使用，可以大幅簡短 <code>rake generate</code> 的運算時間。不過，當我要發佈的時候，還是得面臨一次全部重新運算的問題。所以，我就想到幾個比較<strike>垃圾</strike>取巧的方法來避開。</p>
+
+
+
+
+<ul>
+<li>既然他要運算，那就給他算。</li>
+<li>給他算的是新的文章，舊的文章我先搬走。</li>
+<li>等他算完在把新文章蓋入舊的文章中。</li>
+<li>搬回 public 之後就可以上線了。</li>
+</ul>
+
+
+
+
+<p>由於我是放在 Heroku 上面，我寫得 shell-script 應該是只有我自己合用，如果想改的人請自便。</p>
+
+
+
+
+<figure class='code'><figcaption><span>quick_deploy.sh</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="c">#!/bin/bash </span>
+</span><span class='line'>
+</span><span class='line'><span class="o">[</span> ! -f _config.yml <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">&quot;You are not under octopress directory.&quot;</span> <span class="o">&amp;&amp;</span> <span class="nb">exit </span>0;
+</span><span class='line'>
+</span><span class='line'><span class="c"># 找出在 10 分鐘以內**沒有**修改過的 markdown 檔案，-mmin 單位是分鐘。</span>
+</span><span class='line'><span class="nv">TIMESTAMP</span><span class="o">=</span>10
+</span><span class='line'><span class="c"># 利用 sed 把檔案洗出來並重新組合成 public 底下的結構</span>
+</span><span class='line'><span class="c"># 依照 _config.yml 所設定的 permalink: /blog/:year/:month/:day/:title/</span>
+</span><span class='line'><span class="c"># 所以這裡的輸出結果是 \/blog\/\1\/\2\/\3\/\4\/</span>
+</span><span class='line'><span class="c"># MAINPATH=&quot;blog&quot;</span>
+</span><span class='line'><span class="c"># SUBPATH=&quot;\1\/\2\/\3\/\4&quot;</span>
+</span><span class='line'><span class="c"># 如果你的 permalink 有另外做設定，請自行修改</span>
+</span><span class='line'><span class="c"># 例如我的 permalink: /entry/:title/</span>
+</span><span class='line'><span class="c"># 就設定為 entry\/\4</span>
+</span><span class='line'><span class="c"># \1 代表年</span>
+</span><span class='line'><span class="c"># \2 代表月</span>
+</span><span class='line'><span class="c"># \3 代表日</span>
+</span><span class='line'><span class="c"># \4 代表標題(title)</span>
+</span><span class='line'><span class="nv">MAINPATH</span><span class="o">=</span><span class="s2">&quot;entry&quot;</span>
+</span><span class='line'><span class="nv">SUBPATH</span><span class="o">=</span><span class="s2">&quot;\4&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">FILES</span><span class="o">=</span><span class="sb">`</span>find ./source/_posts/ -type f -name <span class="s2">&quot;*.markdown&quot;</span> -mmin +<span class="nv">$TIMESTAMP</span> | sed -e p -e <span class="s2">&quot;s/\.\/source\/_posts\/\([0-9]\{4\}\)-\([0-9]\{2\}\)-\([0-9]\{2\}\)-\([^.]\+\).markdown/\.\/public\/$MAINPATH\/$SUBPATH\//g&quot;</span> | xargs -n 2<span class="sb">`</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># 建立暫存資料夾</span>
+</span><span class='line'>mkdir -p tmp
+</span><span class='line'>mkdir -p tmp/source/
+</span><span class='line'>mkdir -p tmp/public/
+</span><span class='line'>
+</span><span class='line'><span class="k">for</span> <span class="o">((</span> <span class="nv">index</span><span class="o">=</span>0; index&lt;<span class="k">${#</span><span class="nv">FILES</span><span class="p">[@]</span><span class="k">}</span>; index++ <span class="o">))</span>; <span class="k">do</span>
+</span><span class='line'><span class="k">    while </span><span class="nv">IFS</span><span class="o">=</span><span class="s1">&#39; &#39;</span> <span class="nb">read</span> -ra FILE; <span class="k">do</span>
+</span><span class='line'>        <span class="c"># 把 source/_posts 跟 public 的文章目錄移動到暫存資料夾</span>
+</span><span class='line'>        cp <span class="s2">&quot;${FILE[0]}&quot;</span> <span class="s2">&quot;./tmp/source/&quot;</span>
+</span><span class='line'>        cp -r <span class="s2">&quot;${FILE[1]}&quot;</span> <span class="s2">&quot;./tmp/public/&quot;</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="nv">TT</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="s2">&quot;${FILE[0]}&quot;</span> | sed -e <span class="s2">&quot;s/\.\/source\/_posts\///g&quot;</span><span class="sb">`</span>
+</span><span class='line'>        <span class="c"># 只取文章開頭八行的設定，回寫 source/_posts</span>
+</span><span class='line'>        <span class="c"># 這個動作是很危險的！</span>
+</span><span class='line'>        <span class="c"># 這麼做是為了確保 Archive 跟 Categories 能夠整正常產生。</span>
+</span><span class='line'>        <span class="nv">TS</span><span class="o">=</span><span class="sb">`</span>head -8 ./tmp/source/<span class="s2">&quot;$TT&quot;</span><span class="sb">`</span>
+</span><span class='line'>        <span class="nb">echo</span> <span class="s2">&quot;$TS&quot;</span> &gt; <span class="s2">&quot;${FILE[0]}&quot;</span>
+</span><span class='line'>    <span class="k">done</span> &lt;&lt;&lt; <span class="s2">&quot;${FILES[$index]}&quot;</span>
+</span><span class='line'><span class="k">done</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># 重新產生網站的檔案</span>
+</span><span class='line'>rake generate
+</span><span class='line'>
+</span><span class='line'><span class="c"># 把檔案拷貝回去</span>
+</span><span class='line'>find ./tmp/public/ -type d | xargs -n1 -I@ cp -r @ <span class="s2">&quot;./public/$MAINPATH/&quot;</span>
+</span><span class='line'>cp ./tmp/source/*.markdown ./source/_posts/
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<p>這個 shell-script 有個<strong>非常危險的回寫動作</strong>，要用之前，請確定你對 shell-script 有一定的認識，不然如果發生什麼意外，我可不能擔保喔！</p>
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">hinablue</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-11-29T10:47:00+08:00" pubdate data-updated="true">Nov 29<span>th</span>, 2011</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/octopress/'>Octopress</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://blog.hinablue.me/entry/move-to-octopress/" data-via="hinablue" data-counturl="http://blog.hinablue.me/entry/move-to-octopress/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/entry/photos-2011-11-nantou-final/" title="Previous Post: [影像] 南投，忘憂之旅 Final">&laquo; [影像] 南投，忘憂之旅 Final</a>
+      
+      
+        <a class="basic-alignment right" href="/entry/custom-octopress-aside-and-quick-deploy-script-update/" title="next Post: [筆記] 自訂 Octopress 側邊欄位與部署 shell-script">[筆記] 自訂 Octopress 側邊欄位與部署 shell-script &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Me</h1>
+  <img src="/images/hniablue_icon.jpg" width="195" height="195" alt="Hina, Cain Chen." />
+  <p>我是閃光洽！</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+  </ul>
+</section>
+<script type="text/javascript">
+    $.domReady(function() {
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+        (function() {
+            $.ajax({
+                url: '/atom.xml',
+                dataType: 'xml',
+                success: function(xml) {
+                    var parser, expectedXML;
+                    if (window.DOMParser) {
+                        parser = new DOMParser();
+                        expectedXML = parser.parseFromString(decodeURIComponent(xml.response),"text/xml");
+                    } else {
+                        expectedXML = new ActiveXObject("Microsoft.XMLDOM");
+                        expectedXML.async = false;
+                        expectedXML.loadXML(decodeURIComponent(xml.response));
+                    }
+
+                    var entries = expectedXML.getElementsByTagName('entry');
+                    var entries_limit = entries.length > 5 ? 5 : entries.length;
+                    for(var i=0; i<entries_limit; i++) {
+                        $('<a/>')
+                        .attr('href', entries[i].childNodes[3].attributes[0].nodeValue)
+                        .text(entries[i].childNodes[1].childNodes[0].nodeValue)
+                        .appendTo($('<li/>').addClass('post').appendTo($('#recent_posts')));
+                    }
+                },
+                error: function(err) {
+                    $('<li/>').addClass('post').text('Error Loading feed').appendTo($('#recent_posts'));
+                }
+            });
+        })();
+    });
+</script>
+
+<section>
+  <h1>Github Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/hinablue">@hinablue</a> on Github
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'hinablue',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("hinablue", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/hinablue" class="twitter-follow-button" data-width="208px" data-show-count="false">Follow @hinablue</a>
+  
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/104812280860478253996?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2011 - hinablue -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'hinablue';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.hinablue.me/entry/move-to-octopress/';
+        var disqus_url = 'http://blog.hinablue.me/entry/move-to-octopress/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

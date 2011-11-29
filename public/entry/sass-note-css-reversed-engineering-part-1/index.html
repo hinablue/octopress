@@ -1,0 +1,409 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[SASS note.] CSS 逆向工程 part 1 - HINA::工程幼稚園</title>
+  <meta name="author" content="hinablue">
+
+  
+  <meta name="description" content="工欲善其事，必先利其器！如果你對 CSS 的基礎還不甚了解，請先把基礎打好再來（認真（無誤）。關於什麼叫做 SASS 的，請上網 Google 或是參考我之前寫的文章，或是參考我的投影片（請用 Chrome 開啟）。 首先，對於已經開發的 CSS 樣式表，我們本來就可以使用 sass 的工具， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.hinablue.me/entry/sass-note-css-reversed-engineering-part-1">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/hinablue" rel="alternate" title="HINA::工程幼稚園" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-259895-17']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">HINA::工程幼稚園</a></h1>
+  
+    <h2>偏執與強迫症的患者，算不上是無可救藥，只是我已經遇上我的良醫了。</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/hinablue" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.hinablue.me" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[SASS Note.] CSS 逆向工程 Part 1</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-15T17:51:00+08:00" pubdate data-updated="true">Aug 15<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>工欲善其事，必先利其器！如果你對 CSS 的基礎還不甚了解，請先把基礎打好再來（認真（無誤）。關於什麼叫做 SASS 的，請上網 Google 或是參考我之前<a href="http://blog.hinablue.me/entry/css-note-sass-del-say-a-sexy-styling-del" target="_blank">寫的文章</a>，或是參考我的<a href="http://sass.hinablue.me" target="_blank">投影片</a>（請用 Chrome 開啟）。</p>
+
+<p>首先，對於已經開發的 CSS 樣式表，我們本來就可以使用 sass 的工具，將他從 css 轉換成 sass 檔案格式，這一點都沒有難度（你要換成 scss 也是行得通的）。</p>
+
+<pre><code>$ sass-convert -F css -T sass my_styling.css my_styling.sass
+</code></pre>
+
+<p>接下來，面對已經轉換過的 sass 檔案，我們該怎麼辦？</p>
+
+<ul><li>尋找重複性高的區塊</li><li>尋找數值關聯性</li><li>留意嵌套（Nested）的項目</li><li>留意順序（由上到下）</li></ul>
+
+
+<p>為什麼？</p>
+
+<ul><li>重複區塊，使用 <strong>@mixin</strong></li><li>數值關聯，使用 <strong>$</strong></li><li>嵌套（Nested）組合從 sass 轉出至 css <strong><a href="http://sass-lang.com/docs/yardoc/file.SASS_REFERENCE.html#nested-import" target="_blank">組合</a> <a href="http://sass-lang.com/docs/yardoc/file.SASS_REFERENCE.html#nested_rules" target="_blank">方式</a> <a href="http://sass-lang.com/docs/yardoc/file.SASS_REFERENCE.html#nested_properties" target="_blank">不只一種</a></strong></li><li>順序決定<strong>樣式權重</strong></li></ul>
+
+
+<p>既然這麼麻煩，那為什麼要這樣做？</p>
+
+<p><strong><font size="6">因為我是好人！</font></strong></p>
+
+<!-- more -->
+
+
+<p>這麼做的好處，是對於接下來要維護或是修正的時候，能夠帶來一定的便利性，還有快速。加上強大的 <a href="http://blog.hinablue.me/entry/css-note-powerful-tool-compass-base-on-sass" target="_blank">Compass 這個工具</a>，可以讓你省下很多時間<del>去訂個下午茶或是追個噗浪之類的</del>。所以，基於<del>可以一邊啃派客雞排一邊追噗浪又</del>可以快速開發理由，這麼做其實也是很合理的！</p>
+
+<p>我拿了我自己做過的一個 CSS 樣式檔案來作例子，通常拿來做範例的檔案都又臭又長，這次當然也不利外，註解加上單純 CSS 設定總共有 1052 行，如果使用 sass-convert 做轉換，轉成 sass 檔案之後的行數是 911 行。也許你會覺得，沒差多少嘛，的確，也不過是 141 行的差異而已。</p>
+
+<p>接著我們對轉出的 sass 檔案做一些簡易的編輯，然後再去比對檔案，我們會發現編輯過得檔案變成了 921 行了。像這個時候同一個時間，你一定會覺得很詭譎，怎麼檔案變大了？</p>
+
+<p><font style="font-weight: bold;" size="6">其實我打從一開始就沒說 SASS 會讓 CSS 縮小。</font></p>
+
+<p>這是一種工具，一種可以做簡易程式化的工具，讓你編輯 CSS 能夠更快速且便利。我舉幾個簡單的例子給大家說明一下：</p>
+
+<p><img src="http://static.hinablue.me/blog/2601595663.png" width="655" height="729" />
+這裡定義了許多大家一起用的變數，有了這些變數，當我要修改某一個項目的顏色，或是修改某一個函式（@mixin）的輸出樣式時，從這裡修改就比較方便，不需要做全檔搜尋與取代（這樣如果改到不想改的地方就更麻煩了）。</p>
+
+<p><img src="http://static.hinablue.me/blog/3763179176.png" width="655" height="732" />
+利用迴圈的特性，將整個樣式的寫法精簡，這個迴圈可以帶出六種（snap, party, event, shopstyle, about, gray）樣式設定，並且呼叫函式 nav_colors 做出額外的樣式設定。所以，我所說得可以精簡的地方在此，可以大大降低你重複撰寫樣式（搞不好名子還不小心打錯）的機率。</p>
+
+<p><img src="http://static.hinablue.me/blog/8844697165.png" width="658" height="734" />
+這個地方也是，利用迴圈，利用變數運算，把 CSS Sprites 的設定改成這種寫法。所以呢？一方面你不會把位移的數值打錯，二來也可以省下不少 coding 的時間。只是說，像我這種數學不好的，只能用簡單的運算給各位當範例囉。</p>
+
+<p><img src="http://static.hinablue.me/blog/2124100860.png" width="655" height="734" />
+以上是剛剛迴圈輸出的結果。</p>
+
+<p><img src="http://static.hinablue.me/blog/9626456826.png" width="657" height="732" />
+以上是迴圈輸出 CSS Sprites 的結果。</p>
+
+<p>當然，我們可以做的更多。只是，我們在使用這些工具的時候，還是需要注意一些地方。畢竟他是工具，如果造成不便，那就失去了這個工具的本意了。</p>
+
+<ul><li>SASS =~ CSS，只是換一種方式！
+</li><li>適當的變數、函式與嵌套！</li><li>善用 Compass 內建函式（@mixin）</li><li>將常用的 Styling 作成 @mixin 或是 @extend（不過如果只有一行就太超過了</li><li>將複雜的 @mixin 作成額外的 .sass 檔案，使用 @import 嵌入</li><li>如果你不清楚結果，盡量不要用 @import 嵌套（<a href="http://sass-lang.com/docs/yardoc/file.SASS_REFERENCE.html#nested-import" target="_blank">Nested @import</a>）</li></ul>
+
+
+<p>第一階段大概就是這樣！其實最好的入門方法，就是先把 SASS 當作是 CSS 來寫，只是不需要括號（{ }），使用縮排來做編輯，不需要結尾的分號。那麼，你應該可以很快的入門最基礎的 SASS 的寫作風格。</p>
+
+<p>下一個階段，會來看看一些嵌套的問題，還有樣式名稱嵌套時對於 CSS 權重的影響等。</p>
+
+<p>就降 <img src="http://static.hinablue.me/emoticons/S4/s4_08.gif" alt="幹得好"  border="0"></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">hinablue</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-08-15T17:51:00+08:00" pubdate data-updated="true">Aug 15<span>th</span>, 2011</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/jquery/'>jQuery</a>, <a class='category' href='/categories/javascript/'>javascript</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://blog.hinablue.me/entry/sass-note-css-reversed-engineering-part-1/" data-via="hinablue" data-counturl="http://blog.hinablue.me/entry/sass-note-css-reversed-engineering-part-1/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/entry/photos-about-the-photography-and-nothing-else-2011/" title="Previous Post: [非關影像] 一些枝微末節的細膩">&laquo; [非關影像] 一些枝微末節的細膩</a>
+      
+      
+        <a class="basic-alignment right" href="/entry/sass-note-css-reversed-engineering-part-2/" title="next Post: [SASS note.] CSS 逆向工程 part 2">[SASS note.] CSS 逆向工程 part 2 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Me</h1>
+  <img src="/images/hniablue_icon.jpg" width="195" height="195" alt="Hina, Cain Chen." />
+  <p>我是閃光洽！</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+  </ul>
+</section>
+<script type="text/javascript">
+    $.domReady(function() {
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+        (function() {
+            $.ajax({
+                url: '/atom.xml',
+                dataType: 'xml',
+                success: function(xml) {
+                    var parser, expectedXML;
+                    if (window.DOMParser) {
+                        parser = new DOMParser();
+                        expectedXML = parser.parseFromString(decodeURIComponent(xml.response),"text/xml");
+                    } else {
+                        expectedXML = new ActiveXObject("Microsoft.XMLDOM");
+                        expectedXML.async = false;
+                        expectedXML.loadXML(decodeURIComponent(xml.response));
+                    }
+
+                    var entries = expectedXML.getElementsByTagName('entry');
+                    var entries_limit = entries.length > 5 ? 5 : entries.length;
+                    for(var i=0; i<entries_limit; i++) {
+                        $('<a/>')
+                        .attr('href', entries[i].childNodes[3].attributes[0].nodeValue)
+                        .text(entries[i].childNodes[1].childNodes[0].nodeValue)
+                        .appendTo($('<li/>').addClass('post').appendTo($('#recent_posts')));
+                    }
+                },
+                error: function(err) {
+                    $('<li/>').addClass('post').text('Error Loading feed').appendTo($('#recent_posts'));
+                }
+            });
+        })();
+    });
+</script>
+
+<section>
+  <h1>Github Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/hinablue">@hinablue</a> on Github
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'hinablue',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("hinablue", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/hinablue" class="twitter-follow-button" data-width="208px" data-show-count="false">Follow @hinablue</a>
+  
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/104812280860478253996?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2011 - hinablue -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'hinablue';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.hinablue.me/entry/sass-note-css-reversed-engineering-part-1/';
+        var disqus_url = 'http://blog.hinablue.me/entry/sass-note-css-reversed-engineering-part-1/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,733 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[Layout tech.] Web Design note with XHTML/CSS part 3 - HINA::工程幼稚園</title>
+  <meta name="author" content="hinablue">
+
+  
+  <meta name="description" content="在這之前，請先拜讀： Cascading Style Sheets Level 2 Revision 1 (CSS 2.1) Specification 這次要講的重點是： 再看視覺格式物件（Visual formatting model）中的 display 屬性列表與清單物件不用 TABLE &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.hinablue.me/entry/working-note-about-web-design-xhtml-and-css-part-3">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/hinablue" rel="alternate" title="HINA::工程幼稚園" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-259895-17']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">HINA::工程幼稚園</a></h1>
+  
+    <h2>偏執與強迫症的患者，算不上是無可救藥，只是我已經遇上我的良醫了。</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/hinablue" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.hinablue.me" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[Layout Tech.] Web Design Note With XHTML/CSS Part 3</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-05-20T11:05:00+08:00" pubdate data-updated="true">May 20<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>在這之前，請先拜讀：</p>
+
+<ul><li><a href="http://www.w3.org/TR/CSS2/" target="_blank">Cascading Style Sheets Level 2 Revision 1 (CSS 2.1) Specification</a></li></ul>
+
+
+<p>這次要講的重點是：</p>
+
+<ol><li>再看視覺格式物件（Visual formatting model）中的 display 屬性</li><li>列表與清單物件</li><li>不用 TABLE 的表格</li><li>很好很強大的特殊屬性：counter
+</li></ol>
+
+
+<p>首先，在閱讀這篇文章之前，請明確認知以下兩件事情：</p>
+
+<ol><li style="font-size: 24px; font-weight: bold; color: rgb(255, 0, 0);">IE6+7 sucks!</li><li style="font-size: 24px; font-weight: bold; color: rgb(142, 142, 142);">本文作者是三尛咖！</li></ol>
+
+
+<p>有以上明確的認知之後，我們繼續（疑？）。</p>
+
+<p>視覺格式物件當然不只限於 display 而已，但是定位（position）與浮動（float）在<a href="http://blog.hinablue.me/753" target="">上一篇</a>已經講得夠多了，所以我們這次就來提一下顯示（display）這個屬性。顯示（display）這個屬性的值在 CSS 2.1 的規範中相當多元：</p>
+
+<ul><li style="color: rgb(23, 127, 205);">block</li><li style="color: rgb(0, 128, 0);">inline-block</li><li style="color: rgb(23, 127, 205);">inline</li><li style="color: rgb(0, 128, 0);">list-item</li><li style="color: rgb(23, 127, 205);">none</li><li style="color: rgb(255, 0, 0);">run-in</li><li style="color: rgb(0, 128, 0);">table, inline-table, table-row-group, table-column, table-column-group, table-header-group, table-footer-group, table-row, table-caption</li><li style="text-decoration: line-through;">inherit（這個屬性值就不多做介紹了，不要問我為什麼）</li></ul>
+
+
+<p>我所標明出<span style="font-weight: bold; color: rgb(23, 127, 205);">藍色的部分</span>，是最常見且常用的，而<span style="color: rgb(0, 128, 0); font-weight: bold;">綠色的部分</span>則是比較少人使用的部分，而<span style="color: rgb(255, 0, 0); font-weight: bold;">紅色的部分</span>，是我要特別說明一下的地方。我想可能很少人聽過或是用過 <span style="color: rgb(255, 0, 0); font-weight: bold;">run-in</span> 這個屬性值，它比較特別的地方在於，它被賦予屬性狀態是跟著整個 Box 元件的最後的狀態而定，假設 Box 元件最後被指定為區塊（block），則設定為 run-in 的元件也會跟著被指定為區塊（block），若是指定為<span class="wbtr_mn">行內（或譯</span><span class="wbtr_mn">內聯，inline）元件，則 run-in 元件就會被指定為行內（inline）元件。</p>
+
+<p>會用上 run-in 的設定屬性的地方不多，目前能正常顯示 run-in 的瀏覽器也不多（Chrome、IE8、Opera，很抱歉 Firefox 3.0x 似乎不領情）。而大多會使用 run-in 屬性設定，都會配合 :after 與 :content 來使用，應用的對象多數是配合段落中的影像圖片，這個功能支援度並沒有很完整，起碼，我在 Chrome、IE8、Opera 中測試的結果，只有 IE8 與 Opera 顯示出相同的結果，Chrome 還是顯示出了錯誤的位置。</p>
+
+<p>關於 run-in 我們還是到此為止，這個真的太冷門了。</p>
+
+<!-- more -->
+
+
+<p>接著我們來看 list-item 這個屬性值，顯而易見的，它其實就是清單（Lists）元件的一種，只是利用顯示（display）屬性將它表現出來。當然，既然是清單元件的一種，理所當然的，就可以使用清單元件的所有屬性設定。</p>
+
+<pre><code>&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd"&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-TW"&gt;
+&lt;head profile="http://gmpg.org/xfn/11"&gt;
+&lt;meta http-equiv="content-Type" content="text/html; charset=UTF-8" /&gt;
+&lt;title&gt;Simple Layout - display&lt;/title&gt;
+&lt;style type="text/css"&gt;
+&lt;!--
+.before-runin, .after-runin {
+    border: 5px solid #efefef;
+    padding: 5px;
+    display: block;
+}
+.after-runin div.listitem {
+    display: list-item;
+    list-style-type: circle;
+    margin-left: 20px;
+}
+--&gt;
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;Before:&lt;/h1&gt;
+&lt;div class="before-runin"&gt;
+    &lt;div class="nonlist"&gt;A&lt;/div&gt;
+    &lt;div class="nonlist"&gt;B&lt;/div&gt;
+    &lt;div class="nonlist"&gt;C&lt;/div&gt;
+    &lt;div class="nonlist"&gt;D&lt;/div&gt;
+&lt;/div&gt;
+&lt;h1&gt;After:&lt;/h1&gt;
+&lt;div class="after-runin"&gt;
+    &lt;div class="listitem"&gt;A&lt;/div&gt;
+    &lt;div class="listitem"&gt;B&lt;/div&gt;
+    &lt;div class="listitem"&gt;C&lt;/div&gt;
+    &lt;div class="listitem"&gt;D&lt;/div&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<p><img src="http://static.hinablue.me/blog/2462081882.png" width="629" height="391" /></p>
+
+<p>這樣應該可以很清楚明瞭的知道 list-item 這個屬性值在做甚麼事情了吧。</p>
+
+<p>接著我們來看 table 系列的屬性值，當然，既然可以轉換成 table 系列的屬性值，那麼也可以使用 table 系列的屬性設定，這些設定全部是以 HTML 4 為基準，除了兩個屬性值無法顯示之外，其他屬性皆可以正常顯示，缺點是，這不像是真的 TABLE 一樣可以做到跨欄、跨行的設定，所以，這樣的顯示屬性只能很單純的畫出很工整的 Table 而已，並不像是 HTML 中的 TABLE 標籤那樣靈活。</p>
+
+<pre><code>&lt;html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-TW"&gt;
+&lt;head profile="http://gmpg.org/xfn/11"&gt;
+&lt;meta http-equiv="content-Type" content="text/html; charset=UTF-8" /&gt;
+&lt;title&gt;Simple Layout - display, table&lt;/title&gt;
+&lt;style type="text/css"&gt;
+&lt;!--
+#table-item-inline {
+    display: inline-table;
+}
+#table-item {
+    display: table;
+}
+.tables {
+    width: 300px;
+    height: 100px;
+    border-top: 1px solid #000;
+    border-left: 1px solid #000;
+}
+.row-item {
+    display: table-row;
+    height: 40px;
+}
+.cell-item {
+    display: table-cell;
+    border-right: 1px solid #000;
+    border-bottom: 1px solid #000;
+    text-align: center;
+    vertical-align: middle;
+}
+.caption-item {
+    display: table-caption;
+    text-align: center;
+}
+--&gt;
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div id="table-item" class="tables"&gt;
+    &lt;div class="caption-item"&gt;Simple Layout&lt;/div&gt;
+    &lt;div class="row-item"&gt;
+        &lt;div class="cell-item"&gt;Simple&lt;/div&gt;&lt;div class="cell-item"&gt;Simple&lt;/div&gt;&lt;div class="cell-item"&gt;Simple&lt;/div&gt;&lt;div class="cell-item"&gt;Simple&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="table-item-inline" class="tables"&gt;
+    &lt;div class="caption-item"&gt;Simple Layout&lt;/div&gt;
+    &lt;div class="row-item"&gt;
+        &lt;div class="cell-item"&gt;Simple&lt;/div&gt;&lt;div class="cell-item"&gt;Simple&lt;/div&gt;&lt;div class="cell-item"&gt;Simple&lt;/div&gt;&lt;div class="cell-item"&gt;Simple&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="table-item-inline" class="tables"&gt;
+    &lt;div class="caption-item"&gt;Simple Layout&lt;/div&gt;
+    &lt;div class="row-item"&gt;
+        &lt;div class="cell-item"&gt;Simple&lt;/div&gt;&lt;div class="cell-item"&gt;Simple&lt;/div&gt;&lt;div class="cell-item"&gt;Simple&lt;/div&gt;&lt;div class="cell-item"&gt;Simple&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+</code></pre>
+
+<p><img src="http://static.hinablue.me/blog/4865978079.png" width="613" height="273" /></p>
+
+<p>以上就是顯示（display）屬性在的完整應用設定。老實說，以現在多數的瀏覽器來說，這些設定在各家瀏覽器所顯示的結果可能會有所出入，就像是浮動與定位對於留白的顯示誤差是一樣的，所以，利用顯示來達到清單或是表格的效果，其撰寫與應用的方法有限，真正能夠比較完整的達到清單或是表格需求的，那就是浮動（float）設定。當然，要講浮動設定之前，希望你已經清楚的知道 Box 元件在顯示上的定位問題（還不知道的請參考<a href="http://blog.hinablue.me/753" target="">上一篇</a>）。</p>
+
+<p>在 HTML 中，我們很常使用清單標籤，諸如：<ol><li>、<ul><li>、<dl><dt><dd> 這三種標籤（什麼？沒聽過 <dl><dt><dd>？請參閱 <a href="http://www.w3.org/TR/html401/struct/lists.html#h-10.3" target="_blank">HTML 4.01 10 Lists Definition lists</a> ）。這三種標籤除了可以利用 CSS 來美化顯示效果之外，另一個很大的用途就是，用來取代一些 TABLE 在做的事情，如同我在<a href="http://blog.hinablue.me/752" target="">第一篇</a>所提到的按鈕就是一個例子。已經忘了？那就來個例子，順便，我們來看看 <dl> 標籤如何做出整齊的表單：</p>
+
+<pre><code>&lt;html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-TW"&gt;
+&lt;head profile="http://gmpg.org/xfn/11"&gt;
+&lt;meta http-equiv="content-Type" content="text/html; charset=UTF-8" /&gt;
+&lt;title&gt;Simple Layout - display, table&lt;/title&gt;
+&lt;style type="text/css"&gt;
+&lt;!--
+h1 {
+    clear: both;
+}
+#ul-button {
+    border: 2px solid #1579bc;
+    background-color: #2385c3;
+    width: 700px;
+    height: 30px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+#ul-button li {
+    color: #fff;
+    font-weight: bold;
+    width: 115px;
+    height: 24px;
+    float: left;
+    text-align: center;
+    padding-top: 6px;
+    cursor: pointer;
+}
+#ul-button li:hover {
+    background-color: #1579bc;
+}
+#ul-button li.firstItem {
+    border-right: 1px solid #005d96;
+}
+#ul-button li.lastItem {
+    border-left: 1px solid #74b4bc;
+}
+#ul-button li.item {
+    border-right: 1px solid #005d96;
+    border-left: 1px solid #74b4bc;
+}
+#ul-button li a {
+
+}
+#ul-button li a:hover {
+    text-decoration: none;
+}
+#dl-form dt {
+    float: left;
+    width: 80px;
+    height: 30px;
+}
+#dl-form dd {
+    float: none;
+    width: auto;
+    height: 30px;
+}
+--&gt;
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;UL.button&lt;/h1&gt;
+&lt;ul id="ul-button"&gt;
+    &lt;li class="firstItem"&gt;Home&lt;/li&gt;
+    &lt;li class="item"&gt;About us&lt;/li&gt;
+    &lt;li class="item"&gt;Contact us&lt;/li&gt;
+    &lt;li class="item"&gt;Sitemap&lt;/li&gt;
+    &lt;li class="item"&gt;News&lt;/li&gt;
+    &lt;li class="lastItem"&gt;Services&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1&gt;DL.form&lt;/h1&gt;
+&lt;dl id="dl-form"&gt;
+    &lt;dt&gt;Simple&lt;/dt&gt;
+    &lt;dd&gt;&lt;input type="text" size="20" name="layout" /&gt;&lt;/dd&gt;
+    &lt;dt&gt;&amp;nbsp;&lt;/dt&gt;&lt;dd&gt;Please input something...&lt;/dd&gt;
+
+    &lt;dt&gt;Simple&lt;/dt&gt;
+    &lt;dd&gt;&lt;input type="text" size="20" name="layout" /&gt;&lt;/dd&gt;
+    &lt;dt&gt;&amp;nbsp;&lt;/dt&gt;&lt;dd&gt;Please input something...&lt;/dd&gt;
+
+    &lt;dt&gt;Simple&lt;/dt&gt;
+    &lt;dd&gt;&lt;input type="text" size="20" name="layout" /&gt;&lt;/dd&gt;
+    &lt;dt&gt;&amp;nbsp;&lt;/dt&gt;&lt;dd&gt;Please input something...&lt;/dd&gt;
+&lt;dl&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<p><img src="http://static.hinablue.me/blog/2104549162.png" width="540" height="372" /></p>
+
+<p>結束了嗎？當然，還沒有！清單元件除了能排出按鈕之外，當然也可以拿來畫表格。也許有人會質問，為什麼不拿剛剛的顯示屬性來畫就好？其實也可以（眾毆），不過當你遇到不同寬度、高度的欄位時，就不能使用顯示屬性來畫了，這個時候，清單元件就可以派上用場。但是！<span style="font-weight: bold; color: rgb(255, 0, 0);">請注意！利用清單元件來畫表格的缺點是，可能會有複雜的巢狀清單元件，在 HTML 中可能很容易理解（畢竟不會超過兩層），但是在 CSS 設定中，若是搞不清楚物件屬性的繼承順序的話，很容易將 CSS 寫爛掉。</span>所以，如果要利用清單元件來畫表格，請先衡量是否真有其必要性。</p>
+
+<pre><code>&lt;html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-TW"&gt;
+&lt;head profile="http://gmpg.org/xfn/11"&gt;
+&lt;meta http-equiv="content-Type" content="text/html; charset=UTF-8" /&gt;
+&lt;title&gt;Simple Layout - ul, table&lt;/title&gt;
+&lt;style type="text/css"&gt;
+&lt;!--
+#ul-table {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    width: 328px;
+}
+#ul-table li.row {
+    clear: both;
+}
+#ul-table li.row div.cell {
+    float: left;
+    width: 80px;
+    height: 40px;
+    border: 1px solid #000;
+    text-align: center;
+}
+#ul-table li.row-cross-col {
+    clear: both;
+}
+#ul-table li.row-cross-col div.cell {
+    float: left;
+    width: 80px;
+    height: 50px;
+    border: 1px solid #000;
+    text-align: center;
+    overflow: none;
+    display: block;
+}
+#ul-table li.row-cross-col div:first-child {
+    width: 162px;
+    height: 102px;
+}
+--&gt;
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;UL.table&lt;/h1&gt;
+&lt;ul id="ul-table"&gt;
+    &lt;li class="row"&gt;
+        &lt;div class="cell"&gt;1&lt;/div&gt;&lt;div class="cell"&gt;2&lt;/div&gt;&lt;div class="cell"&gt;3&lt;/div&gt;&lt;div class="cell"&gt;4&lt;/div&gt;
+    &lt;/li&gt;
+    &lt;li class="row-cross-col"&gt;
+        &lt;div class="cell"&gt;1&lt;br /&gt;2&lt;br /&gt;3&lt;br /&gt;4&lt;br /&gt;5&lt;br /&gt;&lt;/div&gt;&lt;div class="cell"&gt;1&lt;br /&gt;2&lt;/div&gt;&lt;div class="cell"&gt;1&lt;br /&gt;2&lt;/div&gt;
+        &lt;div class="cell"&gt;1&lt;br /&gt;2&lt;/div&gt;&lt;div class="cell"&gt;1&lt;br /&gt;2&lt;/div&gt;
+    &lt;/li&gt;
+    &lt;li class="row"&gt;
+        &lt;div class="cell"&gt;1&lt;/div&gt;&lt;div class="cell"&gt;2&lt;/div&gt;&lt;div class="cell"&gt;3&lt;/div&gt;&lt;div class="cell"&gt;4&lt;/div&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;
+&lt;/body&gt;
+</code></pre>
+
+<p><img src="http://static.hinablue.me/blog/8069235456.png" width="354" height="271" /></p>
+
+<p>最後，我來補充一點關於清單元件的東西。一般來說，我們要使用清單元件，無非就是兩種，一種是 <ol> 另一種是 <ul>，我想大家應該都知道差異性（計數與非計數）。現在，我們來試試看，不用 <ol> 標籤來做到 <ol> 標籤的效果。很神奇嗎？先來看看原始碼：</p>
+
+<pre><code>&lt;html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-TW"&gt;
+&lt;head profile="http://gmpg.org/xfn/11"&gt;
+&lt;meta http-equiv="content-Type" content="text/html; charset=UTF-8" /&gt;
+&lt;title&gt;Simple Layout - counter&lt;/title&gt;
+&lt;style type="text/css"&gt;
+&lt;!--
+body {
+    counter-reset: chapter;
+}
+h1:before {
+    content: "Chapter " counter(chapter) ". ";
+    counter-increment: chapter;
+}
+h1 {
+    counter-reset: section;
+}
+h2:before {
+    content: counter(chapter) "." counter(section) " ";
+    counter-increment: section;
+    margin-left: 40px;
+}
+--&gt;
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;H1.counter&lt;/h1&gt;
+    &lt;h2&gt;H2.counter&lt;/h2&gt;
+&lt;h1&gt;H1.counter&lt;/h1&gt;
+    &lt;h2&gt;H2.counter&lt;/h2&gt;
+&lt;h1&gt;H1.counter&lt;/h1&gt;
+    &lt;h2&gt;H2.counter&lt;/h2&gt;
+&lt;h1&gt;H1.counter&lt;/h1&gt;
+    &lt;h2&gt;H2.counter&lt;/h2&gt;
+&lt;/body&gt;
+</code></pre>
+
+<p><img src="http://static.hinablue.me/blog/6617772134.png" width="415" height="450" /></p>
+
+<p>我在噗浪上，另外看到<a href="http://www.plurk.com/p/uv531" target="_blank">有人問</a>說，<ol> 標籤的 start 這個屬性，在 HTML 中似乎要被取消了，其實，我想也是因為 CSS 的這個設定的關係，畢竟，很好用的呢！這種 counter 設定並不限制使用對象，換句話說，它可以使用在任何的標籤上，當然，如果你的數字不要從 1 開始（預設是 1），或是文章內數字要跳號，那麼你可以這樣設定：</p>
+
+<pre><code>&lt;html xmlns="http://www.w3.org/1999/xhtml" xml:lang="zh-TW"&gt;
+&lt;head profile="http://gmpg.org/xfn/11"&gt;
+&lt;meta http-equiv="content-Type" content="text/html; charset=UTF-8" /&gt;
+&lt;title&gt;Simple Layout - counter&lt;/title&gt;
+&lt;style type="text/css"&gt;
+&lt;!--
+body {
+    counter-reset: chapter +5;
+}
+h1:before {
+    content: "Chapter " counter(chapter) ". ";
+    counter-increment: chapter;
+}
+h1 {
+    counter-reset: section +2;
+}
+h2:before {
+    content: counter(chapter) "." counter(section) " ";
+    counter-increment: section section 2;
+    margin-left: 40px;
+}
+--&gt;
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;H1.counter&lt;/h1&gt;
+    &lt;h2&gt;H2.counter&lt;/h2&gt;
+&lt;h1&gt;H1.counter&lt;/h1&gt;
+    &lt;h2&gt;H2.counter&lt;/h2&gt;
+    &lt;h2&gt;H2.counter&lt;/h2&gt;
+&lt;h1&gt;H1.counter&lt;/h1&gt;
+    &lt;h2&gt;H2.counter&lt;/h2&gt;
+    &lt;h2&gt;H2.counter&lt;/h2&gt;
+    &lt;h2&gt;H2.counter&lt;/h2&gt;
+&lt;h1&gt;H1.counter&lt;/h1&gt;
+    &lt;h2&gt;H2.counter&lt;/h2&gt;
+    &lt;h2&gt;H2.counter&lt;/h2&gt;
+    &lt;h2&gt;H2.counter&lt;/h2&gt;
+    &lt;h2&gt;H2.counter&lt;/h2&gt;
+&lt;/body&gt;
+</code></pre>
+
+<p><img src="http://static.hinablue.me/blog/9079000062.png" width="415" height="750" /></p>
+
+<p>這樣，誰說清單非得要用 <ul>、<ol> 或是 <dl> 來排呢？您說是吧。
+</span></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">hinablue</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-05-20T11:05:00+08:00" pubdate data-updated="true">May 20<span>th</span>, 2009</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/jquery/'>jQuery</a>, <a class='category' href='/categories/javascript/'>javascript</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://blog.hinablue.me/entry/working-note-about-web-design-xhtml-and-css-part-3/" data-via="hinablue" data-counturl="http://blog.hinablue.me/entry/working-note-about-web-design-xhtml-and-css-part-3/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/entry/working-note-about-web-design-xhtml-and-css-part-2/" title="Previous Post: [Layout tech.] Web Design note with XHTML/CSS part 2">&laquo; [Layout tech.] Web Design note with XHTML/CSS part 2</a>
+      
+      
+        <a class="basic-alignment right" href="/entry/working-note-about-web-design-xhtml-and-css-part-4/" title="next Post: [Layout tech.] Web Design note with XHTML/CSS part 4">[Layout tech.] Web Design note with XHTML/CSS part 4 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Me</h1>
+  <img src="/images/hniablue_icon.jpg" width="195" height="195" alt="Hina, Cain Chen." />
+  <p>我是閃光洽！</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+  </ul>
+</section>
+<script type="text/javascript">
+    $.domReady(function() {
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+        (function() {
+            $.ajax({
+                url: '/atom.xml',
+                dataType: 'xml',
+                success: function(xml) {
+                    var parser, expectedXML;
+                    if (window.DOMParser) {
+                        parser = new DOMParser();
+                        expectedXML = parser.parseFromString(decodeURIComponent(xml.response),"text/xml");
+                    } else {
+                        expectedXML = new ActiveXObject("Microsoft.XMLDOM");
+                        expectedXML.async = false;
+                        expectedXML.loadXML(decodeURIComponent(xml.response));
+                    }
+
+                    var entries = expectedXML.getElementsByTagName('entry');
+                    var entries_limit = entries.length > 5 ? 5 : entries.length;
+                    for(var i=0; i<entries_limit; i++) {
+                        $('<a/>')
+                        .attr('href', entries[i].childNodes[3].attributes[0].nodeValue)
+                        .text(entries[i].childNodes[1].childNodes[0].nodeValue)
+                        .appendTo($('<li/>').addClass('post').appendTo($('#recent_posts')));
+                    }
+                },
+                error: function(err) {
+                    $('<li/>').addClass('post').text('Error Loading feed').appendTo($('#recent_posts'));
+                }
+            });
+        })();
+    });
+</script>
+
+<section>
+  <h1>Github Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/hinablue">@hinablue</a> on Github
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'hinablue',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("hinablue", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/hinablue" class="twitter-follow-button" data-width="208px" data-show-count="false">Follow @hinablue</a>
+  
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/104812280860478253996?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2011 - hinablue -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'hinablue';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.hinablue.me/entry/working-note-about-web-design-xhtml-and-css-part-3/';
+        var disqus_url = 'http://blog.hinablue.me/entry/working-note-about-web-design-xhtml-and-css-part-3/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

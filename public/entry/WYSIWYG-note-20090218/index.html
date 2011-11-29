@@ -1,0 +1,368 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[工作筆記] WYSIWYG 編輯器一些零星的瑣碎事情 - HINA::工程幼稚園</title>
+  <meta name="author" content="hinablue">
+
+  
+  <meta name="description" content="FCKEditor 算是我從開始接觸所見即所得（WYSIWYG）編輯器，一直用到現在的一個。雖然其中我有嘗試去用別的編輯器，像是 TinyMCE 就是其一。不過，最後用來用去還是回到了 FCKEditor 來，倒不是因為他特別好用，指是習慣問題而已。 這裡有一份線上編輯器的比較表，有興趣可以去看看 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.hinablue.me/entry/WYSIWYG-note-20090218">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/hinablue" rel="alternate" title="HINA::工程幼稚園" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-259895-17']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">HINA::工程幼稚園</a></h1>
+  
+    <h2>偏執與強迫症的患者，算不上是無可救藥，只是我已經遇上我的良醫了。</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/hinablue" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.hinablue.me" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[工作筆記] WYSIWYG 編輯器一些零星的瑣碎事情</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-02-18T10:02:00+08:00" pubdate data-updated="true">Feb 18<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><a href="http://www.fckeditor.net/" target="_blank">FCKEditor</a> 算是我從開始接觸所見即所得（WYSIWYG）編輯器，一直用到現在的一個。雖然其中我有嘗試去用別的編輯器，像是 <a href="http://tinymce.moxiecode.com/" target="_blank">TinyMCE</a> 就是其一。不過，最後用來用去還是回到了 <a href="http://www.fckeditor.net/" target="_blank">FCKEditor</a> 來，倒不是因為他特別好用，指是習慣問題而已。</p>
+
+<p>這裡有一份線上編輯器的比較表，有興趣可以去看看：
+<a href="http://www.geniisoft.com/showcase.nsf/WebEditors" target="_blank">http://www.geniisoft.com/showcase.nsf/WebEditors</a></p>
+
+<p>FCKEditor 也不是沒缺點（請看我<a href="http://blog.hinablue.me/hinablue/706" target="_blank">上一篇</a>），雖然同樣是採用 IFRAME 做轉換，但是結構上來說並沒有 TinyMCE 來得靈活，所以，在某些 scripts 呼叫上會出點問題。但是，因為曾經把 FCK 的整個 dialog 項目給 hack 掉，換成自己要用的東西（這應該不難），所以對於整個 FCK 的使用比 MCE 要來得熟手，所以到頭來，還是用 FCK 比較習慣（比較容易 hack？）。</p>
+
+<p>經過<a href="http://blog.hinablue.me/hinablue/706" target="_blank">上次的那件事情</a>之後，我真的覺得除了那該死的 IE 之外，框架真的是 DOM 裡面的一個致命傷。FCK 就是因為這樣導致 API 要去控制編輯器內容的時候過於綁手綁腳，畢竟，在那該死的 IE 的加持下，Window 與 Document 這兩項 DOM 對於子節點的呼叫硬是跟別人不太一樣，或者該說，在那該死的 IE 盛行的這個世界上，所有 IE 不能跑的都是有問題（客戶如是說），所以只好硬著頭皮把 DOM 給 hack 掉，好讓程序可以正常運作。</p>
+
+<p>其實這樣有點扭曲了 FCK API 的原意，畢竟 API 是一種溝通的管道與媒介，用 API 來對 API 本身提供的 prototype 來動手腳，好像有點奇怪（不只有點吧！），所以，如果有那種需要高度客製化的部分，老實說，我覺得 MCE 操作起來應該會比 FCK 要方便一點。畢竟，MCE 在這方面所<a href="http://wiki.moxiecode.com/index.php/TinyMCE:Index" target="_blank">提供的文件</a>，要比 FCK 要來得多（肯定的）。而且對於某些 DOM 的操作，MCE 確實比 FCK 要方便一些，只是，對於原始碼（HTML/XHTML）的處理上，我個人還是偏愛 FCK 的方式就是（不要問為什麼）。</p>
+
+<p>最近 MCE 推出了 3.x 版本，FCK 好像也在加緊趕工中。其實我個別都有再去嘗試一下新的版本，當然，那個 FCK 新版本的致命 bug（就是我<a href="http://blog.hinablue.me/hinablue/706" target="_blank">上一篇</a>提到的），目前也還沒有解決辦法（除了 hack DOM 之外），而 MCE 目前倒是沒有這方面的困擾，當然，這要看看 FCK 3.x 的造化了，要是這些 bug 還沒辦法去改善的話，那也很有可能棄 FCK 就 MCE 也說不定。</p>
+
+<!-- more -->
+
+
+<p>反正說穿了，不就是一大堆 Javascript prototype 在作怪嘛，只要有 source code 要把 DOM 給 hack 出來用也不是難事（吧）。不過，能不做這種事情就盡量不要做比較好，畢竟，這樣只會增加自己的工作量，把原本簡單的工作給複雜化罷了。倒是有一點，真希望 FCK 能多充實一點 wiki 的東西啊，給那幾樣 sample 實在有點太 simple 了啊（死）。</p>
+
+<p>PHP 的創造者說，Simple is Hard，但，看到那種很 simple 的 documents 的時候，你只會想說，Simple is FUCK！</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">hinablue</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-02-18T10:02:00+08:00" pubdate data-updated="true">Feb 18<span>th</span>, 2009</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/ckeditor/'>CKeditor</a>, <a class='category' href='/categories/fckeditor/'>FCKEditor</a>, <a class='category' href='/categories/javascript/'>Javascript</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://blog.hinablue.me/entry/WYSIWYG-note-20090218/" data-via="hinablue" data-counturl="http://blog.hinablue.me/entry/WYSIWYG-note-20090218/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/entry/what-the-fucking-IE-with-FCKEditor-bugs/" title="Previous Post: [FCKEditor 筆記] 我操你媽 IE">&laquo; [FCKEditor 筆記] 我操你媽 IE</a>
+      
+      
+        <a class="basic-alignment right" href="/entry/photos-memory-usage-in-photoshop/" title="next Post: [非關影像] 後製還是需要桌機啊！">[非關影像] 後製還是需要桌機啊！ &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Me</h1>
+  <img src="/images/hniablue_icon.jpg" width="195" height="195" alt="Hina, Cain Chen." />
+  <p>我是閃光洽！</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+  </ul>
+</section>
+<script type="text/javascript">
+    $.domReady(function() {
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+        (function() {
+            $.ajax({
+                url: '/atom.xml',
+                dataType: 'xml',
+                success: function(xml) {
+                    var parser, expectedXML;
+                    if (window.DOMParser) {
+                        parser = new DOMParser();
+                        expectedXML = parser.parseFromString(decodeURIComponent(xml.response),"text/xml");
+                    } else {
+                        expectedXML = new ActiveXObject("Microsoft.XMLDOM");
+                        expectedXML.async = false;
+                        expectedXML.loadXML(decodeURIComponent(xml.response));
+                    }
+
+                    var entries = expectedXML.getElementsByTagName('entry');
+                    var entries_limit = entries.length > 5 ? 5 : entries.length;
+                    for(var i=0; i<entries_limit; i++) {
+                        $('<a/>')
+                        .attr('href', entries[i].childNodes[3].attributes[0].nodeValue)
+                        .text(entries[i].childNodes[1].childNodes[0].nodeValue)
+                        .appendTo($('<li/>').addClass('post').appendTo($('#recent_posts')));
+                    }
+                },
+                error: function(err) {
+                    $('<li/>').addClass('post').text('Error Loading feed').appendTo($('#recent_posts'));
+                }
+            });
+        })();
+    });
+</script>
+
+<section>
+  <h1>Github Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/hinablue">@hinablue</a> on Github
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'hinablue',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("hinablue", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/hinablue" class="twitter-follow-button" data-width="208px" data-show-count="false">Follow @hinablue</a>
+  
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/104812280860478253996?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2011 - hinablue -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'hinablue';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.hinablue.me/entry/WYSIWYG-note-20090218/';
+        var disqus_url = 'http://blog.hinablue.me/entry/WYSIWYG-note-20090218/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

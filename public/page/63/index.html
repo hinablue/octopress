@@ -1,0 +1,415 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>HINA::工程幼稚園</title>
+  <meta name="author" content="hinablue">
+
+  
+  <meta name="description" content="開始之前，底下是參考文件： CSS3 . Info, Try out the CSS 3 Template layout moduleReady for use: CSS 3 Template layout moduleCSS Template layout module demoW3C &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.hinablue.me/page/63">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/hinablue" rel="alternate" title="HINA::工程幼稚園" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-259895-17']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">HINA::工程幼稚園</a></h1>
+  
+    <h2>偏執與強迫症的患者，算不上是無可救藥，只是我已經遇上我的良醫了。</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/hinablue" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.hinablue.me" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/entry/CSS3-tech-CSS3-template-layout-module-and-multi-background-with-jQuery/">[CSS 3 Tech.] CSS3 Template Layout Module and Multi Background With jQuery</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-06-11T13:26:00+08:00" pubdate data-updated="true">Jun 11<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>開始之前，底下是參考文件：</p>
+
+<ul><li><a href="http://www.css3.info/try-out-the-css-3-template-layout-module/" target="_blank">CSS3 . Info, Try out the CSS 3 Template layout module</a></li><li><a href="http://a.deveria.com/?p=236" target="_blank">Ready for use: CSS 3 Template layout module</a></li><li><a href="http://a.deveria.com/csstpl/" target="_blank">CSS Template layout module demo</a></li><li><a href="http://www.w3.org/TR/2009/WD-css3-layout-20090402/" target="_blank">W3C Working Draft, CSS Template Layout Module</a></li><li><a href="http://www.protocoder.com/css/css-multiple-backgrounds-background-layering-with-jquery/" target="_blank">CSS Multiple, Layed backgrounds with jQuery</a></li></ul>
+
+
+<p>如果你看完了，覺得可以理解，那麼這一篇文章你就可以跳過了 <img src="http://static.hinablue.me/emoticons/S4/s4_08.gif" alt="幹得好"  border="0"></p>
+
+<p><font style="color: rgb(0, 102, 153);" size="5"><strong>CSS 3 的 Template Layout Module 特異功能！</strong></font></p>
+
+<p>雖然說 CSS3 跟 HTML5 一樣還沒正式發表，發表時間也是遙遙無期，不過，當我看完 Template Layout Module 之後，我深深的覺得，所謂的網頁設計這個工作，真的在 CSS3 與 HTML5 發表之後，會產生甚麼樣的變化呢？我想起之前工作時，跟大陸的工程師聊過的一些事情。在大陸做網路這一塊，分了好多種專門的職位，當然，對台灣的<del>老闆</del>市場來說，這是不合成本的做法。不過，所謂術業有專攻，我還是覺得，我比較羨慕大陸那樣各司其職的做法就是。</p>
+
+<p>如果有看過上面的 <a href="http://a.deveria.com/csstpl/" target="_blank">CSS Template layout module demo</a>，那麼我們繼續看下去。</p>
+
+<p>CSS3 在<a href="http://www.w3.org/TR/2009/WD-css3-layout-20090402" target="_blank">這個模組</a>裡，重新定義了 display 這個屬性，並且新增了 <strong><a href="http://www.w3.org/TR/2009/WD-css3-layout-20090402/#slot-pseudo" target="_blank">::slot</a></strong><em> </em>這個擬似元件（pseudo-elements），另外增加了一個專用的單位＂<span style="font-weight: bold;"><a href="http://www.w3.org/TR/2009/WD-css3-layout-20090402/#definition-of-the-gr-unit-in-a-template-" target="_blank">gr</a></span>＂。暫且先不提這兩個新增的屬性值跟單位，我們先來看看被改寫的 display 有了甚麼樣的特異功能。</p>
+
+<ol><li>可定義行、列、內文區域位置。</li><li>可定義每一行、列寬度，最大、最小寬度（高度）。</li><li>可用萬用字元（*）自動取得寬度（高度）。</li><li>可用點（.）插入一個區隔行、列的空白區塊。</li></ol>
+
+
+<p>另外，新的擬似類別 ::slot 與新的單位 gr 能做什麼呢？</p>
+
+<ol><li>可用 ::slot 直接指定每一區塊的各別的 Styling 設定。</li><li>在已經定義的 display 中，gr 代表了行與列的 grid line 位置，元件可以利用 n x m 的 grid-line 來定義新的位置，這個單位在目前的 jQuery plugin 並沒有被實作出來。</li></ol>
+
+
+<p>我們繼續回到 display 這個屬性，我這裡直接使用範例來說明。</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/entry/CSS3-tech-CSS3-template-layout-module-and-multi-background-with-jQuery/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/entry/photos-Ruifang-Jiufen-in-the-office-day-20090609/">[影像] 老鏡遊九份</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-06-10T13:06:00+08:00" pubdate data-updated="true">Jun 10<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Canon 40D with Canon EF 20-35 f/2.8L, picture Style RVP-100F。<br /><br /><a href="http://blog.hinablue.me/748" target="_blank">上次</a>，同一個角度，不同的鏡頭。<br /><img src="http://static.hinablue.me/blog/7636423770.jpg" width="700" height="467" /><br /><br />這次，完全沒有人。<br /><img src="http://static.hinablue.me/blog/8289648786.jpg" width="700" height="467" /><br /><br />沒人真好！<br /><img src="http://static.hinablue.me/blog/7118020426.jpg" width="467" height="700" /><br /><br />老街全部都是觀光客，香港人，日本人居冠！<br /><img src="http://static.hinablue.me/blog/3200482616.jpg" width="700" height="467" /><br /><br />這個叫做＂巴菲小公主的凝望＂XD XD XD<br /><img src="http://static.hinablue.me/blog/2348927526.jpg" width="700" height="467" /><br /><br />鑰匙圈。<br /><img src="http://static.hinablue.me/blog/3081733008.jpg" width="700" height="467" /><br /><br />大頭狗模式！<br /><img src="http://static.hinablue.me/blog/3512183630.jpg" width="467" height="700" /><br /><br />因為沒人，所以可以跟熊拍個爽。<br /><img src="http://static.hinablue.me/blog/4777823554.jpg" width="700" height="467" /><br /><br /><img src="http://static.hinablue.me/blog/6173842364.jpg" width="700" height="467" /><br /><br /><img src="http://static.hinablue.me/blog/6932761414.jpg" width="700" height="467" /><br /><br /><img src="http://static.hinablue.me/blog/8274375068.jpg" width="700" height="467" /><br /><br /><img src="http://static.hinablue.me/blog/1821591261.jpg" width="700" height="467" /><br /><br />打完收工（啥）！<br /></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/entry/photos-canon-len-ef-20-35-f-28L-part-2/">[非關影像] 老鏡試拍 Part 2</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2009-06-08T16:11:00+08:00" pubdate data-updated="true">Jun 8<span>th</span>, 2009</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Canon 40D with Canon EF 20-35 f/2.8L, Picture Style RVP-100F。</p>
+
+<p><img src="http://static.hinablue.me/blog/4167856518.jpg" width="700" height="467" /></p>
+
+<p><img src="http://static.hinablue.me/blog/7662191831.jpg" width="467" height="700" /></p>
+
+<p><img src="http://static.hinablue.me/blog/4850508795.jpg" width="700" height="467" /></p>
+
+<p><img src="http://static.hinablue.me/blog/1464315534.jpg" width="700" height="467" /></p>
+
+<p><img src="http://static.hinablue.me/blog/6285367596.jpg" width="467" height="700" /></p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/entry/photos-canon-len-ef-20-35-f-28L-part-2/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/page/64/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/page/62/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Me</h1>
+  <img src="/images/hniablue_icon.jpg" width="195" height="195" alt="Hina, Cain Chen." />
+  <p>我是閃光洽！</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+  </ul>
+</section>
+<script type="text/javascript">
+    $.domReady(function() {
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+        (function() {
+            $.ajax({
+                url: '/atom.xml',
+                dataType: 'xml',
+                success: function(xml) {
+                    var parser, expectedXML;
+                    if (window.DOMParser) {
+                        parser = new DOMParser();
+                        expectedXML = parser.parseFromString(decodeURIComponent(xml.response),"text/xml");
+                    } else {
+                        expectedXML = new ActiveXObject("Microsoft.XMLDOM");
+                        expectedXML.async = false;
+                        expectedXML.loadXML(decodeURIComponent(xml.response));
+                    }
+
+                    var entries = expectedXML.getElementsByTagName('entry');
+                    var entries_limit = entries.length > 5 ? 5 : entries.length;
+                    for(var i=0; i<entries_limit; i++) {
+                        $('<a/>')
+                        .attr('href', entries[i].childNodes[3].attributes[0].nodeValue)
+                        .text(entries[i].childNodes[1].childNodes[0].nodeValue)
+                        .appendTo($('<li/>').addClass('post').appendTo($('#recent_posts')));
+                    }
+                },
+                error: function(err) {
+                    $('<li/>').addClass('post').text('Error Loading feed').appendTo($('#recent_posts'));
+                }
+            });
+        })();
+    });
+</script>
+
+<section>
+  <h1>Github Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  
+  <a href="https://github.com/hinablue">@hinablue</a> on Github
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'hinablue',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating&#8230;</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("hinablue", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/hinablue" class="twitter-follow-button" data-width="208px" data-show-count="false">Follow @hinablue</a>
+  
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/104812280860478253996?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2011 - hinablue -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'hinablue';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,498 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[CSS tech.] CSS 3 2D Transforms, Transition 動態效果筆記 - HINA::工程幼稚園</title>
+  <meta name="author" content="hinablue">
+
+  
+  <meta name="description" content="IE 退散！往後面站，往後面站，往後面站&#8230; 在 CSS3 的規範裡面，新增了對於動態效果的設定。關於這方面的資訊，可以參考 W3C 的文件，相信比看我在這邊廢話要來的好很多（肯定的）。在基於 Webkit 的瀏覽器核心底下（我是使用 Chrome） ，這些效果都能夠正常的顯示，不過， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.hinablue.me/entry/CSS-2D-transform-and-transition">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/hinablue" rel="alternate" title="HINA::工程幼稚園" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-259895-17']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">HINA::工程幼稚園</a></h1>
+  
+    <h2>偏執與強迫症的患者，算不上是無可救藥，只是我已經遇上我的良醫了。</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/hinablue" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.hinablue.me" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[CSS Tech.] CSS 3 2D Transforms, Transition 動態效果筆記</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-08-24T13:56:00+08:00" pubdate data-updated="true">Aug 24<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><strong><font color="#FF0000"><span style="font-size: xx-large;">IE 退散！往後面站，往後面站，往後面站&#8230;</span></font></strong></p>
+
+<p>在 CSS3 的規範裡面，新增了對於動態效果的設定。關於這方面的資訊，可以參考 <a href="http://www.w3.org/TR/css3-2d-transforms/" target="_blank">W3C 的文件</a>，相信比看我在這邊廢話要來的好很多（肯定的）。在基於 Webkit 的瀏覽器核心底下（我是使用 Chrome） ，這些效果都能夠正常的顯示，不過，總覺得用太多並不是件好事，似乎很吃系統資源的樣子，在我測試幾次之後，還差點讓 Chrome 掛點（我在 Windows 7 系統下測試）。</p>
+
+<p>CSS 2D Transforms 的原理其實不難，因為困難的運算都交給瀏覽器去做，剩下的只是設定問題。不過我總覺得其實，在設定上才是一件很困難的事情（沒有誤），再加上本人數學實在是爛到靠北，在寫這種動態的時候更是難過（掩面）。這裡簡單介紹一下這些動態屬性，當然，一切以 -webkit 為主（怎麼樣，打我啊）！</p>
+
+<ol><li>-webkit-transform
+指定轉換的方式，其方式有：</li><ul><li>matrix</li><li>translate</li><li>translateX</li><li>translateY</li><li>scale</li><li>scaleX</li><li>scaleY</li><li>rotate</li><li>skew</li><li>skewX</li><li>skewY</li></ul>以上的轉換可以參考<a href="http://css3.mikeplate.com/" target="_blank">這個網站</a>，裡面可以把玩部分轉換特效。至於那個比較特別的矩陣變換（ matrix），在 W3C 是有很完整的解釋，不過礙於在下數學太爛，所以完全看不懂他在幹嘛（喂），在這裡有一個<a href="http://www.css88.com/tool/css3Preview/Transform-Matrix.html" target="_blank">矩陣變換的操作</a>可以把玩，這樣應該比較容易理解（鏡射效果基本上就可以用他來快速達成），另外，這個矩陣變換跟 Flash 裡的矩陣變換是一樣的。
+
+<li>-webkit-transform-origin
+指定轉換的<strong><font color="#008000">原點（相對於原物件）</font></strong>，也可以指定單一數值，這樣的話第二個數值會自動指定為置中（center）。可以指定的兩個數值分別是相對於原物件原點的 X, Y 值，允許使用負值。</li><li>-webkit-transition-property</li><li>-webkit-transition-duration</li><li>-webkit-transition-timing-function</li><li>-webkit-transition-delay
+以上的東西<a href="http://www.webdesignerdepot.com/2010/01/css-transitions-101/" target="_blank">在這裡</a>（還有<a href="http://www.qianduan.net/css-transitions-101.html" target="_blank">中文翻譯版本</a>）有很完整的介紹。老實說看完之後我已經不知道我要寫啥了（喂喂喂）。不過我要附帶一提的是，基本上連 -webkit-transform, -webkit-transform-origin 也可以是 transition 的變換對象（property）的。</li></ol>
+
+
+<p>所以，他可以做到什麼事情？請看<a href="http://www.romancortes.com/ficheros/page-flip.html" target="_blank">這個範例</a>！他是怎麼做到的呢？其實說穿了就是好幾個 DIV 層疊起來的結果，只是，這些堆疊的 DIV 其實應該是依照某種規則去定位的，不過由於我數學太爛，目前還不知道到底整個三角函數運算跟旋轉到底是怎麼回事，只好留給高人指點了（喂）。</p>
+
+<!-- more -->
+
+
+<p>雖然說我自己也硬刻了一個，但是沒辦法追到原理實在讓人賭爛啊（這就叫鑽牛角尖嗎？）！</p>
+
+<pre><code>&lt;html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"&gt; 
+&lt;head&gt; 
+    &lt;meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /&gt; 
+    &lt;title&gt;Pure CSS3 Page Flip Effect&lt;/title&gt; 
+    &lt;style type="text/css"&gt; 
+        body
+        {
+            padding: 0;
+            margin: 0;
+        }
+
+        #pageflip
+        {
+            margin: 100px auto;
+            width: 400px;
+            height: 200px;
+            padding: 0 0 50px 0;
+            overflow: hidden;
+        }
+        #all
+        {
+            position: relative;
+            border: 1px dashed #ff3333;
+            width: 400px;
+            height: 200px;
+        }
+
+        #page1
+        {
+            position: absolute;
+            background-color: #ff3366;
+            width: 200px;
+            height: 200px;
+            left: 200px;
+            z-index: 1;
+        }
+        #page2
+        {
+            position: absolute;
+            background-color: #ff6633;
+            width: 200px;
+            height: 200px;
+            z-index: 3;
+            -webkit-transform-origin: 0px 0px;
+            -webkit-transform: translate(380px, 15px) rotate(-66deg);
+            -webkit-transition-property: -webkit-transform, -webkit-transform-origin;
+            -webkit-transition-duration: 1s;
+        }
+        #masker2
+        {
+            position: absolute;
+            background-color: #ffffff;
+            width: 400px;
+            height: 400px;
+            -webkit-transform-origin: 50px 18px;
+            -webkit-transform: translate(15px, 0px) rotate(34deg);
+            -webkit-transition-property: -webkit-transform, -webkit-transform-origin;
+            -webkit-transition-duration: 1s;
+        }
+        #all:hover #page2
+        {
+            -webkit-transform-origin: 200px 100px;
+            -webkit-transform: translate(0px, 0px) rotate(0deg);
+        }
+        #all:hover #masker2
+        {
+            -webkit-transform-origin: 200px 150px;
+            -webkit-transform: translate(200px, 0px) rotate(0deg);
+        }
+        #masker3
+        {
+            position: absolute;
+            background-color: #ffffff;
+            width: 400px;
+            height: 400px;
+            -webkit-transform-origin: -50px 0px;
+            -webkit-transform: translate(380px, 0px) rotate(-32deg);
+            -webkit-transition-property: -webkit-transform, -webkit-transform-origin;
+            -webkit-transition-duration: 1s;
+            z-index: 4;
+            overflow: hidden;
+        }
+
+        #page3
+        {
+            position: absolute;
+            background-color: #ff9933;    
+            width: 200px;
+            height: 200px;
+            z-index: 4;
+            -webkit-transform-origin: 0px 0px;
+            -webkit-transform: translate(-160px, -70px) rotate(32deg);
+            -webkit-transition-property: -webkit-transform, -webkit-transform-origin;
+            -webkit-transition-duration: 1s;
+        }
+
+        #all:hover #page3
+        {
+            -webkit-transform-origin: 90px 0px;
+            -webkit-transform: translate(0px, 50px) rotate(0deg);
+        }
+        #all:hover #masker3
+        {
+            -webkit-transform-origin: 200px 100px;
+            -webkit-transform: translate(200px, -50px) rotate(0deg);
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;div id="pageflip"&gt;
+        &lt;div id="all"&gt;
+            &lt;div id="page1"&gt;
+                &lt;div&gt;Page1&lt;/div&gt;
+            &lt;/div&gt;
+
+            &lt;div id="page2"&gt;
+                &lt;div id="masker2"&gt;&lt;/div&gt;
+                &lt;div&gt;Page2&lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div id="masker3"&gt;
+                &lt;div id="page3"&gt;
+                    &lt;div&gt;Page3&lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;div&gt;
+&lt;/body&gt;
+</code></pre>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">hinablue</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-08-24T13:56:00+08:00" pubdate data-updated="true">Aug 24<span>th</span>, 2010</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/jquery/'>jQuery</a>, <a class='category' href='/categories/javascript/'>javascript</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://blog.hinablue.me/entry/CSS-2D-transform-and-transition/" data-via="hinablue" data-counturl="http://blog.hinablue.me/entry/CSS-2D-transform-and-transition/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/entry/my-new-notebook-hp-envy-14/" title="Previous Post: [新玩具] HP ENVY 14 我是外貿協會啦">&laquo; [新玩具] HP ENVY 14 我是外貿協會啦</a>
+      
+      
+        <a class="basic-alignment right" href="/entry/jQuery-note-about-the-bind-live-and-events/" title="next Post: [jQuery note.] 關於 bind, live 與 evnets 的筆記">[jQuery note.] 關於 bind, live 與 evnets 的筆記 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Me</h1>
+  <img src="/images/hniablue_icon.jpg" width="195" height="195" alt="Hina, Cain Chen." />
+  <p>我是閃光洽！</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+  </ul>
+</section>
+<script type="text/javascript">
+    $.domReady(function() {
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+        (function() {
+            $.ajax({
+                url: '/atom.xml',
+                dataType: 'xml',
+                success: function(xml) {
+                    var parser, expectedXML;
+                    if (window.DOMParser) {
+                        parser = new DOMParser();
+                        expectedXML = parser.parseFromString(decodeURIComponent(xml.response),"text/xml");
+                    } else {
+                        expectedXML = new ActiveXObject("Microsoft.XMLDOM");
+                        expectedXML.async = false;
+                        expectedXML.loadXML(decodeURIComponent(xml.response));
+                    }
+
+                    var entries = expectedXML.getElementsByTagName('entry');
+                    var entries_limit = entries.length > 5 ? 5 : entries.length;
+                    for(var i=0; i<entries_limit; i++) {
+                        $('<a/>')
+                        .attr('href', entries[i].childNodes[3].attributes[0].nodeValue)
+                        .text(entries[i].childNodes[1].childNodes[0].nodeValue)
+                        .appendTo($('<li/>').addClass('post').appendTo($('#recent_posts')));
+                    }
+                },
+                error: function(err) {
+                    $('<li/>').addClass('post').text('Error Loading feed').appendTo($('#recent_posts'));
+                }
+            });
+        })();
+    });
+</script>
+
+<section>
+  <h1>Github Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/hinablue">@hinablue</a> on Github
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'hinablue',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("hinablue", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/hinablue" class="twitter-follow-button" data-width="208px" data-show-count="false">Follow @hinablue</a>
+  
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/104812280860478253996?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2011 - hinablue -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'hinablue';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.hinablue.me/entry/CSS-2D-transform-and-transition/';
+        var disqus_url = 'http://blog.hinablue.me/entry/CSS-2D-transform-and-transition/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

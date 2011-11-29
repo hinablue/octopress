@@ -1,0 +1,476 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[WWW] Plupload Queue 改 - HINA::工程幼稚園</title>
+  <meta name="author" content="hinablue">
+
+  
+  <meta name="description" content="上次介紹過這個超犯規上傳檔案工具，這次要來繼續犯規。 由於我們需要監聽檔案上傳的動作，我們看他的 API 文件中，有描述了 Event 的項目，但是，倘若使用 pluploadQueue 的方法，他所內建的 Event 就被他的 Queue 給寫死了，從外部就沒辦法直覺的控制。當然，要避免這種情況 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.hinablue.me/entry/file-uploader-Plupload-Queue-modified-by-hina">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/hinablue" rel="alternate" title="HINA::工程幼稚園" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-259895-17']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">HINA::工程幼稚園</a></h1>
+  
+    <h2>偏執與強迫症的患者，算不上是無可救藥，只是我已經遇上我的良醫了。</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/hinablue" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.hinablue.me" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[WWW] Plupload Queue 改</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-03-19T11:49:00+08:00" pubdate data-updated="true">Mar 19<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>上次介紹過這個<a href="http://blog.hinablue.me/830" target="_blank">超犯規上傳檔案工具</a>，這次要來繼續犯規。</p>
+
+<p>由於我們需要監聽檔案上傳的動作，我們看他的 API 文件中，有描述了 Event 的項目，但是，倘若使用 pluploadQueue 的方法，他所內建的 Event 就被他的 Queue 給寫死了，從外部就沒辦法直覺的控制。當然，要避免這種情況，就是自己重新畫一個 UI 來用（翻桌）。</p>
+
+<p>所以，既然人家已經好心的幫我們畫好了一個 UI（而且還可以支援多國語言），那就不要枉費人家的一番好意，拿來改寫也只是剛好而以。附帶一提，他的多語言檔案少了一個設定，請自行加入：</p>
+
+<pre><code>// .po file like language pack
+plupload.addI18n({
+    'Select files' : '選擇檔案',
+    'Add files to the upload queue and click the start button.' : '將檔案加入上傳排程後按開始鈕開始上傳。',
+    'Filename' : '檔案名稱',
+</code></pre>
+
+<!-- more -->
+
+
+<pre><code>    'Status' : '狀態',
+    'Size' : '大小',
+    'Add files' : '加入檔案',
+    'Start upload' : '開始上傳',  /// 這個項目漏掉了，請自行加入。
+    'Stop current upload' : '停止當前上傳',
+    'Start uploading queue' : '開始排程上傳',
+    'Drag files here.' : '拖曳檔案至此'
+});
+</code></pre>
+
+<p>首先打開 jquery.plupload.queue.js 的原始檔，我們會發現他的 Event 控制在檔案的最下面。</p>
+
+<pre><code>/// 前略，約莫在 193 行開始
+                uploader.bind("UploadFile", function(up, file) {
+                    $('#' + file.id).addClass('plupload_current_file');
+                });
+/// 中間有一段 Init, Error 的 Event，也暫且略過。
+
+                uploader.bind('QueueChanged', updateList);
+
+                uploader.bind('StateChanged', function(up) {
+                    if (up.state == plupload.STOPPED) {
+                        updateList();
+                    }
+                });
+
+                uploader.bind('FileUploaded', function(up, file) {
+                    handleStatus(file);
+                });
+
+                uploader.bind("UploadProgress", function(up, file) {
+                    // Set file specific progress
+                    $('#' + file.id + ' div.plupload_file_status', target).html(file.percent + '%');
+
+                    handleStatus(file);
+                    updateTotalProgress();
+                });
+
+
+
+/// 前略，約莫在 79 行
+$.fn.pluploadQueue = function(settings, callback) {   /// 我們在此加入 callback 這個物件。
+</code></pre>
+
+<p>我以 FileUploaded 這個 Event 來舉例：</p>
+
+<pre><code>                uploader.bind('FileUploaded', function(up, file, response) {
+                    handleStatus(file);
+                    if($.isFunction(callback.FileUploaded)) callback.FileUploaded(up, file, response);
+                });
+
+
+
+$(function() {
+    // Setup flash version
+    $("#flash_uploader").pluploadQueue({
+        // General settings
+        runtimes : 'flash',
+        url : 'upload.php',
+        max_file_size : '10mb',
+        chunk_size : '1mb',
+        unique_names : true,
+        multipart: true,
+        resize : {width : 320, height : 240, quality : 90},
+        filters : [
+            {title : "Image files", extensions : "jpg,gif,png"},
+            {title : "Zip files", extensions : "zip"}
+        ],
+
+        // Flash settings
+        flash_swf_url : '../js/plupload.flash.swf'
+    },
+   {
+        /// 這裡就是我們要丟進 callback 的 Object 內容，包含了個種 Event 的名稱，以及要被呼叫的 function。
+        'FileUploaded': function(up, file) {
+            // do something here
+        }
+    });
+});
+</code></pre>
+
+<p>另外，他有一個官方 API 所沒有的 Event 叫做 Error，到底他會傳回甚麼我也不清楚。但是依照 pluploadQueue 對於這個 Event 的處理，看起來就是將上傳錯誤的檔案標記為錯誤，僅此而以。</p>
+
+<p>我將這個 jquery.plupload.queue.js 改寫了，其中有包含了：</p>
+
+<ol><li>UploadFile</li><li>Error</li><li>StateChanged</li><li>QueueChanged</li><li>FileUploaded</li><li>UploadProgress</li></ol>
+
+
+<p>也許你會好奇為什麼沒有包含 Init 這個監聽，因為在 pluploadQueue 中，有一個 preinit function 可以呼叫，這也是官方沒有寫進去的東西，這個 preinit 是包含在 setting 中，可以由 setting 傳入一個 function 來做一些事情，這些事情會在呼叫 Init 之前就先執行，所以我也不再多將 Init 改寫了（要改的人請自便）。</p>
+
+<pre><code>/// 呼叫的方法如下：
+$(function() {
+
+$("#flash_uploader").pluploadQueue({
+        // General settings
+        // 略
+    }, {
+        'UploadFile' : function (up, file) { ... },
+
+        'Error' : function (up, err) { ... },
+
+        'StateChanged' : function (up) { ... },
+
+        'QueueChanged' : function (up) { ... },
+
+        'FileUploaded' : function (up, file, response) { ... },
+
+        'UploadProgress' : function (up, file) { ... },
+
+    });
+</code></pre>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">hinablue</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-03-19T11:49:00+08:00" pubdate data-updated="true">Mar 19<span>th</span>, 2010</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/jquery/'>jQuery</a>, <a class='category' href='/categories/javascript/'>javascript</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://blog.hinablue.me/entry/file-uploader-Plupload-Queue-modified-by-hina/" data-via="hinablue" data-counturl="http://blog.hinablue.me/entry/file-uploader-Plupload-Queue-modified-by-hina/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/entry/2010-03-14-moncoeur/" title="Previous Post: [影像後製] 台中 - 心之芳庭">&laquo; [影像後製] 台中 - 心之芳庭</a>
+      
+      
+        <a class="basic-alignment right" href="/entry/photos-2010-03-13-Germany-Traveler-Kitchen-part-1/" title="next Post: [影像] 台中德國秘密旅行 part 1">[影像] 台中德國秘密旅行 part 1 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Me</h1>
+  <img src="/images/hniablue_icon.jpg" width="195" height="195" alt="Hina, Cain Chen." />
+  <p>我是閃光洽！</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+  </ul>
+</section>
+<script type="text/javascript">
+    $.domReady(function() {
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+        (function() {
+            $.ajax({
+                url: '/atom.xml',
+                dataType: 'xml',
+                success: function(xml) {
+                    var parser, expectedXML;
+                    if (window.DOMParser) {
+                        parser = new DOMParser();
+                        expectedXML = parser.parseFromString(decodeURIComponent(xml.response),"text/xml");
+                    } else {
+                        expectedXML = new ActiveXObject("Microsoft.XMLDOM");
+                        expectedXML.async = false;
+                        expectedXML.loadXML(decodeURIComponent(xml.response));
+                    }
+
+                    var entries = expectedXML.getElementsByTagName('entry');
+                    var entries_limit = entries.length > 5 ? 5 : entries.length;
+                    for(var i=0; i<entries_limit; i++) {
+                        $('<a/>')
+                        .attr('href', entries[i].childNodes[3].attributes[0].nodeValue)
+                        .text(entries[i].childNodes[1].childNodes[0].nodeValue)
+                        .appendTo($('<li/>').addClass('post').appendTo($('#recent_posts')));
+                    }
+                },
+                error: function(err) {
+                    $('<li/>').addClass('post').text('Error Loading feed').appendTo($('#recent_posts'));
+                }
+            });
+        })();
+    });
+</script>
+
+<section>
+  <h1>Github Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/hinablue">@hinablue</a> on Github
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'hinablue',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("hinablue", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/hinablue" class="twitter-follow-button" data-width="208px" data-show-count="false">Follow @hinablue</a>
+  
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/104812280860478253996?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2011 - hinablue -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'hinablue';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.hinablue.me/entry/file-uploader-Plupload-Queue-modified-by-hina/';
+        var disqus_url = 'http://blog.hinablue.me/entry/file-uploader-Plupload-Queue-modified-by-hina/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

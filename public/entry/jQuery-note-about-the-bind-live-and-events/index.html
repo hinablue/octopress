@@ -1,0 +1,516 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>[jQuery note.] 關於 bind, live 與 evnets 的筆記 - HINA::工程幼稚園</title>
+  <meta name="author" content="hinablue">
+
+  
+  <meta name="description" content="UPDATE, 簡易的 plugin，為了強姦干擾 Events 執行順序而做的。
+噗浪討論串：http://www.plurk.com/p/7u9br0 (function($) { $.fn.superbind = function(order, type, data, fn) { if &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://blog.hinablue.me/entry/jQuery-note-about-the-bind-live-and-events">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <link href="http://feeds.feedburner.com/hinablue" rel="alternate" title="HINA::工程幼稚園" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-259895-17']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">HINA::工程幼稚園</a></h1>
+  
+    <h2>偏執與強迫症的患者，算不上是無可救藥，只是我已經遇上我的良醫了。</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://feeds.feedburner.com/hinablue" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:blog.hinablue.me" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">[jQuery Note.] 關於 Bind, Live 與 Evnets 的筆記</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-09-27T11:09:00+08:00" pubdate data-updated="true">Sep 27<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p><strong><font color="#FF0000">UPDATE</font></strong>, 簡易的 plugin，為了<s>強姦</s>干擾 Events 執行順序而做的。
+噗浪討論串：<a href="http://www.plurk.com/p/7u9br0" target="_blank">http://www.plurk.com/p/7u9br0</a></p>
+
+<pre><code>(function($) {
+    $.fn.superbind = function(order, type, data, fn) {
+        if ( $.isFunction( data ) ) {
+            fn = data;
+            data = undefined;
+        }
+
+        var order = (typeof order !== "number" || order &lt; 0) ? 0 : order;
+</code></pre>
+
+<!-- more -->
+
+
+<pre><code>        return this.each(function() {
+            /* TODO: fire event before inline event.
+            if ( order === 0 &amp;&amp; typeof $(this).attr("on"+type) === "function") {
+            }
+            */
+            var _ = setTimeout( function() {
+                var guid = 0;
+                $.each( $.cache, function() {
+                    if ( this.events &amp;&amp; this.events[ "live" ] &amp;&amp; this.events[ type ] ) {
+                        var len = this.events[ type ].length - 1;
+                        guid = parseInt(this.events[ "live" ][ len ].guid) + 1;
+                    }
+                });
+                $.each( $.cache, function() {
+                    var reorder = [], events_len = 0, reorder_len = 0;
+                    var obj = {
+                        data: data,
+                        guid: guid,
+                        handler: fn,
+                        namespace: "",
+                        type: type
+                    };
+                    if ( this.events &amp;&amp; this.events[ type ] &amp;&amp; !this.events[ "live" ] ) {
+                        events_len = this.events[ type ].length;
+                        order = (order &gt; events_len) ? events_len : order;
+
+                        for(var i in this.events[ type ]) {
+                            if (order === events_len &amp;&amp; parseInt(i) === events_len-1) {
+                                reorder.push(this.events[ type ][i]);
+                                reorder.push(obj);
+                                order = -1;
+                            } else if ( parseInt(i) === order || order === 0) {
+                                reorder.push(obj);
+                                reorder.push(this.events[ type ][i]);
+                                order = -1;
+                            } else {
+                                reorder.push(this.events[ type ][i]);
+                            }
+                        }
+                        this.events[ type ] = reorder;
+                        reorder = [];
+                        delete reorder;
+                    }
+                });
+            }, 20);
+
+            return this;
+        });
+    };
+})(jQuery);
+</code></pre>
+
+<p>噗浪討論串：<a href="http://www.plurk.com/p/7u4b0j" target="_blank">http://www.plurk.com/p/7u4b0j</a></p>
+
+<p>最近為了一些應用上的效果，所以特別研究了一下 Events 的資料。挖開 jQuery 之後才發現，這是一個很奇妙的世界（疑）。結合各家神人討論，所以我來心得報告一下（喂）。特別感謝<a href="http://www.plurk.com/jaceju" target="_blank">大澤木小鐵</a>、<a href="http://www.plurk.com/Fillano" target="_blank">費拉諾蘭大公</a>鼎力相助（一拜）。</p>
+
+<p>通常在 jQuery 裡面，我們使用 Events 的作法，有三種：</p>
+
+<pre><code>// 1. 使用 bind 來綁定 event
+$("#elem").bind("click", function(e) { ... });
+// 2. 直接使用 event
+$("#elem").click(function(e) { ... });
+// 3. 使用 live 來綁定 event
+$("#elem").live("click", function(e) { ... });
+
+
+&lt;!-- 4. inline 的寫法 --&gt;
+&lt;div id="elem" onclick=" ... "&gt; ... &lt;/div&gt;
+</code></pre>
+
+<blockquote>4 > 2 = 3 > 1</blockquote>
+
+
+<p>疑？不要問我為什麼，因為實驗的結果就是這樣（喂）。當我們把 jQuery 三種使用 Events 的資料傾印出來的時候，會發現一件很神奇的事情，使用 bind/click 直接綁定的 Events，其資料是儲存於元件本身，而使用 live 綁定時，資料會儲存於 document 裡面。再根據<a href="http://www.plurk.com/Fillano" target="_blank" style="margin-top: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 0px; color: rgb(203, 137, 179) !important; border-bottom-width: 1px; border-bottom-style: dashed; border-bottom-color: rgb(204, 51, 153); text-decoration: none !important; ">費拉諾蘭大公</a>所述，三者的資料都會儲存於 $.cache 裡面（使用陣列儲存）。</p>
+
+<p>所以，我們分別來看這些事情：</p>
+
+<pre><code>&lt;!doctype html&gt;
+&lt;html lang="en" class="no-js"&gt;
+&lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;style&gt;
+    #main {
+      width: 400px;
+      height: 600px;
+      border: 1px solid #000000;
+      color: #ff3333;
+    }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+    &lt;div id="container"&gt;
+        &lt;div id="main" onclick="console.log(4);"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"&gt;&lt;/script&gt;
+    &lt;script&gt;!window.jQuery &amp;&amp; document.write('&lt;script src="./js/jquery-1.4.2.min.js"&gt;&lt;\/script&gt;')&lt;/script&gt;
+    &lt;script&gt;
+    $(document).ready(function() {
+        $("#main").bind("click", function(e) {
+            console.log(3);
+            console.log($.data(this).events);
+        });
+        $("#main").click(function(e) {
+            console.log(2);
+            console.log($.data(this).events);
+        });
+        $("#main").live("click", function(e) {
+            console.log(1);
+            console.log($.data(this).events);
+            console.log($.data(document).events);
+            console.log("$.cache");
+            console.log($.cache);
+        });
+    });
+    &lt;/script&gt;
+&lt;/body&gt;
+</code></pre>
+
+<p>依照 $.cache 的儲存方法，他會將元素上的 click/bind 跟 live 分開存放，但是請注意，他並不會儲存 DOM 裡 inline 寫法的 onclick，所以，並不能單純使用這個方法去判斷是否有該 Events 存在或是執行。此外，因為 $.cache 是以陣列的方式儲存這些事情，而且他也並不能直覺的取得所綁定的對象，所以在資訊取出上，有相對麻煩的地方。</p>
+
+<p>當你將 $.cache 列出來時，你會發現 live 這個方法，會產生一個相同的 event 方法，換句話說，你使用 bind/click 去綁定一個 Event 時，他只會有一個 event 方法，而，倘若你使用 live 去綁定一個 Event 時，他同時會衍生出一個該 Event 的 event 方法（超饒舌）。</p>
+
+<pre><code>// 這一段 Javascript 可以加在上述 live 的 function 底下
+
+console.log("======================");
+for(i in $.cache) {
+    console.log("這是第 "+i.toString()+" 個 Event cache。");
+    var events = $.cache[i].events || null;
+    if(typeof events === "object") {
+        for(event in events) {
+            console.log("這是使用 "+event.toString()+" 綁定。");
+            console.log(events[event]);
+            if(events[event].length &gt; 1) {
+                for(j in events[event]) {
+                    console.log("這是第 "+(parseInt(j)+1).toString()+" 個 Event 綁定。");
+                    console.log(events[event][j]);
+                }
+            }
+        }
+    }
+}
+</code></pre>
+
+<p>這裡有一個不小心實驗出來的問題，當你使用 bind/click 時，倘若在 handler function 中使用了 return false; 的話，那麼 live 所綁定的 Event 會略過不執行。原因是，因為 live 把 Event 偷偷地綁在 document 上面，由於 DOM 中 addEventListener 的規則，你使用 return false 就等同於 stopPropagation() 的意思（其實 return false 也會連帶執行 preventDefault()）。</p>
+
+<p>所以，在 document 的子元件執行 stopPropagation()，想當然爾，document 所綁定的 Events 就不會被執行了，這一點可得小心為上。</p>
+
+<p>其實我只是想做一個可以惡搞 Events 執行順序的 plugin 而已（攤手）。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">hinablue</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-09-27T11:09:00+08:00" pubdate data-updated="true">Sep 27<span>th</span>, 2010</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/categories/jquery/'>jQuery</a>, <a class='category' href='/categories/javascript/'>javascript</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://blog.hinablue.me/entry/jQuery-note-about-the-bind-live-and-events/" data-via="hinablue" data-counturl="http://blog.hinablue.me/entry/jQuery-note-about-the-bind-live-and-events/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/entry/CSS-2D-transform-and-transition/" title="Previous Post: [CSS tech.] CSS 3 2D Transforms, Transition 動態效果筆記">&laquo; [CSS tech.] CSS 3 2D Transforms, Transition 動態效果筆記</a>
+      
+      
+        <a class="basic-alignment right" href="/entry/photos-Houtong-with-cats-2010-10-02/" title="next Post: [影像] 人比貓多之侯硐貓村">[影像] 人比貓多之侯硐貓村 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>About Me</h1>
+  <img src="/images/hniablue_icon.jpg" width="195" height="195" alt="Hina, Cain Chen." />
+  <p>我是閃光洽！</p>
+</section>
+<section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+  </ul>
+</section>
+<script type="text/javascript">
+    $.domReady(function() {
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+        (function() {
+            $.ajax({
+                url: '/atom.xml',
+                dataType: 'xml',
+                success: function(xml) {
+                    var parser, expectedXML;
+                    if (window.DOMParser) {
+                        parser = new DOMParser();
+                        expectedXML = parser.parseFromString(decodeURIComponent(xml.response),"text/xml");
+                    } else {
+                        expectedXML = new ActiveXObject("Microsoft.XMLDOM");
+                        expectedXML.async = false;
+                        expectedXML.loadXML(decodeURIComponent(xml.response));
+                    }
+
+                    var entries = expectedXML.getElementsByTagName('entry');
+                    var entries_limit = entries.length > 5 ? 5 : entries.length;
+                    for(var i=0; i<entries_limit; i++) {
+                        $('<a/>')
+                        .attr('href', entries[i].childNodes[3].attributes[0].nodeValue)
+                        .text(entries[i].childNodes[1].childNodes[0].nodeValue)
+                        .appendTo($('<li/>').addClass('post').appendTo($('#recent_posts')));
+                    }
+                },
+                error: function(err) {
+                    $('<li/>').addClass('post').text('Error Loading feed').appendTo($('#recent_posts'));
+                }
+            });
+        })();
+    });
+</script>
+
+<section>
+  <h1>Github Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/hinablue">@hinablue</a> on Github
+  
+  <script type="text/javascript">
+    $.domReady(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'hinablue',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section>
+  <h1>Latest Tweets</h1>
+  <ul id="tweets">
+    <li class="loading">Status updating...</li>
+  </ul>
+  <script type="text/javascript">
+    $.domReady(function(){
+      getTwitterFeed("hinablue", 4, false);
+    });
+  </script>
+  <script src="/javascripts/twitter.js" type="text/javascript"> </script>
+  
+    <a href="http://twitter.com/hinablue" class="twitter-follow-button" data-width="208px" data-show-count="false">Follow @hinablue</a>
+  
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/104812280860478253996?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2011 - hinablue -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'hinablue';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://blog.hinablue.me/entry/jQuery-note-about-the-bind-live-and-events/';
+        var disqus_url = 'http://blog.hinablue.me/entry/jQuery-note-about-the-bind-live-and-events/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
